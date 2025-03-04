@@ -4,63 +4,63 @@ import java.util.*;
 
 public class Notify {
 
-    private String notifyId;
-    private String userIdSend;
-    private String userIdReceive;
-    private Date date;
-    private String text;
+    private String notifyID;
+    private String senderID;
+    private String receiverID;
+    private Date notifyDate;
+    private String content;
     private boolean markRead;
 
     public Notify() {
     }
 
-    public Notify(String notifyId, String userIdSend, String userIdReceive, Date date, String text, boolean markRead) {
-        this.notifyId = notifyId;
-        this.userIdSend = userIdSend;
-        this.userIdReceive = userIdReceive;
-        this.date = date;
-        this.text = text;
+    public Notify(String notifyID, String senderID, String receiverID, Date notifyDate, String content, boolean markRead) {
+        this.notifyID = notifyID;
+        this.senderID = senderID;
+        this.receiverID = receiverID;
+        this.notifyDate = notifyDate;
+        this.content = content;
         this.markRead = markRead;
     }
 
-    public String getNotifyId() {
-        return notifyId;
+    public String getNotifyID() {
+        return notifyID;
     }
 
-    public void setNotifyId(String notifyId) {
-        this.notifyId = notifyId;
+    public void setNotifyID(String notifyID) {
+        this.notifyID = notifyID;
     }
 
-    public String getUserIdSend() {
-        return userIdSend;
+    public String getSenderID() {
+        return senderID;
     }
 
-    public void setUserIdSend(String userIdSend) {
-        this.userIdSend = userIdSend;
+    public void setSenderID(String senderID) {
+        this.senderID = senderID;
     }
 
-    public String getUserIdReceive() {
-        return userIdReceive;
+    public String getReceiverID() {
+        return receiverID;
     }
 
-    public void setUserIdReceive(String userIdReceive) {
-        this.userIdReceive = userIdReceive;
+    public void setReceiverID(String receiverID) {
+        this.receiverID = receiverID;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getNotifyDate() {
+        return notifyDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setNotifyDate(Date notifyDate) {
+        this.notifyDate = notifyDate;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public boolean isMarkRead() {
@@ -70,5 +70,7 @@ public class Notify {
     public void setMarkRead(boolean markRead) {
         this.markRead = markRead;
     }
+
+    
 
 }
