@@ -4,7 +4,7 @@ import exception.*;
 import java.util.*;
 import java.util.function.*;
 
-public class PostComment {
+public class CommentsOfPost {
 
     private List<String> commentIds = new ArrayList<>();
 

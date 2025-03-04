@@ -11,14 +11,14 @@ public class User {
     private String avatar;
     private Date premiumExpirationDate;
     private boolean premiumAccount;
-    private UserPots postList;
+    private PostsOfUser postList;
     private Friends friends;
-    private UserNotifications notifyList;
+    private NotifyOfUser notifyList;
     
     public User(){
     }
     
-    public User(String userId, String username, String password, String email, String avatar, Date premiumExpirationDate, boolean premiumAccount, UserPots postList, Friends friends, UserNotifications notifyList) {
+    public User(String userId, String username, String password, String email, String avatar, Date premiumExpirationDate, boolean premiumAccount, PostsOfUser postList, Friends friends, NotifyOfUser notifyList) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -26,9 +26,9 @@ public class User {
         this.avatar = avatar;
         this.premiumExpirationDate = premiumExpirationDate;
         this.premiumAccount = premiumAccount;
-        this.postList = new UserPots();
+        this.postList = new PostsOfUser();
         this.friends = new Friends();
-        this.notifyList = new UserNotifications();
+        this.notifyList = new NotifyOfUser();
     }
 
     public String getUserId() {
@@ -87,7 +87,7 @@ public class User {
         this.premiumAccount = premiumAccount;
     }
 
-    public UserPots getPostList() {
+    public PostsOfUser getPostList() {
         return postList;
     }
 
@@ -95,7 +95,7 @@ public class User {
         return friends;
     }
 
-    public UserNotifications getNotifyList() {
+    public NotifyOfUser getNotifyList() {
         return notifyList;
     }
 }

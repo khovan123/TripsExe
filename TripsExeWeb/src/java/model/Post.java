@@ -9,8 +9,8 @@ public class Post {
     private Date postDate;
     private String content;
     private String imageUrl;
-    private PostComment comments;
-    private PostLike likes;
+    private CommentsOfPost comments;
+    private LikesOfPost likes;
 
     public Post() {
     }
@@ -21,8 +21,8 @@ public class Post {
         this.postDate = postDate;
         this.content = content;
         this.imageUrl = imageUrl;
-        this.comments = new PostComment();
-        this.likes = new PostLike();
+        this.comments = new CommentsOfPost();
+        this.likes = new LikesOfPost();
     }
 
     public String getPostId() {
@@ -65,11 +65,11 @@ public class Post {
         this.imageUrl = imageUrl;
     }
 
-    public PostComment getComments() {
+    public CommentsOfPost getComments() {
         return comments;
     }
 
-    public PostLike getLikes() {
+    public LikesOfPost getLikes() {
         return likes;
     }
 }

@@ -1,15 +1,15 @@
-    package model;
+package model;
 
 import exception.*;
 import java.util.*;
 import java.util.function.*;
 
-public class UserNotifications {
+public class LikesOfPost {
 
-    private List<String> notifyIds = new ArrayList<>();
+    private List<String> userIds = new ArrayList<>();
 
     public String search(Predicate<String> p) throws NotFoundException {
-        for (String id : notifyIds) {
+        for (String id : userIds) {
             if (p.test(id)) {
                 return id;
             }
@@ -17,21 +17,23 @@ public class UserNotifications {
         throw new NotFoundException("Can not found!");
     }
 
-    public void addNotify(String notifyId) throws AddException {
+    public void addLikedUserId(String userId) throws AddException {
         try {
-            this.search(p -> p.equalsIgnoreCase(notifyId));
-            this.notifyIds.add(notifyId);
+            this.search(p -> p.equalsIgnoreCase(userId));
+            this.userIds.add(userId);
         } catch (NotFoundException e) {
             throw new AddException("Add post failed!");
         }
     }
 
     //max: top 10 notify, priority: not marked read
-    public void setNotifyIdsFromDB() {
+    public void setLikedUserIdsFromDB() {
 
     }
 
-    public List<Notify> getNotifysIn4FromDB() {
+    //empty code here::not using this func
+    public List<Notify> getLikedIn4FromDB() {
         return null;
     }
+
 }
