@@ -4,7 +4,7 @@ import exception.*;
 import java.util.*;
 import java.util.function.Predicate;
 
-public class PostsOfUser {
+public class UserPots {
 
     private List<String> postIds = new ArrayList<>();
 

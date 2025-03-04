@@ -13,7 +13,7 @@ public class UserDAO extends DBContext {
 
     // CRUD Cho User
     public void createUser(User user) throws SQLException {
-        String sql = "INSERT INTO UserTBL(userId, username, password, email, avatar, premiumExpirationDate, premiumAccount)"
+        String sql = "INSERT INTO UserTBL(userId, username, password, email, avatar, premiumExpirationDate, isPremiumAccount)"
                 + " VALUES(?,?,?,?,?,?,?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, user.getUserId());
@@ -40,7 +40,7 @@ public class UserDAO extends DBContext {
                 u.setEmail(rs.getString("email"));
                 u.setAvatar(rs.getString("avatar"));
                 u.setPremiumExpirationDate(rs.getDate("premiumExpirationDate"));
-                u.setPremiumAccount(rs.getBoolean("premiumAccount"));
+                u.setPremiumAccount(rs.getBoolean("isPremiumAccount"));
                 return u;
             }
             return null;
@@ -49,7 +49,7 @@ public class UserDAO extends DBContext {
 
     public void updateUser(User user) throws SQLException {
         String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ?, avatar = ?," +
-                " premiumExpirationDate = ?, premiumAccount = ? WHERE userId = ?";
+                " premiumExpirationDate = ?, isPremiumAccount = ? WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, user.getUsername());
             st.setString(2, user.getPassword());
@@ -71,32 +71,32 @@ public class UserDAO extends DBContext {
     }
     
     // Notification between User
-    public void sendNotification(String userIdSend, String userIdReceive, String text, boolean markRead) throws SQLException {
-        String sql = "INSERT INTO NotifyTBL (senderId, receiverId, notifyDate, content, markRead)"
+    public void sendNotification(String senderId, String receiverId, String messageContent, boolean isRead) throws SQLException {
+        String sql = "INSERT INTO NotifyTBL (senderId, receiverId, notificationDate, messageContent, isRead)"
                 + " VALUES (?,?,GETDATE(),?,?)"; 
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, userIdSend);
-            st.setString(2, userIdReceive);
-            st.setString(3, text);
-            st.setBoolean(4, markRead); 
+            st.setString(1, senderId);
+            st.setString(2, receiverId);
+            st.setString(3, messageContent);
+            st.setBoolean(4, isRead); 
             st.executeUpdate();
         }
     }
     
-    public List<Notify> getNotifications(String userId) throws SQLException {
+    public List<Notify> getNotifications(String receiverId) throws SQLException {
         List<Notify> notifications = new ArrayList<>();  
-        String sql = "SELECT * FROM NotifyTBL WHERE receiverId = ? ORDER BY notifyDate DESC"; 
+        String sql = "SELECT * FROM NotifyTBL WHERE receiverId = ? ORDER BY notificationDate DESC"; 
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, userId);
+            st.setString(1, receiverId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Notify n = new Notify();
                 n.setNotifyId(rs.getString("notifyId"));
                 n.setSenderId(rs.getString("senderId"));
                 n.setReceiverId(rs.getString("receiverId")); 
-                n.setNotifyDate(rs.getDate("notifyDate"));
-                n.setContent(rs.getString("content"));
-                n.setMarkRead(rs.getBoolean("markRead"));
+                n.setNotificationDate(rs.getDate("notificationDate"));
+                n.setMessageContent(rs.getString("messageContent"));
+                n.setRead(rs.getBoolean("isRead"));
                 notifications.add(n);
             }
         }
@@ -104,7 +104,7 @@ public class UserDAO extends DBContext {
     }
     
     public void markNotificationAsRead(String notifyId) throws SQLException {
-        String sql = "UPDATE NotifyTBL SET markRead = 1 WHERE notifyId = ?";
+        String sql = "UPDATE NotifyTBL SET isRead = 1 WHERE notifyId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, notifyId); 
             st.executeUpdate();

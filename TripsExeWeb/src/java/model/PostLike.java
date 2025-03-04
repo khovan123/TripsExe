@@ -4,7 +4,7 @@ import exception.*;
 import java.util.*;
 import java.util.function.*;
 
-public class LikesOfPost {
+public class PostLike {
 
     private List<String> userIds = new ArrayList<>();
 

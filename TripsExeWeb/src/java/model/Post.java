@@ -6,23 +6,23 @@ public class Post {
 
     private String postId;
     private String title;
-    private Date date;
-    private String text;
-    private String urlImage;
-    private CommentsOfPost comments;
-    private LikesOfPost likes;
+    private Date postDate;
+    private String content;
+    private String imageUrl;
+    private PostComment comments;
+    private PostLike likes;
 
     public Post() {
     }
 
-    public Post(String postId, String title, Date date, String text, String urlImage) {
+    public Post(String postId, String title, Date postDate, String content, String imageUrl) {
         this.postId = postId;
         this.title = title;
-        this.date = date;
-        this.text = text;
-        this.urlImage = urlImage;
-        this.comments = new CommentsOfPost();
-        this.likes = new LikesOfPost();
+        this.postDate = postDate;
+        this.content = content;
+        this.imageUrl = imageUrl;
+        this.comments = new PostComment();
+        this.likes = new PostLike();
     }
 
     public String getPostId() {
@@ -41,36 +41,35 @@ public class Post {
         this.title = title;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getPostDate() {
+        return postDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setPostDate(Date postDate) {
+        this.postDate = postDate;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getUrlImage() {
-        return urlImage;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public CommentsOfPost getComments() {
+    public PostComment getComments() {
         return comments;
     }
 
-    public LikesOfPost getLikes() {
+    public PostLike getLikes() {
         return likes;
     }
-
 }

@@ -4,12 +4,12 @@ import exception.*;
 import java.util.*;
 import java.util.function.*;
 
-public class NotifyOfUser {
+public class PostComment {
 
-    private List<String> notifyIds = new ArrayList<>();
+    private List<String> commentIds = new ArrayList<>();
 
     public String search(Predicate<String> p) throws NotFoundException {
-        for (String id : notifyIds) {
+        for (String id : commentIds) {
             if (p.test(id)) {
                 return id;
             }
@@ -17,21 +17,21 @@ public class NotifyOfUser {
         throw new NotFoundException("Can not found!");
     }
 
-    public void addNotify(String notifyId) throws AddException {
+    public void addComment(String commentId) throws AddException {
         try {
-            this.search(p -> p.equalsIgnoreCase(notifyId));
-            this.notifyIds.add(notifyId);
+            this.search(p -> p.equalsIgnoreCase(commentId));
+            this.commentIds.add(commentId);
         } catch (NotFoundException e) {
             throw new AddException("Add post failed!");
         }
     }
 
-    //max: top 10 notify, priority: not marked read
-    public void setNotifyIdsFromDB() {
+    public void setCommentIdsFromDB() {
 
     }
 
-    public List<Notify> getNotifysIn4FromDB() {
+    public List<Comment> getCommentIn4FromDB() {
         return null;
     }
+
 }

@@ -1,15 +1,15 @@
-package model;
+    package model;
 
 import exception.*;
 import java.util.*;
 import java.util.function.*;
 
-public class CommentsOfPost {
+public class UserNotifications {
 
-    private List<String> commentIds = new ArrayList<>();
+    private List<String> notifyIds = new ArrayList<>();
 
     public String search(Predicate<String> p) throws NotFoundException {
-        for (String id : commentIds) {
+        for (String id : notifyIds) {
             if (p.test(id)) {
                 return id;
             }
@@ -17,21 +17,21 @@ public class CommentsOfPost {
         throw new NotFoundException("Can not found!");
     }
 
-    public void addComment(String commentId) throws AddException {
+    public void addNotify(String notifyId) throws AddException {
         try {
-            this.search(p -> p.equalsIgnoreCase(commentId));
-            this.commentIds.add(commentId);
+            this.search(p -> p.equalsIgnoreCase(notifyId));
+            this.notifyIds.add(notifyId);
         } catch (NotFoundException e) {
             throw new AddException("Add post failed!");
         }
     }
 
-    public void setCommentIdsFromDB() {
+    //max: top 10 notify, priority: not marked read
+    public void setNotifyIdsFromDB() {
 
     }
 
-    public List<Comment> getCommentIn4FromDB() {
+    public List<Notify> getNotifysIn4FromDB() {
         return null;
     }
-
 }

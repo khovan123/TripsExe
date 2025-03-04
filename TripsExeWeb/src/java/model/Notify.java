@@ -7,20 +7,20 @@ public class Notify {
     private String notifyId;
     private String senderId;
     private String receiverId;
-    private Date notifyDate;
-    private String content;
-    private boolean markRead;
+    private Date notificationDate;
+    private String messageContent;
+    private boolean isRead;
 
     public Notify() {
     }
 
-    public Notify(String notifyId, String senderId, String receiverId, Date notifyDate, String content, boolean markRead) {
+    public Notify(String notifyId, String senderId, String receiverId, Date notificationDate, String messageContent, boolean isRead) {
         this.notifyId = notifyId;
         this.senderId = senderId;
         this.receiverId = receiverId;
-        this.notifyDate = notifyDate;
-        this.content = content;
-        this.markRead = markRead;
+        this.notificationDate = notificationDate;
+        this.messageContent = messageContent;
+        this.isRead = isRead;
     }
 
     public String getNotifyId() {
@@ -47,29 +47,27 @@ public class Notify {
         this.receiverId = receiverId;
     }
 
-    public Date getNotifyDate() {
-        return notifyDate;
+    public Date getNotificationDate() {
+        return notificationDate;
     }
 
-    public void setNotifyDate(Date notifyDate) {
-        this.notifyDate = notifyDate;
+    public void setNotificationDate(Date notificationDate) {
+        this.notificationDate = notificationDate;
     }
 
-    public String getContent() {
-        return content;
+    public String getMessageContent() {
+        return messageContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setMessageContent(String messageContent) {
+        this.messageContent = messageContent;
     }
 
-    public boolean isMarkRead() {
-        return markRead;
+    public boolean isRead() {
+        return isRead;
     }
 
-    public void setMarkRead(boolean markRead) {
-        this.markRead = markRead;
+    public void setRead(boolean isRead) {
+        this.isRead = isRead;
     }
-
-    
 }
