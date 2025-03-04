@@ -12,12 +12,11 @@ import model.User;
 public class UserDAO extends DBContext {
 
     // CRUD Cho User
-    // Create (Thêm người dùng mới)
     public void createUser(User user) throws SQLException {
-        String sql = "INSERT INTO Users(userID, username, password, email, avatar, premiumExpirationDate, premiumAccount)"
+        String sql = "INSERT INTO UserTBL(userId, username, password, email, avatar, premiumExpirationDate, premiumAccount)"
                 + " VALUES(?,?,?,?,?,?,?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, user.getUserID());
+            st.setString(1, user.getUserId());
             st.setString(2, user.getUsername());
             st.setString(3, user.getPassword());
             st.setString(4, user.getEmail());
@@ -28,14 +27,14 @@ public class UserDAO extends DBContext {
         }
     }
 
-    public User getUserByID(String userID) throws SQLException {
-        String sql = "SELECT * FROM Users WHERE userID = ?";
+    public User getUserById(String userId) throws SQLException {
+        String sql = "SELECT * FROM UserTBL WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, userID);
+            st.setString(1, userId);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 User u = new User();
-                u.setUserID(rs.getString("userID"));
+                u.setUserId(rs.getString("userId"));
                 u.setUsername(rs.getString("username"));
                 u.setPassword(rs.getString("password"));
                 u.setEmail(rs.getString("email"));
@@ -49,8 +48,8 @@ public class UserDAO extends DBContext {
     }
 
     public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE Users SET username = ?, password = ?, email = ?, avatar = ?,"
-                + "premiumExpirationDate = ?, premiumAccount = ? WHERE userID = ?";
+        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ?, avatar = ?," +
+                " premiumExpirationDate = ?, premiumAccount = ? WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, user.getUsername());
             st.setString(2, user.getPassword());
@@ -58,54 +57,56 @@ public class UserDAO extends DBContext {
             st.setString(4, user.getAvatar());
             st.setDate(5, user.getPremiumExpirationDate());
             st.setBoolean(6, user.isPremiumAccount());
+            st.setString(7, user.getUserId());
             st.executeUpdate();
         }
     }
 
-    public void deleteUser(String userID) throws SQLException {
-        String sql = "DELETE FROM Users Where userID = ?";
+    public void deleteUser(String userId) throws SQLException {
+        String sql = "DELETE FROM UserTBL WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, userID);
-            st.executeUpdate();
-        }
-    }
-
-    public void sendNotification(String userIdSend, String userIdReceive, String text, boolean markRead) throws SQLException {
-        String sql = "INSERT INTO Notify (senderID, reciverID, notifyDate, content, markRead)"
-                + "VALUES(?,?,GETDATE(),?,0)";
-        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, userIdSend);
-            st.setString(2, userIdReceive);
-            st.setString(3, text);
+            st.setString(1, userId);
             st.executeUpdate();
         }
     }
     
-    public List<Notify> getNotifications(String userId) throws SQLException{
+    // Notification between User
+    public void sendNotification(String userIdSend, String userIdReceive, String text, boolean markRead) throws SQLException {
+        String sql = "INSERT INTO NotifyTBL (senderId, receiverId, notifyDate, content, markRead)"
+                + " VALUES (?,?,GETDATE(),?,?)"; 
+        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
+            st.setString(1, userIdSend);
+            st.setString(2, userIdReceive);
+            st.setString(3, text);
+            st.setBoolean(4, markRead); 
+            st.executeUpdate();
+        }
+    }
+    
+    public List<Notify> getNotifications(String userId) throws SQLException {
         List<Notify> notifications = new ArrayList<>();  
-        String sql = "SELECT FROM Notify Where recieverID = ? ORDER BY notifyDate DESC";
-        try(PreparedStatement st = getConnection().prepareStatement(sql)){
+        String sql = "SELECT * FROM NotifyTBL WHERE receiverId = ? ORDER BY notifyDate DESC"; 
+        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, userId);
             ResultSet rs = st.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Notify n = new Notify();
-                n.setNotifyID(rs.getString("notifyID"));
-                n.setSenderID(rs.getString("senderID"));
-                n.setReceiverID(rs.getString("recieverID"));
+                n.setNotifyId(rs.getString("notifyId"));
+                n.setSenderId(rs.getString("senderId"));
+                n.setReceiverId(rs.getString("receiverId")); 
                 n.setNotifyDate(rs.getDate("notifyDate"));
                 n.setContent(rs.getString("content"));
                 n.setMarkRead(rs.getBoolean("markRead"));
-                
                 notifications.add(n);
             }
         }
         return notifications;
     }
     
-    public void markNotificationAsRead(String notifyID) throws SQLException{
-        String sql = "UPDATE Notify SET markRead = 1 WHERE notifyID = ?";
-        try (PreparedStatement st = getConnection().prepareStatement(sql)){
-            st.setString(1, notifyID); 
+    public void markNotificationAsRead(String notifyId) throws SQLException {
+        String sql = "UPDATE NotifyTBL SET markRead = 1 WHERE notifyId = ?";
+        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
+            st.setString(1, notifyId); 
             st.executeUpdate();
         }
     }

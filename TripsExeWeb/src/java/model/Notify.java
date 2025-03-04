@@ -4,9 +4,9 @@ import java.util.*;
 
 public class Notify {
 
-    private String notifyID;
-    private String senderID;
-    private String receiverID;
+    private String notifyId;
+    private String senderId;
+    private String receiverId;
     private Date notifyDate;
     private String content;
     private boolean markRead;
@@ -14,37 +14,37 @@ public class Notify {
     public Notify() {
     }
 
-    public Notify(String notifyID, String senderID, String receiverID, Date notifyDate, String content, boolean markRead) {
-        this.notifyID = notifyID;
-        this.senderID = senderID;
-        this.receiverID = receiverID;
+    public Notify(String notifyId, String senderId, String receiverId, Date notifyDate, String content, boolean markRead) {
+        this.notifyId = notifyId;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
         this.notifyDate = notifyDate;
         this.content = content;
         this.markRead = markRead;
     }
 
-    public String getNotifyID() {
-        return notifyID;
+    public String getNotifyId() {
+        return notifyId;
     }
 
-    public void setNotifyID(String notifyID) {
-        this.notifyID = notifyID;
+    public void setNotifyId(String notifyId) {
+        this.notifyId = notifyId;
     }
 
-    public String getSenderID() {
-        return senderID;
+    public String getSenderId() {
+        return senderId;
     }
 
-    public void setSenderID(String senderID) {
-        this.senderID = senderID;
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
     }
 
-    public String getReceiverID() {
-        return receiverID;
+    public String getReceiverId() {
+        return receiverId;
     }
 
-    public void setReceiverID(String receiverID) {
-        this.receiverID = receiverID;
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
     }
 
     public Date getNotifyDate() {
@@ -72,5 +72,4 @@ public class Notify {
     }
 
     
-
 }
