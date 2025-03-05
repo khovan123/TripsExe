@@ -11,7 +11,7 @@ import model.User;
 
 public class UserDAO extends DBContext {
 
-    // CRUD Cho User
+    // CRUD 
     public void createUser(User user) throws SQLException {
         String sql = "INSERT INTO UserTBL(userId, username, password, email, avatar, premiumExpirationDate, isPremiumAccount)"
                 + " VALUES(?,?,?,?,?,?,?)";
@@ -70,7 +70,7 @@ public class UserDAO extends DBContext {
         }
     }
     
-    // Notification giua cac User
+    // Notification 
     public void sendNotification(String senderId, String receiverId, String messageContent, boolean isRead) throws SQLException {
         String sql = "INSERT INTO NotifyTBL (senderId, receiverId, notificationDate, messageContent, isRead)"
                 + " VALUES (?,?,GETDATE(),?,?)"; 
