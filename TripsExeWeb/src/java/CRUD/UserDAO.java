@@ -70,7 +70,7 @@ public class UserDAO extends DBContext {
         }
     }
     
-    // Notification between User
+    // Notification giua cac User
     public void sendNotification(String senderId, String receiverId, String messageContent, boolean isRead) throws SQLException {
         String sql = "INSERT INTO NotifyTBL (senderId, receiverId, notificationDate, messageContent, isRead)"
                 + " VALUES (?,?,GETDATE(),?,?)"; 
