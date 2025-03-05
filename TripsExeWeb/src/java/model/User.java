@@ -14,18 +14,18 @@ public class User {
     private PostsOfUser postList;
     private Friends friends;
     private NotifyOfUser notifyList;
-    
-    public User(){
+
+    public User() {
     }
-    
-    public User(String userId, String username, String password, String email, String avatar, Date premiumExpirationDate, boolean premiumAccount, PostsOfUser postList, Friends friends, NotifyOfUser notifyList) {
+
+    public User(String userId, String username, String password, String email, String avatar) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
         this.avatar = avatar;
-        this.premiumExpirationDate = premiumExpirationDate;
-        this.premiumAccount = premiumAccount;
+        this.premiumExpirationDate = null;
+        this.premiumAccount = false;
         this.postList = new PostsOfUser();
         this.friends = new Friends();
         this.notifyList = new NotifyOfUser();
