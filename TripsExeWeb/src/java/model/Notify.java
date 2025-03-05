@@ -14,13 +14,13 @@ public class Notify {
     public Notify() {
     }
 
-    public Notify(String notifyId, String senderId, String receiverId, Date notificationDate, String messageContent, boolean isRead) {
+    public Notify(String notifyId, String senderId, String receiverId, Date notificationDate, String messageContent) {
         this.notifyId = notifyId;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.notificationDate = notificationDate;
         this.messageContent = messageContent;
-        this.isRead = isRead;
+        this.isRead = false;
     }
 
     public String getNotifyId() {
