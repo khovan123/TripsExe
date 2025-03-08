@@ -5,17 +5,31 @@ import java.util.*;
 public class Comment {
 
     private String commentId;
+    private String postId;
     private String userId;
     private Date commentDate;
     private String content;
     private String imageUrl;
 
-    public Comment(String commentId, String userId, Date commentDate, String content, String imageUrl) {
+    public Comment() {
+    }
+    
+
+    public Comment(String commentId, String postId, String userId, Date commentDate, String content, String imageUrl) {
         this.commentId = commentId;
+        this.postId = postId;
         this.userId = userId;
         this.commentDate = commentDate;
         this.content = content;
         this.imageUrl = imageUrl;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
     }
 
     public String getCommentId() {
