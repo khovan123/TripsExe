@@ -6,16 +6,16 @@ public class Comment {
 
     private String commentId;
     private String userId;
-    private Date date;
-    private String text;
-    private String urlImage;
+    private Date commentDate;
+    private String content;
+    private String imageUrl;
 
-    public Comment(String commentId, String userId, Date date, String text, String urlImage) {
+    public Comment(String commentId, String userId, Date commentDate, String content, String imageUrl) {
         this.commentId = commentId;
         this.userId = userId;
-        this.date = date;
-        this.text = text;
-        this.urlImage = urlImage;
+        this.commentDate = commentDate;
+        this.content = content;
+        this.imageUrl = imageUrl;
     }
 
     public String getCommentId() {
@@ -34,28 +34,27 @@ public class Comment {
         this.userId = userId;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCommentDate() {
+        return commentDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCommentDate(Date commentDate) {
+        this.commentDate = commentDate;
     }
 
-    public String getText() {
-        return text;
+    public String getContent() {
+        return content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getUrlImage() {
-        return urlImage;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setUrlImage(String urlImage) {
-        this.urlImage = urlImage;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
-
 }
