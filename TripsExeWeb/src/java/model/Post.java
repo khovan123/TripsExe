@@ -4,7 +4,8 @@ import java.sql.Date;
 
 public class Post {
 
-    private String postId;
+    private int postId;
+    //private int userId;
     private String title;
     private Date postDate;
     private String content;
@@ -15,7 +16,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(String postId, String title, Date postDate, String content, String imageUrl) {
+    public Post(int postId, String title, Date postDate, String content, String imageUrl) {
         this.postId = postId;
         this.title = title;
         this.postDate = postDate;
@@ -25,11 +26,11 @@ public class Post {
         this.likes = new LikesOfPost();
     }
 
-    public String getPostId() {
+    public int getPostId() {
         return postId;
     }
 
-    public void setPostId(String postId) {
+    public void setPostId(int postId) {
         this.postId = postId;
     }
 
