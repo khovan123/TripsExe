@@ -4,13 +4,13 @@ import java.util.*;
 
 public class Comment {
 
-    private String commentId;
+    private int commentId;
     private String userId;
     private Date commentDate;
     private String content;
     private String imageUrl;
 
-    public Comment(String commentId, String userId, Date commentDate, String content, String imageUrl) {
+    public Comment(int commentId, String userId, Date commentDate, String content, String imageUrl) {
         this.commentId = commentId;
         this.userId = userId;
         this.commentDate = commentDate;
@@ -18,11 +18,11 @@ public class Comment {
         this.imageUrl = imageUrl;
     }
 
-    public String getCommentId() {
+    public int getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(String commentId) {
+    public void setCommentId(int commentId) {
         this.commentId = commentId;
     }
 

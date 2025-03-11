@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class User {
 
-    private String userId;
+    private int userId;
     private String username;
     private String password;
     private String email;
@@ -12,13 +12,13 @@ public class User {
     private Date premiumExpirationDate;
     private boolean premiumAccount;
     private PostsOfUser postList;
-    private Friends friends;
+    private UserFriend friends;
     private NotifyOfUser notifyList;
 
     public User() {
     }
 
-    public User(String userId, String username, String password, String email, String avatar) {
+    public User(int userId, String username, String password, String email, String avatar) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -27,15 +27,15 @@ public class User {
         this.premiumExpirationDate = null;
         this.premiumAccount = false;
         this.postList = new PostsOfUser();
-        this.friends = new Friends();
+        this.friends = new UserFriend();
         this.notifyList = new NotifyOfUser();
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -91,7 +91,7 @@ public class User {
         return postList;
     }
 
-    public Friends getFriends() {
+    public UserFriend getFriends() {
         return friends;
     }
 
