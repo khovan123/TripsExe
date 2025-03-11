@@ -4,46 +4,46 @@ import java.util.*;
 
 public class Notify {
 
-    private String notifyId;
-    private String senderId;
-    private String receiverId;
+    private int notifyId;
+    private int senderId;
+    private int receiverId;
     private Date notificationDate;
     private String messageContent;
-    private boolean isRead;
+    private boolean markRead;
 
     public Notify() {
     }
 
-    public Notify(String notifyId, String senderId, String receiverId, Date notificationDate, String messageContent) {
+    public Notify(int notifyId, int senderId, int receiverId, Date notificationDate, String messageContent) {
         this.notifyId = notifyId;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.notificationDate = notificationDate;
         this.messageContent = messageContent;
-        this.isRead = false;
+        this.markRead = false;
     }
 
-    public String getNotifyId() {
+    public int getNotifyId() {
         return notifyId;
     }
 
-    public void setNotifyId(String notifyId) {
+    public void setNotifyId(int notifyId) {
         this.notifyId = notifyId;
     }
 
-    public String getSenderId() {
+    public int getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(String senderId) {
+    public void setSenderId(int senderId) {
         this.senderId = senderId;
     }
 
-    public String getReceiverId() {
+    public int getReceiverId() {
         return receiverId;
     }
 
-    public void setReceiverId(String receiverId) {
+    public void setReceiverId(int receiverId) {
         this.receiverId = receiverId;
     }
 
@@ -63,11 +63,13 @@ public class Notify {
         this.messageContent = messageContent;
     }
 
-    public boolean isRead() {
-        return isRead;
+    public boolean isMarkRead() {
+        return markRead;
     }
 
-    public void setRead(boolean isRead) {
-        this.isRead = isRead;
+    public void setMarkRead(boolean markRead) {
+        this.markRead = markRead;
     }
+
+    
 }
