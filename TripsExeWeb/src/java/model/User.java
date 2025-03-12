@@ -12,7 +12,7 @@ public class User {
     private Date premiumExpirationDate;
     private boolean premiumAccount;
     private PostsOfUser postList;
-    private UserFriend friends;
+    private FriendsOfUser friends;
     private NotifyOfUser notifyList;
 
     public User() {
@@ -27,7 +27,7 @@ public class User {
         this.premiumExpirationDate = null;
         this.premiumAccount = false;
         this.postList = new PostsOfUser();
-        this.friends = new UserFriend();
+        this.friends = new FriendsOfUser();
         this.notifyList = new NotifyOfUser();
     }
 
@@ -91,11 +91,17 @@ public class User {
         return postList;
     }
 
-    public UserFriend getFriends() {
+    public FriendsOfUser getFriends() {
         return friends;
     }
 
     public NotifyOfUser getNotifyList() {
         return notifyList;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", avatarUrl=" + avatarUrl + ", premiumExpirationDate=" + premiumExpirationDate + ", premiumAccount=" + premiumAccount + ", postList=" + postList + ", friends=" + friends + ", notifyList=" + notifyList + '}';
+    }
+
 }
