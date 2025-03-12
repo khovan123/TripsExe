@@ -4,18 +4,13 @@ import java.util.*;
 
 public class Comment {
 
-    private String commentId;
-    private String postId;
-    private String userId;
+    private int commentId;
+    private int postId;
+    private int userId;
     private Date commentDate;
     private String content;
     private String imageUrl;
-
-    public Comment() {
-    }
-
-    public Comment(String commentId, String postId, String userId, Date commentDate, String content, String imageUrl) {
-        this.commentId = commentId;
+    public Comment(int postId, int userId, Date commentDate, String content, String imageUrl) {
         this.postId = postId;
         this.userId = userId;
         this.commentDate = commentDate;
@@ -23,19 +18,27 @@ public class Comment {
         this.imageUrl = imageUrl;
     }
 
-    public String getUserId() {
-        return userId;
+    public int getCommentId() {
+        return commentId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setCommentId(int commentId) {
+        this.commentId = commentId;
     }
-    
-    public String getPostId() {
+
+    public int getPostId() {
         return postId;
     }
 
-    public void setPostId(String postId) {
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
+    
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
         this.postId = postId;
     }
 
