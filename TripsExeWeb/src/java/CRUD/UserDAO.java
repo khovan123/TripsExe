@@ -15,7 +15,7 @@ public class UserDAO extends DBContext {
 
     // CRUD 
     public void createUser(User user) throws SQLException {
-        String sql = "INSERT INTO UserTBL(userId, username, password, email, avatar)"
+        String sql = "INSERT INTO UserTBL(userId, username, password, email, avatarUrl)"
                 + " VALUES(?,?,?,?,?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setInt(1, user.getUserId());
