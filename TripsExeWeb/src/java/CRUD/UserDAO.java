@@ -15,7 +15,7 @@ public class UserDAO extends DBContext {
 
     // CRUD 
     public void createUser(User user) throws SQLException {
-        String sql = "INSERT INTO UserTBL(userId, username, password, email)"
+        String sql = "INSERT INTO UserTBL( username, password, email)"
                 + " VALUES(?,?,?,?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setInt(1, user.getUserId());
@@ -27,7 +27,7 @@ public class UserDAO extends DBContext {
     }
 
     public User getUserById(String userId) throws SQLException {
-        String sql = "SELECT userId, username, password, email FROM UserTBL WHERE userId = ?";
+        String sql = "SELECT * FROM UserTBL WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, userId);
             ResultSet rs = st.executeQuery();
@@ -44,33 +44,16 @@ public class UserDAO extends DBContext {
     }
 
     public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ? WHERE userId = ?";
+        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ?, avatar = ?, premiumExpirationDate = ?, premiumAccount = ? WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, user.getUsername());
             st.setString(2, user.getPassword());
             st.setString(3, user.getEmail());
-            st.setInt(4, user.getUserId());
+            st.setString(4, user.getAvatar());
+            st.setDate(5, user.getPremiumExpirationDate());
+            st.setBoolean(6, user.isPremiumAccount());
+            st.setInt(7, user.getUserId());
             st.executeUpdate();
-        }
-    }
-
-    public User getUserById(int userId) throws SQLException {
-        String sql = "SELECT * FROM UserTBL WHERE userId = ?";
-        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setInt(1, userId);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                User u = new User();
-                u.setUserId(rs.getInt("userId"));
-                u.setUsername(rs.getString("username"));
-                u.setPassword(rs.getString("password"));
-                u.setEmail(rs.getString("email"));
-                u.setAvatar(rs.getString("avatar"));
-                u.setPremiumExpirationDate(rs.getDate("premiumExpirationDate"));
-                u.setPremiumAccount(rs.getBoolean("PremiumAccount"));
-                return u;
-            }
-            return null;
         }
     }
 
@@ -84,13 +67,12 @@ public class UserDAO extends DBContext {
 
     // Notification 
     public void sendNotification(String senderId, String receiverId, String messageContent, boolean isRead) throws SQLException {
-        String sql = "INSERT INTO NotifyTBL (senderId, receiverId, notificationDate, messageContent, isRead)"
+        String sql = "INSERT INTO NotifyTBL ( receiverId, notificationDate, messageContent, isRead)"
                 + " VALUES (?,?,GETDATE(),?,?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, senderId);
-            st.setString(2, receiverId);
-            st.setString(3, messageContent);
-            st.setBoolean(4, isRead);
+            st.setString(1, receiverId);
+            st.setString(2, messageContent);
+            st.setBoolean(3, isRead);
             st.executeUpdate();
         }
     }
@@ -137,9 +119,6 @@ public class UserDAO extends DBContext {
                 u.setUsername(rs.getString("username"));
                 u.setPassword(rs.getString("password"));
                 u.setEmail(rs.getString("email"));
-                u.setAvatar(rs.getString("avatar"));
-                u.setPremiumExpirationDate(rs.getDate("premiumExpirationDate"));
-                u.setPremiumAccount(rs.getBoolean("isPremiumAccount"));
                 return u;
             }
             return null;
@@ -148,16 +127,15 @@ public class UserDAO extends DBContext {
 
     // Post
     public void createPost(Post post) throws SQLException {
-        String sql = "INSERT INTO PostTBL (postId, title, postDate, content, imageUrl) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PostTBL ( title, postDate, content, imageUrl) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setInt(1, post.getPostId());
-            st.setString(2, post.getTitle());
-            st.setDate(3, post.getPostDate());
-            st.setString(4, post.getContent());
+            st.setString(1, post.getTitle());
+            st.setDate(2, post.getPostDate());
+            st.setString(3, post.getContent());
             if (post.getImageUrl() != null) {
-                st.setString(5, post.getImageUrl());
+                st.setString(4, post.getImageUrl());
             } else {
-                st.setNull(5, java.sql.Types.VARCHAR);
+                st.setNull(4, java.sql.Types.VARCHAR);
             }
             st.executeUpdate();
         }
@@ -182,13 +160,12 @@ public class UserDAO extends DBContext {
 
     // Comment
     public void addComment(Comment comment) throws SQLException {
-        String sql = "INSERT INTO CommentTBL (commentId, postId, userId, content, imageUrl, commentDate) VALUES (?, ?, ?, ?, ?, GETDATE())";
+        String sql = "INSERT INTO CommentTBL ( postId, userId, content, imageUrl, commentDate) VALUES (?, ?, ?, ?, ?, GETDATE())";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, comment.getCommentId());
-            st.setString(2, comment.getPostId());
-            st.setString(3, comment.getUserId());
-            st.setString(4, comment.getContent());
-            st.setString(5, comment.getImageUrl());
+            st.setString(1, comment.getPostId());
+            st.setString(2, comment.getUserId());
+            st.setString(3, comment.getContent());
+            st.setString(4, comment.getImageUrl());
             st.executeUpdate();
         }
     }
