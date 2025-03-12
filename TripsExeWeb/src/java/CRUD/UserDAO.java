@@ -12,8 +12,7 @@ import model.Post;
 import model.User;
 
 public class UserDAO extends DBContext {
-
-    // CRUD 
+    
     public void createUser(User user) throws SQLException {
         String sql = "INSERT INTO UserTBL(username, password, email, avatarUrl, premiumExpirationDate, isPremiumAccount)"
                 + " VALUES(?,?,?,?,GETDATE(),?)";
@@ -45,7 +44,7 @@ public class UserDAO extends DBContext {
     }
 
     public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ?, avatar = ?, premiumExpirationDate = ?, premiumAccount = ? WHERE userId = ?";
+        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ?, avatar = ?, premiumExpirationDate = ?, isPremiumAccount = ? WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, user.getUsername());
             st.setString(2, user.getPassword());
@@ -66,21 +65,19 @@ public class UserDAO extends DBContext {
         }
     }
 
-    // Notification 
     public void sendNotification(Notify notify) throws SQLException {
-        String sql = "INSERT INTO NotifyTBL (notifyId, userId, notificationDate, messageContent) VALUES (?, ?, GETDATE(), ?)";
+        String sql = "INSERT INTO NotifyTBL (userId, notificationDate, messageContent) VALUES (?, GETDATE(), ?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setInt(1, notify.getNotifyId());
-            st.setInt(2, notify.getUserId());
+            st.setInt(1, notify.getUserId());
+            st.setInt(2, notify.getNotifyId());
             st.setString(3, notify.getMessageContent());
             st.executeUpdate();
         }
     }
 
-    public List<Notify> getNotifications(String userId, boolean sender) throws SQLException {
+    public List<Notify> getNotifications(String userId) throws SQLException {
         List<Notify> notifications = new ArrayList<>();
-        String sql = sender ? "SELECT * FROM NotifyTBL WHERE senderId = ? ORDER BY notificationDate DESC"
-                : "SELECT * FROM NotifyTBL WHERE receiverId = ? ORDER BY notificationDate DESC";
+        String sql = "SELECT * FROM NotifyTBL WHERE userId = ? ORDER BY notificationDate DESC";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, userId);
             ResultSet rs = st.executeQuery();
@@ -90,7 +87,7 @@ public class UserDAO extends DBContext {
                 n.setUserId(rs.getInt(userId));
                 n.setNotificationDate(rs.getDate("notificationDate"));
                 n.setMessageContent(rs.getString("messageContent"));
-                n.setMarkRead(rs.getBoolean("markRead"));
+                n.setMarkRead(rs.getBoolean("isRead"));
                 notifications.add(n);
             }
         }
@@ -104,7 +101,6 @@ public class UserDAO extends DBContext {
             st.executeUpdate();
         }
     }
-// Login
 
     public User login(String identifier, String password) throws SQLException {
         String sql = "SELECT * FROM UserTBL WHERE (username = ? OR email = ?) AND password = ?";
@@ -125,7 +121,6 @@ public class UserDAO extends DBContext {
         }
     }
 
-    // Post
     public void createPost(Post post) throws SQLException {
         String sql = "INSERT INTO PostTBL (title, postDate, content, imageUrl) VALUES (?, ?, ?, ?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
@@ -158,7 +153,6 @@ public class UserDAO extends DBContext {
         return posts;
     }
 
-    // Comment
     public void addComment(Comment comment) throws SQLException {
         String sql = "INSERT INTO CommentTBL (postId, userId, content, imageUrl, commentDate) VALUES (?, ?, ?, ?, GETDATE())";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
