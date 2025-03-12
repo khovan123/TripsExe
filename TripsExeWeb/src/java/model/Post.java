@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Post {
 
     private int postId;
-    //private int userId;
+    private int userId;
     private String title;
     private Date postDate;
     private String content;
@@ -16,8 +16,9 @@ public class Post {
     public Post() {
     }
 
-    public Post(int postId, String title, Date postDate, String content, String imageUrl) {
+    public Post(int postId, int userId, String title, Date postDate, String content, String imageUrl) {
         this.postId = postId;
+        this.userId = userId;
         this.title = title;
         this.postDate = postDate;
         this.content = content;
@@ -34,6 +35,14 @@ public class Post {
         this.postId = postId;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+    
     public String getTitle() {
         return title;
     }

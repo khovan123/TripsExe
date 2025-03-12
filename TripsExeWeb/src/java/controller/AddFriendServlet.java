@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import model.Friend;
 import model.User;
 
-@WebServlet(name = "AddFriendServlet", urlPatterns = {"/addfriend"})
+@WebServlet(name = "AddFriendServlet", urlPatterns = {"/addFriends"})
 public class AddFriendServlet extends HttpServlet {
 
     private UserDAO userDAO;
@@ -34,46 +34,60 @@ public class AddFriendServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String senderId_Raw = request.getParameter("senderId");
-        String receiverId_Raw = request.getParameter("receiverId");
+        String requestURI = request.getRequestURI();
+
+        if (!requestURI.endsWith("/addFriends")) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid request endpoint.");
+            return;
+        }
+
+        String userId1_raw = request.getParameter("userId1");
+        String userId2_raw = request.getParameter("userId2");
 
         try {
-            int senderId = Integer.parseInt(senderId_Raw);
-            int receiverId = Integer.parseInt(receiverId_Raw);
+            int userId1 = Integer.parseInt(userId1_raw);
+            int userId2 = Integer.parseInt(userId2_raw);
 
-            User user1 = userDAO.getUserById(senderId);
-            User user2 = userDAO.getUserById(receiverId);
+            User user1 = userDAO.getUserById(userId1);
+            User user2 = userDAO.getUserById(userId2);
 
             if (user1 == null) {
-                request.setAttribute("errorMsg", "Error: User " + senderId + " does not exist.");
-                request.getRequestDispatcher("something.jsp").forward(request, response);
+                request.setAttribute("errorMsg", "Error: User " + userId1 + " does not exist.");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
                 return;
             }
 
             if (user2 == null) {
-                request.setAttribute("errorMsg", "Error: User " + receiverId + " does not exist.");
-                request.getRequestDispatcher("something.jsp").forward(request, response);
+                request.setAttribute("errorMsg", "Error: User " + userId2 + " does not exist.");
+                request.getRequestDispatcher("error.jsp").forward(request, response);
                 return;
             }
 
-            if (friendsDAO.isFriendshipExist(senderId, receiverId)) {
+            if (friendsDAO.isFriendshipExist(userId1, userId2)) {
                 request.setAttribute("errorMsg", "Error: Users are already friends.");
-                request.getRequestDispatcher("something.jsp").forward(request, response);
+                request.getRequestDispatcher("error.jsp").forward(request, response);
                 return;
             }
 
-            friendsDAO.addFriends(senderId, receiverId);
+            friendsDAO.addFriends(userId1, userId2);
 
-            String messageContent = user1.getUsername() + " had added you as a friends";
-            notifyDAO.sendNotification(senderId, receiverId, messageContent, false);
+            String msgForUser2 = user1.getUsername() + " has added you as a friend.";
+            notifyDAO.sendNotification(userId2, msgForUser2, false);
+
+            String msgForUser1 = "You have sent a friend request to " + user2.getUsername() + ".";
+            notifyDAO.sendNotification(userId1, msgForUser1, false);
+
+            request.setAttribute("successMsg", "Friend request sent successfully!");
+            request.getRequestDispatcher("success.jsp").forward(request, response);
 
         } catch (NumberFormatException ex) {
-            request.setAttribute("errorMsg", "Error: Invalid ID format. Please provide numeric IDs");
+            request.setAttribute("errorMsg", "Error: Invalid ID format. Please provide numeric IDs.");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(AddFriendServlet.class.getName()).log(Level.SEVERE, null, ex);
-            request.setAttribute("errorMsg", "Error: Failed to add friend or send notification");
+            request.setAttribute("errorMsg", "Error: Failed to add friend or send notification.");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
-        request.getRequestDispatcher("something.jsp").forward(request, response);
     }
 
     @Override

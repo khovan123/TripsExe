@@ -10,42 +10,40 @@ import connectDB.DBContext;
 
 public class NotifyDAO extends DBContext{
    
-    public void sendNotification(int senderId, int receiverId, String messageContent, boolean markRead) throws SQLException { // Đổi String thành int, isRead thành markRead
-        String sql = "INSERT INTO NotifyTBL (sendID, receiverID, notifyDate, messageContent, markRead) " +
-                     "VALUES (?,?,GETDATE(),?,?)"; 
+    public void sendNotification(int userId, String messageContent, boolean markRead) throws SQLException {
+        String sql = "INSERT INTO NotifyTBL (userId, notificationDate, messageContent, markRead) " +
+                     "VALUES (?, GETDATE(), ?, ?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setInt(1, senderId); 
-            st.setInt(2, receiverId); 
-            st.setString(3, messageContent);
-            st.setBoolean(4, markRead);
+            st.setInt(1, userId);
+            st.setString(2, messageContent);
+            st.setBoolean(3, markRead);
             st.executeUpdate();
         }
     }
-    
-    public List<Notify> getNotifications(int receiverId) throws SQLException { 
-        List<Notify> notifications = new ArrayList<>();  
-        String sql = "SELECT * FROM NotifyTBL WHERE receiverID = ? ORDER BY notifyDate DESC"; 
+
+    public List<Notify> getNotifications(int userId) throws SQLException {
+        List<Notify> notifications = new ArrayList<>();
+        String sql = "SELECT * FROM NotifyTBL WHERE userId = ? ORDER BY notificationDate DESC";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setInt(1, receiverId); 
+            st.setInt(1, userId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Notify n = new Notify();
                 n.setNotifyId(rs.getInt("notifyId"));
-                n.setSenderId(rs.getInt("sendId")); 
-                n.setReceiverId(rs.getInt("receiverId")); 
-                n.setNotificationDate(rs.getDate("notifyDate"));
+                n.setUserId(rs.getInt("userId"));
+                n.setNotificationDate(rs.getDate("notificationDate"));
                 n.setMessageContent(rs.getString("messageContent"));
-                n.setMarkRead(rs.getBoolean("markRead")); 
+                n.setMarkRead(rs.getBoolean("markRead"));
                 notifications.add(n);
             }
         }
         return notifications;
     }
-    
-    public void markNotificationAsRead(int notifyId) throws SQLException { 
-        String sql = "UPDATE NotifyTBL SET markRead = 1 WHERE notifyId = ?"; 
+
+    public void markNotificationAsRead(int notifyId) throws SQLException {
+        String sql = "UPDATE NotifyTBL SET markRead = 1 WHERE notifyId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setInt(1, notifyId); 
+            st.setInt(1, notifyId);
             st.executeUpdate();
         }
     }

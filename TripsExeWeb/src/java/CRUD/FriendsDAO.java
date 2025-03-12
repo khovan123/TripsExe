@@ -21,11 +21,11 @@ public class FriendsDAO extends DBContext {
         }
     }
 
-    public void addFriends(int senderId, int recieverId) throws SQLException {
+    public void addFriends(int userId1, int userId2) throws SQLException {
         String sql = "INSERT INTO FriendsTBL(userId1, userId2) VALUES (? , ?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)){
-            st.setInt(1, senderId);
-            st.setInt(2, recieverId);
+            st.setInt(1, userId1);
+            st.setInt(2, userId2);
             st.executeUpdate();
         }
     }

@@ -9,15 +9,21 @@ import java.sql.SQLException;
 public class PostDAO extends DBContext {
 
     public void addPost(Post post) throws SQLException {
-        String sql = "INSERT INTO PostTBL(title, content, imageUrl) "
-                + "VALUES(?,?,?)";
-        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, post.getTitle());
-            st.setString(2, post.getContent());
+    boolean hasImage = post.getImageUrl() != null;
+
+    String sql = hasImage
+            ? "INSERT INTO PostTBL(title, content, imageUrl) VALUES(?,?,?)"
+            : "INSERT INTO PostTBL(title, content) VALUES(?,?)";
+
+    try (PreparedStatement st = getConnection().prepareStatement(sql)) {
+        st.setString(1, post.getTitle());
+        st.setString(2, post.getContent());
+        if (hasImage) {
             st.setString(3, post.getImageUrl());
-            st.executeUpdate();
         }
+        st.executeUpdate();
     }
+}
 
     public Post getPostById(int postId) throws SQLException {
         String sql = "SELECT * FROM PostTBL WHERE postId = ?";
@@ -48,10 +54,10 @@ public class PostDAO extends DBContext {
             st.executeUpdate();
         }
     }
-    
-    public void deletePost(int postId) throws SQLException{
-        String sql = "DELETE FROM PostTBL WHERE postId = ?"; 
-        try(PreparedStatement st = getConnection().prepareStatement(sql)){
+
+    public void deletePost(int postId) throws SQLException {
+        String sql = "DELETE FROM PostTBL WHERE postId = ?";
+        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setInt(1, postId);
             st.executeUpdate();
         }
