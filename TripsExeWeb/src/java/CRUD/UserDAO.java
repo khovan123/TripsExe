@@ -15,13 +15,14 @@ public class UserDAO extends DBContext {
 
     // CRUD 
     public void createUser(User user) throws SQLException {
-        String sql = "INSERT INTO UserTBL(username, password, email, avatarUrl)"
-                + " VALUES(?,?,?,?)";
+        String sql = "INSERT INTO UserTBL(username, password, email, avatarUrl, premiumExpirationDate, premiumAccount)"
+                + " VALUES(?,?,?,?,GETDATE(),?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, user.getUsername());
             st.setString(2, user.getPassword());
             st.setString(3, user.getEmail());
             st.setString(4, user.getAvatarUrl());
+            st.setBoolean(5, user.isPremiumAccount());
             st.executeUpdate();
         }
     }
