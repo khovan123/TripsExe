@@ -13,7 +13,6 @@ public class Comment {
 
     public Comment() {
     }
-    
 
     public Comment(String commentId, String postId, String userId, Date commentDate, String content, String imageUrl) {
         this.commentId = commentId;
@@ -24,6 +23,14 @@ public class Comment {
         this.imageUrl = imageUrl;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+    
     public String getPostId() {
         return postId;
     }
@@ -38,14 +45,6 @@ public class Comment {
 
     public void setCommentId(String commentId) {
         this.commentId = commentId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public Date getCommentDate() {
