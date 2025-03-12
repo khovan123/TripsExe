@@ -5,12 +5,12 @@ import java.util.*;
 public class Comment {
 
     private int commentId;
-    private String userId;
+    private int postId;
     private Date commentDate;
     private String content;
     private String imageUrl;
 
-    public Comment(int commentId, String userId, Date commentDate, String content, String imageUrl) {
+    public Comment(int commentId, int postId, Date commentDate, String content, String imageUrl) {
         this.commentId = commentId;
         this.userId = userId;
         this.commentDate = commentDate;
@@ -26,12 +26,12 @@ public class Comment {
         this.commentId = commentId;
     }
 
-    public String getUserId() {
-        return userId;
+    public int getPostId() {
+        return postId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 
     public Date getCommentDate() {
