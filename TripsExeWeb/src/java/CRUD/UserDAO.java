@@ -26,10 +26,10 @@ public class UserDAO extends DBContext {
         }
     }
 
-    public User getUserById(String userId) throws SQLException {
+    public User getUserById(int userId) throws SQLException {
         String sql = "SELECT * FROM UserTBL WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, userId);
+            st.setInt(1, userId);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 User u = new User();
@@ -66,14 +66,11 @@ public class UserDAO extends DBContext {
     }
 
     // Notification 
-    public void sendNotification(String senderId, String receiverId, String messageContent, boolean isRead) throws SQLException {
-        String sql = "INSERT INTO NotifyTBL (sendId, receiverId, notificationDate, messageContent, isRead)"
-                + " VALUES (?,?,GETDATE(),?,?)";
+     public void sendNotification(Notify notify) throws SQLException {
+        String sql = "INSERT INTO NotifyTBL (userId, notificationDate, messageContent) VALUES (?, GETDATE(), ?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, senderId);
-            st.setString(2, receiverId);
-            st.setString(3, messageContent);
-            st.setBoolean(4, isRead);
+            st.setInt(1, notify.getUserId());
+            st.setString(2, notify.getMessageContent());
             st.executeUpdate();
         }
     }
@@ -88,8 +85,7 @@ public class UserDAO extends DBContext {
             while (rs.next()) {
                 Notify n = new Notify();
                 n.setNotifyId(rs.getInt("notifyId"));
-                n.setSenderId(rs.getInt("senderId"));
-                n.setReceiverId(rs.getInt("receiverId"));
+                n.setUserId(rs.getInt(userId));
                 n.setNotificationDate(rs.getDate("notificationDate"));
                 n.setMessageContent(rs.getString("messageContent"));
                 n.setMarkRead(rs.getBoolean("markRead"));
