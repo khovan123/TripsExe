@@ -6,12 +6,12 @@ public class Comment {
 
     private int commentId;
     private int postId;
+    private int userId;
     private Date commentDate;
     private String content;
     private String imageUrl;
-
-    public Comment(int commentId, int postId, Date commentDate, String content, String imageUrl) {
-        this.commentId = commentId;
+    public Comment(int postId, int userId, Date commentDate, String content, String imageUrl) {
+        this.postId = postId;
         this.userId = userId;
         this.commentDate = commentDate;
         this.content = content;
@@ -32,6 +32,22 @@ public class Comment {
 
     public void setPostId(int postId) {
         this.postId = postId;
+    }
+    
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
     }
 
     public Date getCommentDate() {
