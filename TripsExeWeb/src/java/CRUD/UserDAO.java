@@ -67,21 +67,23 @@ public class UserDAO extends DBContext {
 
     // Notification 
     public void sendNotification(String senderId, String receiverId, String messageContent, boolean isRead) throws SQLException {
-        String sql = "INSERT INTO NotifyTBL ( receiverId, notificationDate, messageContent, isRead)"
+        String sql = "INSERT INTO NotifyTBL (sendId, receiverId, notificationDate, messageContent, isRead)"
                 + " VALUES (?,?,GETDATE(),?,?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, receiverId);
-            st.setString(2, messageContent);
-            st.setBoolean(3, isRead);
+            st.setString(1, senderId);
+            st.setString(2, receiverId);
+            st.setString(3, messageContent);
+            st.setBoolean(4, isRead);
             st.executeUpdate();
         }
     }
 
-    public List<Notify> getNotifications(String receiverId) throws SQLException {
+    public List<Notify> getNotifications(String userId, boolean sender) throws SQLException {
         List<Notify> notifications = new ArrayList<>();
-        String sql = "SELECT * FROM NotifyTBL WHERE receiverId = ? ORDER BY notificationDate DESC";
+        String sql = sender ? "SELECT * FROM NotifyTBL WHERE senderId = ? ORDER BY notificationDate DESC"
+                : "SELECT * FROM NotifyTBL WHERE receiverId = ? ORDER BY notificationDate DESC";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, receiverId);
+            st.setString(1, userId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Notify n = new Notify();
