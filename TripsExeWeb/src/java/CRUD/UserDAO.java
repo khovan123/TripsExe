@@ -15,35 +15,28 @@ public class UserDAO extends DBContext {
 
     // CRUD 
     public void createUser(User user) throws SQLException {
-<<<<<<< HEAD
-        String sql = "INSERT INTO UserTBL(userId, username, password, email, avatar, premiumExpirationDate, isPremiumAccount)"
-                + " VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO UserTBL(userId, username, password, email)"
+                + " VALUES(?,?,?,?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, user.getUserId());
+            st.setInt(1, user.getUserId());
             st.setString(2, user.getUsername());
             st.setString(3, user.getPassword());
             st.setString(4, user.getEmail());
-            st.setString(5, user.getAvatar());
-            st.setDate(6, user.getPremiumExpirationDate());
-            st.setBoolean(7, user.isPremiumAccount());
             st.executeUpdate();
         }
     }
 
     public User getUserById(String userId) throws SQLException {
-        String sql = "SELECT * FROM UserTBL WHERE userId = ?";
+        String sql = "SELECT userId, username, password, email FROM UserTBL WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, userId);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 User u = new User();
-                u.setUserId(rs.getString("userId"));
+                u.setUserId(rs.getInt("userId"));
                 u.setUsername(rs.getString("username"));
                 u.setPassword(rs.getString("password"));
                 u.setEmail(rs.getString("email"));
-                u.setAvatar(rs.getString("avatar"));
-                u.setPremiumExpirationDate(rs.getDate("premiumExpirationDate"));
-                u.setPremiumAccount(rs.getBoolean("isPremiumAccount"));
                 return u;
             }
             return null;
@@ -51,19 +44,12 @@ public class UserDAO extends DBContext {
     }
 
     public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ?, avatar = ?,"
-                + " premiumExpirationDate = ?, isPremiumAccount = ? WHERE userId = ?";
-=======
-        String sql = "INSERT INTO UserTBL(username, password, email, avatar, premiumExpirationDate, isPremiumAccount) "
-                + "VALUES(?,?,?,?,?,?)";
->>>>>>> 5a292a2b4f53e917af24bdf56d0112a5eca52b6c
+        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ? WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, user.getUsername());
             st.setString(2, user.getPassword());
             st.setString(3, user.getEmail());
-            st.setString(4, user.getAvatar());
-            st.setDate(5, user.getPremiumExpirationDate());
-            st.setBoolean(6, user.isPremiumAccount());
+            st.setInt(4, user.getUserId());
             st.executeUpdate();
         }
     }
@@ -88,21 +74,6 @@ public class UserDAO extends DBContext {
         }
     }
 
-    public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ?, avatar = ?, "
-                + "premiumExpirationDate = ?, isPremiumAccount = ? WHERE userId = ?";
-        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, user.getUsername());
-            st.setString(2, user.getPassword());
-            st.setString(3, user.getEmail());
-            st.setString(4, user.getAvatar());
-            st.setDate(5, user.getPremiumExpirationDate());
-            st.setBoolean(6, user.isPremiumAccount());
-            st.setInt(7, user.getUserId());
-            st.executeUpdate();
-        }
-    }
-
     public void deleteUser(int userId) throws SQLException {
         String sql = "DELETE FROM UserTBL WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
@@ -110,7 +81,6 @@ public class UserDAO extends DBContext {
             st.executeUpdate();
         }
     }
-<<<<<<< HEAD
 
     // Notification 
     public void sendNotification(String senderId, String receiverId, String messageContent, boolean isRead) throws SQLException {
@@ -133,12 +103,12 @@ public class UserDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Notify n = new Notify();
-                n.setNotifyId(rs.getString("notifyId"));
-                n.setSenderId(rs.getString("senderId"));
-                n.setReceiverId(rs.getString("receiverId"));
+                n.setNotifyId(rs.getInt("notifyId"));
+                n.setSenderId(rs.getInt("senderId"));
+                n.setReceiverId(rs.getInt("receiverId"));
                 n.setNotificationDate(rs.getDate("notificationDate"));
                 n.setMessageContent(rs.getString("messageContent"));
-                n.setRead(rs.getBoolean("isRead"));
+                n.setMarkRead(rs.getBoolean("markRead"));
                 notifications.add(n);
             }
         }
@@ -150,30 +120,20 @@ public class UserDAO extends DBContext {
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, notifyId);
             st.executeUpdate();
-=======
-    
-    public boolean isUserExist(int userId) throws SQLException {
-        String sql = "SELECT * FROM UserTBL WHERE UserId = ?";
-        try (PreparedStatement st = getConnection().prepareStatement(sql)){
-            st.setInt(1, userId);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1) > 0;
-            }
-            return false;
->>>>>>> 5a292a2b4f53e917af24bdf56d0112a5eca52b6c
         }
     }
 // Login
-    public User login(String username, String password) throws SQLException {
-        String sql = "SELECT * FROM UserTBL WHERE username = ? AND password = ?";
+
+    public User login(String identifier, String password) throws SQLException {
+        String sql = "SELECT * FROM UserTBL WHERE (username = ? OR email = ?) AND password = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, username);
-            st.setString(2, password);
+            st.setString(1, identifier);
+            st.setString(2, identifier);
+            st.setString(3, password);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 User u = new User();
-                u.setUserId(rs.getString("userId"));
+                u.setUserId(rs.getInt("userId"));
                 u.setUsername(rs.getString("username"));
                 u.setPassword(rs.getString("password"));
                 u.setEmail(rs.getString("email"));
@@ -185,28 +145,31 @@ public class UserDAO extends DBContext {
             return null;
         }
     }
-    
+
     // Post
     public void createPost(Post post) throws SQLException {
         String sql = "INSERT INTO PostTBL (postId, title, postDate, content, imageUrl) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, post.getPostId());
+            st.setInt(1, post.getPostId());
             st.setString(2, post.getTitle());
             st.setDate(3, post.getPostDate());
             st.setString(4, post.getContent());
-            st.setString(5, post.getImageUrl());
+            if (post.getImageUrl() != null) {
+                st.setString(5, post.getImageUrl());
+            } else {
+                st.setNull(5, java.sql.Types.VARCHAR);
+            }
             st.executeUpdate();
         }
     }
-    
+
     public List<Post> getAllPosts() throws SQLException {
         List<Post> posts = new ArrayList<>();
         String sql = "SELECT * FROM PostTBL ORDER BY postDate DESC";
-        try (PreparedStatement st = getConnection().prepareStatement(sql);
-             ResultSet rs = st.executeQuery()) {
+        try (PreparedStatement st = getConnection().prepareStatement(sql); ResultSet rs = st.executeQuery()) {
             while (rs.next()) {
                 Post post = new Post();
-                post.setPostId(rs.getString("postId"));
+                post.setPostId(rs.getInt("postId"));
                 post.setTitle(rs.getString("title"));
                 post.setPostDate(rs.getDate("postDate"));
                 post.setContent(rs.getString("content"));
@@ -216,7 +179,7 @@ public class UserDAO extends DBContext {
         }
         return posts;
     }
-    
+
     // Comment
     public void addComment(Comment comment) throws SQLException {
         String sql = "INSERT INTO CommentTBL (commentId, postId, userId, content, imageUrl, commentDate) VALUES (?, ?, ?, ?, ?, GETDATE())";
@@ -229,7 +192,7 @@ public class UserDAO extends DBContext {
             st.executeUpdate();
         }
     }
-    
+
     public List<Comment> getCommentsByPost(String postId) throws SQLException {
         List<Comment> comments = new ArrayList<>();
         String sql = "SELECT * FROM CommentTBL WHERE postId = ? ORDER BY commentDate ASC";
@@ -249,6 +212,5 @@ public class UserDAO extends DBContext {
         }
         return comments;
     }
-    
 
 }
