@@ -10,6 +10,10 @@ public class Comment {
     private Date commentDate;
     private String content;
     private String imageUrl;
+
+    public Comment() {
+    }
+
     public Comment(int postId, int userId, Date commentDate, String content, String imageUrl) {
         this.postId = postId;
         this.userId = userId;
@@ -33,21 +37,13 @@ public class Comment {
     public void setPostId(int postId) {
         this.postId = postId;
     }
-    
-    public int getPostId() {
-        return postId;
+
+    public int getUserId() {
+        return userId;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
-    }
-
-    public String getCommentId() {
-        return commentId;
-    }
-
-    public void setCommentId(String commentId) {
-        this.commentId = commentId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public Date getCommentDate() {
@@ -72,5 +68,10 @@ public class Comment {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" + "commentId=" + commentId + ", postId=" + postId + ", userId=" + userId + ", commentDate=" + commentDate + ", content=" + content + ", imageUrl=" + imageUrl + '}';
     }
 }

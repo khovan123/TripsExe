@@ -12,7 +12,7 @@ import model.Post;
 import model.User;
 
 public class UserDAO extends DBContext {
-    
+
     public void createUser(User user) throws SQLException {
         String sql = "INSERT INTO UserTBL(username, password, email, avatarUrl, premiumExpirationDate, isPremiumAccount)"
                 + " VALUES(?,?,?,?,GETDATE(),?)";
@@ -156,8 +156,8 @@ public class UserDAO extends DBContext {
     public void addComment(Comment comment) throws SQLException {
         String sql = "INSERT INTO CommentTBL (postId, userId, content, imageUrl, commentDate) VALUES (?, ?, ?, ?, GETDATE())";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, comment.getPostId());
-            st.setString(2, comment.getUserId());
+            st.setInt(1, comment.getPostId());
+            st.setInt(2, comment.getUserId());
             st.setString(3, comment.getContent());
             st.setString(4, comment.getImageUrl());
             st.executeUpdate();
@@ -172,9 +172,9 @@ public class UserDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Comment comment = new Comment();
-                comment.setCommentId(rs.getString("commentId"));
-                comment.setPostId(rs.getString("postId"));
-                comment.setUserId(rs.getString("userId"));
+                comment.setCommentId(rs.getInt("commentId"));
+                comment.setPostId(rs.getInt("postId"));
+                comment.setUserId(rs.getInt("userId"));
                 comment.setContent(rs.getString("content"));
                 comment.setImageUrl(rs.getString("imageUrl"));
                 comment.setCommentDate(rs.getTimestamp("commentDate"));

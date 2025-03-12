@@ -33,5 +33,4 @@ public class CommentsOfPost {
     public List<Comment> getCommentIn4FromDB() {
         return null;
     }
-
 }

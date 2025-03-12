@@ -4,7 +4,7 @@ import exception.*;
 import java.util.*;
 import java.util.function.*;
 
-public class UserFriend {
+public class FriendsOfUser {
 
     private List<String> friendIds = new ArrayList<>();
 

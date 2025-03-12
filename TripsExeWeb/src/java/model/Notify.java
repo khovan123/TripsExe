@@ -61,4 +61,8 @@ public class Notify {
         this.markRead = markRead;
     }
 
+    @Override
+    public String toString() {
+        return "Notify{" + "notifyId=" + notifyId + ", userId=" + userId + ", notificationDate=" + notificationDate + ", messageContent=" + messageContent + ", markRead=" + markRead + '}';
+    }
 }
