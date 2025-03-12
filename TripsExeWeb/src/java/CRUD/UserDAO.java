@@ -15,13 +15,14 @@ public class UserDAO extends DBContext {
 
     // CRUD 
     public void createUser(User user) throws SQLException {
-        String sql = "INSERT INTO UserTBL( username, password, email)"
-                + " VALUES(?,?,?,?)";
+        String sql = "INSERT INTO UserTBL(userId, username, password, email, avatar)"
+                + " VALUES(?,?,?,?,?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setInt(1, user.getUserId());
             st.setString(2, user.getUsername());
             st.setString(3, user.getPassword());
             st.setString(4, user.getEmail());
+            st.setString(5, user.getAvatarUrl());
             st.executeUpdate();
         }
     }
@@ -49,7 +50,7 @@ public class UserDAO extends DBContext {
             st.setString(1, user.getUsername());
             st.setString(2, user.getPassword());
             st.setString(3, user.getEmail());
-            st.setString(4, user.getAvatar());
+            st.setString(4, user.getAvatarUrl());
             st.setDate(5, user.getPremiumExpirationDate());
             st.setBoolean(6, user.isPremiumAccount());
             st.setInt(7, user.getUserId());
@@ -66,11 +67,12 @@ public class UserDAO extends DBContext {
     }
 
     // Notification 
-     public void sendNotification(Notify notify) throws SQLException {
-        String sql = "INSERT INTO NotifyTBL (userId, notificationDate, messageContent) VALUES (?, GETDATE(), ?)";
+    public void sendNotification(Notify notify) throws SQLException {
+        String sql = "INSERT INTO NotifyTBL (notifyId, userId, notificationDate, messageContent) VALUES (?, ?, GETDATE(), ?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setInt(1, notify.getUserId());
-            st.setString(2, notify.getMessageContent());
+            st.setInt(1, notify.getNotifyId());
+            st.setInt(2, notify.getUserId());
+            st.setString(3, notify.getMessageContent());
             st.executeUpdate();
         }
     }
@@ -96,7 +98,7 @@ public class UserDAO extends DBContext {
     }
 
     public void markNotificationAsRead(String notifyId) throws SQLException {
-        String sql = "UPDATE NotifyTBL SET isRead = 1 WHERE notifyId = ?";
+        String sql = "UPDATE NotifyTBL SET markRead = 1 WHERE notifyId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, notifyId);
             st.executeUpdate();
@@ -125,15 +127,16 @@ public class UserDAO extends DBContext {
 
     // Post
     public void createPost(Post post) throws SQLException {
-        String sql = "INSERT INTO PostTBL ( title, postDate, content, imageUrl) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PostTBL (postId, title, postDate, content, imageUrl) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, post.getTitle());
-            st.setDate(2, post.getPostDate());
-            st.setString(3, post.getContent());
+            st.setInt(1, post.getPostId());
+            st.setString(2, post.getTitle());
+            st.setDate(3, post.getPostDate());
+            st.setString(4, post.getContent());
             if (post.getImageUrl() != null) {
-                st.setString(4, post.getImageUrl());
+                st.setString(5, post.getImageUrl());
             } else {
-                st.setNull(4, java.sql.Types.VARCHAR);
+                st.setNull(5, java.sql.Types.VARCHAR);
             }
             st.executeUpdate();
         }
@@ -158,12 +161,13 @@ public class UserDAO extends DBContext {
 
     // Comment
     public void addComment(Comment comment) throws SQLException {
-        String sql = "INSERT INTO CommentTBL ( postId, userId, content, imageUrl, commentDate) VALUES (?, ?, ?, ?, ?, GETDATE())";
+        String sql = "INSERT INTO CommentTBL (commentId, postId, userId, content, imageUrl, commentDate) VALUES (?, ?, ?, ?, ?, GETDATE())";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, comment.getPostId());
-            st.setString(2, comment.getUserId());
-            st.setString(3, comment.getContent());
-            st.setString(4, comment.getImageUrl());
+            st.setString(1, comment.getCommentId());
+            st.setString(2, comment.getPostId());
+            st.setString(3, comment.getUserId());
+            st.setString(4, comment.getContent());
+            st.setString(5, comment.getImageUrl());
             st.executeUpdate();
         }
     }

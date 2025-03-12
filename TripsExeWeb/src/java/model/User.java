@@ -8,7 +8,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private String avatar;
+    private String avatarUrl;
     private Date premiumExpirationDate;
     private boolean premiumAccount;
     private PostsOfUser postList;
@@ -18,12 +18,12 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String username, String password, String email, String avatar) {
+    public User(int userId, String username, String password, String email, String avatarUrl) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.avatar = avatar;
+        this.avatarUrl = null;
         this.premiumExpirationDate = null;
         this.premiumAccount = false;
         this.postList = new PostsOfUser();
@@ -63,12 +63,12 @@ public class User {
         this.email = email;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public Date getPremiumExpirationDate() {

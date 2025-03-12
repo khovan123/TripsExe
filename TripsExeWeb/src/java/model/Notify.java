@@ -13,7 +13,7 @@ public class Notify {
     public Notify() {
     }
 
-    public Notify(int notifyId, int senderId, int receiverId, Date notificationDate, String messageContent) {
+    public Notify(int notifyId, int userId, Date notificationDate, String messageContent) {
         this.notifyId = notifyId;
         this.userId = userId;
         this.notificationDate = notificationDate;
