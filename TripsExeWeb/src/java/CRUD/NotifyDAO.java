@@ -8,30 +8,29 @@ import java.util.List;
 import model.Notify;
 import connectDB.DBContext;
 
-public class NotifyDAO extends DBContext{
-   
-    public void sendNotification(int userId, String messageContent, boolean markRead) throws SQLException {
-        String sql = "INSERT INTO NotifyTBL (userId, notificationDate, messageContent, markRead) " +
-                     "VALUES (?, GETDATE(), ?, ?)";
+public class NotifyDAO extends DBContext {
+
+    public void sendNotification(int userId, String messageContent, boolean markRead) throws SQLException { // Đổi String thành int, isRead thành markRead
+        String sql = "INSERT INTO NotifyTBL (userId, notificationDate, messageContent, markRead) "
+                + "VALUES (?,?,GETDATE(),?,?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setInt(1, userId);
-            st.setString(2, messageContent);
-            st.setBoolean(3, markRead);
+            st.setString(3, messageContent);
+            st.setBoolean(4, markRead);
             st.executeUpdate();
         }
     }
 
-    public List<Notify> getNotifications(int userId) throws SQLException {
+    public List<Notify> getAllNotifications(int receiverId) throws SQLException {
         List<Notify> notifications = new ArrayList<>();
-        String sql = "SELECT * FROM NotifyTBL WHERE userId = ? ORDER BY notificationDate DESC";
+        String sql = "SELECT * FROM NotifyTBL WHERE userId = ? ORDER BY notifyDate DESC";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setInt(1, userId);
+            st.setInt(1, receiverId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Notify n = new Notify();
                 n.setNotifyId(rs.getInt("notifyId"));
-                n.setUserId(rs.getInt("userId"));
-                n.setNotificationDate(rs.getDate("notificationDate"));
+                n.setNotificationDate(rs.getDate("notifyDate"));
                 n.setMessageContent(rs.getString("messageContent"));
                 n.setMarkRead(rs.getBoolean("markRead"));
                 notifications.add(n);
@@ -47,4 +46,5 @@ public class NotifyDAO extends DBContext{
             st.executeUpdate();
         }
     }
+
 }

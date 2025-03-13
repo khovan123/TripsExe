@@ -82,4 +82,9 @@ public class Post {
     public LikesOfPost getLikes() {
         return likes;
     }
+
+    @Override
+    public String toString() {
+        return "Post{" + "postId=" + postId + ", title=" + title + ", postDate=" + postDate + ", content=" + content + ", imageUrl=" + imageUrl + ", comments=" + comments + ", likes=" + likes + '}';
+    }
 }

@@ -5,10 +5,12 @@ import model.Post;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PostDAO extends DBContext {
 
-    public void addPost(Post post) throws SQLException {
+    public void createPost(Post post) throws SQLException {
     boolean hasImage = post.getImageUrl() != null;
 
     String sql = hasImage
@@ -61,6 +63,23 @@ public class PostDAO extends DBContext {
             st.setInt(1, postId);
             st.executeUpdate();
         }
+    }
+    
+      public List<Post> getAllPosts() throws SQLException {
+        List<Post> posts = new ArrayList<>();
+        String sql = "SELECT * FROM PostTBL ORDER BY postDate DESC";
+        try (PreparedStatement st = getConnection().prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                Post post = new Post();
+                post.setPostId(rs.getInt("postId"));
+                post.setTitle(rs.getString("title"));
+                post.setPostDate(rs.getDate("postDate"));
+                post.setContent(rs.getString("content"));
+                post.setImageUrl(rs.getString("imageUrl"));
+                posts.add(post);
+            }
+        }
+        return posts;
     }
 
 }

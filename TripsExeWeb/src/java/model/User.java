@@ -8,26 +8,23 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private String avatar;
+    private String avatarUrl;
+    private Date dob;
+    private boolean gender;
     private Date premiumExpirationDate;
     private boolean premiumAccount;
     private PostsOfUser postList;
-    private UserFriend friends;
+    private FriendsOfUser friends;
     private NotifyOfUser notifyList;
 
     public User() {
-    }
-
-    public User(int userId, String username, String password, String email, String avatar) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.avatar = avatar;
+        this.avatarUrl = null;
+        this.dob = null;
+        this.gender = false;
         this.premiumExpirationDate = null;
         this.premiumAccount = false;
         this.postList = new PostsOfUser();
-        this.friends = new UserFriend();
+        this.friends = new FriendsOfUser();
         this.notifyList = new NotifyOfUser();
     }
 
@@ -63,14 +60,30 @@ public class User {
         this.email = email;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+    
     public Date getPremiumExpirationDate() {
         return premiumExpirationDate;
     }
@@ -91,11 +104,17 @@ public class User {
         return postList;
     }
 
-    public UserFriend getFriends() {
+    public FriendsOfUser getFriends() {
         return friends;
     }
 
     public NotifyOfUser getNotifyList() {
         return notifyList;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", avatarUrl=" + avatarUrl + ", premiumExpirationDate=" + premiumExpirationDate + ", premiumAccount=" + premiumAccount + ", postList=" + postList + ", friends=" + friends + ", notifyList=" + notifyList + '}';
+    }
+
 }

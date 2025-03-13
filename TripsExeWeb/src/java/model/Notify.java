@@ -1,10 +1,11 @@
 package model;
 
-import java.util.Date;
+import java.util.*;
 
 public class Notify {
+
     private int notifyId;
-    private int userId; 
+    private int userId;
     private Date notificationDate;
     private String messageContent;
     private boolean markRead;
@@ -12,12 +13,12 @@ public class Notify {
     public Notify() {
     }
 
-    public Notify(int notifyId, int userId, Date notificationDate, String messageContent, boolean markRead) {
+    public Notify(int notifyId, int userId, Date notificationDate, String messageContent) {
         this.notifyId = notifyId;
         this.userId = userId;
         this.notificationDate = notificationDate;
         this.messageContent = messageContent;
-        this.markRead = markRead;
+        this.markRead = false;
     }
 
     public int getNotifyId() {
@@ -58,5 +59,10 @@ public class Notify {
 
     public void setMarkRead(boolean markRead) {
         this.markRead = markRead;
+    }
+
+    @Override
+    public String toString() {
+        return "Notify{" + "notifyId=" + notifyId + ", userId=" + userId + ", notificationDate=" + notificationDate + ", messageContent=" + messageContent + ", markRead=" + markRead + '}';
     }
 }

@@ -1,13 +1,13 @@
 package model;
 
-public class Friend {
+public class Friends {
     private int userId1;
     private int userId2;
 
-    public Friend() {
+    public Friends() {
     }
 
-    public Friend(int userId1, int userId2) {
+    public Friends(int userId1, int userId2) {
         this.userId1 = userId1;
         this.userId2 = userId2;
     }
