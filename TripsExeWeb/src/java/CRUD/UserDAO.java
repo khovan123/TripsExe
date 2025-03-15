@@ -10,22 +10,12 @@ import model.User;
 
 public class UserDAO extends DBContext {
 
-    public void addUser(User user) throws SQLException {
-        String sql = "INSERT INTO UserTBL(username, password, email, phoneNumber, fullName, additionalName, avatarUrl, overview, dob, gender, premiumExpirationDate, premiumAccount)"
-                + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+    public void addUser(String email, String password) throws SQLException {
+        String sql = "INSERT INTO UserTBL(username, email, password) VALUES(?, ?, ?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, user.getUsername());
-            st.setString(2, user.getPassword());
-            st.setString(3, user.getEmail());
-            st.setString(4, user.getPhoneNumber());
-            st.setString(5, user.getFullName());
-            st.setString(6, user.getAdditionalName());
-            st.setString(7, user.getAvatarUrl());
-            st.setString(8, user.getOverview());
-            st.setDate(9, user.getDob());
-            st.setBoolean(10, user.isGender());
-            st.setDate(11, user.getPremiumExpirationDate());
-            st.setBoolean(12, user.isPremiumAccount());
+            st.setString(1, email);
+            st.setString(2, email);
+            st.setString(3, password);
             st.executeUpdate();
         }
     }
@@ -76,8 +66,9 @@ public class UserDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 return mapResultSetToUser(rs);
+            } else {
+                throw new SQLException();
             }
-            return null;
         }
     }
 
@@ -88,8 +79,9 @@ public class UserDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 return mapResultSetToUser(rs);
+            } else {
+                throw new SQLException();
             }
-            return null;
         }
     }
 
