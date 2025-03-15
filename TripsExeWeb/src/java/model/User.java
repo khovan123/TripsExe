@@ -21,14 +21,14 @@ public class User {
     private NotifyOfUser notifyList;
 
     public User() {
-        this.additionalName = null;
-        this.overview = null;
-        this.avatarUrl = null;
-        this.phoneNumber = null;
-        this.dob = null;
-        this.gender = false;
-        this.premiumExpirationDate = null;
-        this.premiumAccount = false;
+        this.postList = new PostsOfUser();
+        this.friends = new FriendsOfUser();
+        this.notifyList = new NotifyOfUser();
+    }
+
+    public User(String password, String email) {
+        this.password = password;
+        this.email = email;
         this.postList = new PostsOfUser();
         this.friends = new FriendsOfUser();
         this.notifyList = new NotifyOfUser();

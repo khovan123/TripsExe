@@ -1,15 +1,15 @@
 CREATE TABLE UserTBL (
     userId INT IDENTITY(1,1),
-    fullName VARCHAR(255) NOT NULL,
-    additionalName VARCHAR(255) NULL,
-    username VARCHAR(50) NOT NULL,
-    password VARCHAR(255) NOT NULL,
+    username VARCHAR(50) NULL,
     email VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    fullName VARCHAR(255) NULL,
+    additionalName VARCHAR(255) NULL,
+    dob DATE NULL,
+    gender BIT NULL, -- 0: nu, 1: nam
     phoneNumber VARCHAR(20) NULL,
     avatarUrl VARCHAR(255) NULL,
     overview VARCHAR(255) NULL,
-    dob DATE NULL,
-    gender BIT NULL, -- 0: nu, 1: nam
     premiumExpirationDate DATETIME NULL,
     premiumAccount BIT NULL DEFAULT 0,
     createdAt DATETIME NULL DEFAULT GETDATE(),
@@ -22,16 +22,16 @@ CREATE TABLE UserTBL (
 
 
 INSERT INTO UserTBL (
+    username, 
+    email, 
+    password, 
     fullName, 
     additionalName, 
-    username, 
-    password, 
-    email, 
+    dob, 
+    gender, 
     phoneNumber, 
     avatarUrl, 
     overview, 
-    dob, 
-    gender, 
     premiumExpirationDate, 
     premiumAccount
 ) VALUES (
