@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PostDAO extends DBContext {
 
-    public void createPost(Post post) throws SQLException {
+    public void addPost(Post post) throws SQLException {
     boolean hasImage = post.getImageUrl() != null;
 
     String sql = hasImage

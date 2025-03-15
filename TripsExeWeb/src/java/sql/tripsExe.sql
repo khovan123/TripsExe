@@ -6,20 +6,60 @@ GO
 
 CREATE TABLE UserTBL (
     userId INT IDENTITY(1,1),
-    username VARCHAR(50) NOT NULL, 
-    password VARCHAR(255) NOT NULL, 
-    email VARCHAR(100) NOT NULL, 
-    avatarUrl VARCHAR(255), -- img dang link, duong dan
-    dob DATE NULL, -- ngày sinh
-    gender BIT NULL, -- 0: nữ, 1: nam
-    premiumExpirationDate DATETIME, 
-    premiumAccount BIT DEFAULT 0, 
+    fullName VARCHAR(255) NOT NULL,
+    additionalName VARCHAR(255) NULL,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phoneNumber VARCHAR(20) NULL,
+    avatarUrl VARCHAR(255) NULL,
+    overview VARCHAR(255) NULL,
+    dob DATE NULL,
+    gender BIT NULL, -- 0: nu, 1: name
+    premiumExpirationDate DATETIME NULL,
+    premiumAccount BIT DEFAULT 0,
+    createdAt DATETIME DEFAULT GETDATE(),
+    updatedAt DATETIME DEFAULT GETDATE(),
 
     CONSTRAINT PK_Users PRIMARY KEY (userId),
-    CONSTRAINT UQ_User_Email UNIQUE (email), -- chi co mot email k duoc trung lap 
-    CONSTRAINT UQ_User_Name UNIQUE (username) -- tuong tu voi email khong duoc trung lap
+    CONSTRAINT UQ_User_Email UNIQUE (email),
+    CONSTRAINT UQ_User_Phone UNIQUE (phoneNumber),
+    CONSTRAINT UQ_User_Name UNIQUE (username)
 );
-GO
+
+
+DROP TABLE IF EXISTS UserTBL;
+
+
+INSERT INTO UserTBL (
+    fullName, 
+    additionalName, 
+    username, 
+    password, 
+    email, 
+    phoneNumber, 
+    avatarUrl, 
+    overview, 
+    dob, 
+    gender, 
+    premiumExpirationDate, 
+    premiumAccount
+) VALUES (
+    'John Doe',                  -- fullName
+    'Johnny',                   -- additionalName
+    'johndoe123',              -- username
+    'hashedpassword123',       -- password (in reality, this should be properly hashed)
+    'john.doe@example.com',    -- email
+    '+1234567890',            -- phoneNumber
+    'https://example.com/avatar.jpg', -- avatarUrl
+    'Software developer',     -- overview
+    '1990-05-15',            -- dob
+    1,                       -- gender (1 = male)
+    '2025-12-31 23:59:59',  -- premiumExpirationDate
+    1                       -- premiumAccount
+);
+
+SELECT * FROM UserTBL
 
 
 CREATE TABLE PostTBL (

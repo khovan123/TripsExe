@@ -3,12 +3,15 @@ package model;
 import java.sql.Date;
 
 public class User {
-
     private int userId;
     private String username;
     private String password;
     private String email;
+    private String phoneNumber;
+    private String fullName;
+    private String additionalName;
     private String avatarUrl;
+    private String overview;
     private Date dob;
     private boolean gender;
     private Date premiumExpirationDate;
@@ -18,7 +21,10 @@ public class User {
     private NotifyOfUser notifyList;
 
     public User() {
+        this.additionalName = null;
+        this.overview = null;
         this.avatarUrl = null;
+        this.phoneNumber = null;
         this.dob = null;
         this.gender = false;
         this.premiumExpirationDate = null;
@@ -60,12 +66,44 @@ public class User {
         this.email = email;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getAdditionalName() {
+        return additionalName;
+    }
+
+    public void setAdditionalName(String additionalName) {
+        this.additionalName = additionalName;
+    }
+
     public String getAvatarUrl() {
         return avatarUrl;
     }
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
     public Date getDob() {
@@ -83,7 +121,7 @@ public class User {
     public void setGender(boolean gender) {
         this.gender = gender;
     }
-    
+
     public Date getPremiumExpirationDate() {
         return premiumExpirationDate;
     }
@@ -114,7 +152,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", avatarUrl=" + avatarUrl + ", premiumExpirationDate=" + premiumExpirationDate + ", premiumAccount=" + premiumAccount + ", postList=" + postList + ", friends=" + friends + ", notifyList=" + notifyList + '}';
+        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", avatarUrl=" + avatarUrl + ", premiumExpirationDate=" + premiumExpirationDate + ", premiumAccount=" + premiumAccount + ", postList=" + postList + ", friends=" + friends + ", notifyList=" + notifyList + '}';
     }
-
 }
