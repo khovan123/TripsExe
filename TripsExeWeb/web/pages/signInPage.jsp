@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -43,17 +44,22 @@
         </style>
     </head>
     <body class="bg-[#191A1F] flex items-center justify-center min-h-screen">
+        <c:if test="${not empty errorMsg}">
+            <div class="bg-red-500 text-white text-sm p-3 rounded-md">
+                ${errorMsg}
+            </div>
+        </c:if>
         <div class="bg-[#141519] p-12 rounded-md shadow-lg w-full max-w-md text-center border-1 border-[#303135] flex flex-col gap-6">
             <h2 class="text-white font-bold text-4xl">Sign in</h2>
             <p class="text-gray-400 text-base">
                 Don't have an account? <a href="signUpPage.jsp" class="text-blue-500 hover:underline">Click here to sign up</a>
             </p>
-            <form class="flex flex-col gap-4">
+            <form action="SignIn" method="POST" class="flex flex-col gap-4">
                 <div class="relative">
-                    <input type="email" placeholder="user@demo.com" class="w-full bg-[#191A1F] text-white rounded-md focus:outline-none border-1 border-[#303135] px-5 py-2 focus:border-blue-500 text-lg placeholder:text-[#ccc]" required>
+                    <input type="email" name="email" placeholder="user@demo.com" class="w-full bg-[#191A1F] text-white rounded-md focus:outline-none border-1 border-[#303135] px-5 py-2 focus:border-blue-500 text-lg placeholder:text-[#ccc]" required>
                 </div>
                 <div class="relative">
-                    <input type="password" placeholder="••••" class="w-full bg-[#191A1F] text-white rounded-md focus:outline-none border-1 border-[#303135] px-5 py-2 focus:border-blue-500 text-lg placeholder:text-[#ccc]" required>
+                    <input type="password" name="password" placeholder="••••" class="w-full bg-[#191A1F] text-white rounded-md focus:outline-none border-1 border-[#303135] px-5 py-2 focus:border-blue-500 text-lg placeholder:text-[#ccc]" required>
                     <span class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer">👁️</span>
                 </div>
                 <div class="flex justify-between items-center text-gray-400 text-xs">
