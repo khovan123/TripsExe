@@ -4,19 +4,15 @@ import CRUD.FriendsDAO;
 import CRUD.NotifyDAO;
 import CRUD.UserDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Friend;
 import model.User;
 
-@WebServlet(name = "AddFriendServlet", urlPatterns = {"/addFriends"})
+@WebServlet(urlPatterns = {"/add"})
 public class AddFriendServlet extends HttpServlet {
 
     private UserDAO userDAO;
@@ -36,7 +32,7 @@ public class AddFriendServlet extends HttpServlet {
 
         String requestURI = request.getRequestURI();
 
-        if (!requestURI.endsWith("/addFriends")) {
+        if (!requestURI.endsWith("/add")) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid request endpoint.");
             return;
         }
