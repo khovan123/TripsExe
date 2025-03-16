@@ -3,36 +3,42 @@ package model;
 import java.sql.Date;
 
 public class User {
-
-    private String userId;
+    private int userId;
     private String username;
     private String password;
     private String email;
-    private String avatar;
+    private String phoneNumber;
+    private String fullName;
+    private String additionalName;
+    private String avatarUrl;
+    private String overview;
+    private Date dob;
+    private boolean gender;
     private Date premiumExpirationDate;
     private boolean premiumAccount;
     private PostsOfUser postList;
-    private Friends friends;
+    private FriendsOfUser friends;
     private NotifyOfUser notifyList;
 
-    public User(String userId, String username, String password, String email, String avatar) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.avatar = avatar;
-        this.premiumAccount = false;
-        this.premiumExpirationDate = null;
+    public User() {
         this.postList = new PostsOfUser();
-        this.friends = new Friends();
+        this.friends = new FriendsOfUser();
         this.notifyList = new NotifyOfUser();
     }
 
-    public String getUserId() {
+    public User(String password, String email) {
+        this.password = password;
+        this.email = email;
+        this.postList = new PostsOfUser();
+        this.friends = new FriendsOfUser();
+        this.notifyList = new NotifyOfUser();
+    }
+
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -60,12 +66,60 @@ public class User {
         this.email = email;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getAdditionalName() {
+        return additionalName;
+    }
+
+    public void setAdditionalName(String additionalName) {
+        this.additionalName = additionalName;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     public Date getPremiumExpirationDate() {
@@ -88,7 +142,7 @@ public class User {
         return postList;
     }
 
-    public Friends getFriends() {
+    public FriendsOfUser getFriends() {
         return friends;
     }
 
@@ -96,4 +150,8 @@ public class User {
         return notifyList;
     }
 
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", avatarUrl=" + avatarUrl + ", premiumExpirationDate=" + premiumExpirationDate + ", premiumAccount=" + premiumAccount + ", postList=" + postList + ", friends=" + friends + ", notifyList=" + notifyList + '}';
+    }
 }

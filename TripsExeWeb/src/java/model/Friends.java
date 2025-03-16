@@ -1,41 +1,32 @@
 package model;
 
-import exception.*;
-import java.util.*;
-import java.util.function.*;
-
 public class Friends {
+    private int userId1;
+    private int userId2;
 
-    private List<String> friendIds = new ArrayList<>();
-
-    public List<String> getFriendIds() {
-        return this.friendIds;
+    public Friends() {
     }
 
-    public String search(Predicate<String> p) throws NotFoundException {
-        for (String id : friendIds) {
-            if (p.test(id)) {
-                return id;
-            }
-        }
-        throw new NotFoundException("Can not found!");
+    public Friends(int userId1, int userId2) {
+        this.userId1 = userId1;
+        this.userId2 = userId2;
     }
 
-    public void addFriend(String anotherUserId) throws AddException {
-        try {
-            this.search(p -> p.equalsIgnoreCase(anotherUserId));
-            this.friendIds.add(anotherUserId);
-        } catch (NotFoundException e) {
-            throw new AddException("Add friend failed!");
-        }
+    public int getUserId1() {
+        return userId1;
     }
 
-    public void setFriendIdsFromDB() {
-
+    public void setUserId1(int userId1) {
+        this.userId1 = userId1;
     }
 
-    public List<User> getFriendsIn4FromDB() {
-        return null;
+    public int getUserId2() {
+        return userId2;
     }
 
+    public void setUserId2(int userId2) {
+        this.userId2 = userId2;
+    }
+    
+    
 }
