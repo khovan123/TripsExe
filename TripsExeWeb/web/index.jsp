@@ -13,5 +13,6 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        <jsp:include page="/components/Button.jsp"/>
     </body>
 </html>
