@@ -10,21 +10,20 @@ import connectDB.DBContext;
 
 public class NotifyDAO extends DBContext {
 
-    public void sendNotification(int senderId, int receiverId, String messageContent, boolean markRead) throws SQLException { // Đổi String thành int, isRead thành markRead
-        String sql = "INSERT INTO NotifyTBL (sendID, receiverID, notifyDate, messageContent, markRead) "
+    public void sendNotification(int userId, String messageContent, boolean markRead) throws SQLException { // Đổi String thành int, isRead thành markRead
+        String sql = "INSERT INTO NotifyTBL (userId, notificationDate, messageContent, markRead) "
                 + "VALUES (?,?,GETDATE(),?,?)";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setInt(1, senderId);
-            st.setInt(2, receiverId);
+            st.setInt(1, userId);
             st.setString(3, messageContent);
             st.setBoolean(4, markRead);
             st.executeUpdate();
         }
     }
 
-    public List<Notify> getNotifications(int receiverId) throws SQLException {
+    public List<Notify> getAllNotifications(int receiverId) throws SQLException {
         List<Notify> notifications = new ArrayList<>();
-        String sql = "SELECT * FROM NotifyTBL WHERE receiverID = ? ORDER BY notifyDate DESC";
+        String sql = "SELECT * FROM NotifyTBL WHERE userId = ? ORDER BY notifyDate DESC";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setInt(1, receiverId);
             ResultSet rs = st.executeQuery();
@@ -33,7 +32,7 @@ public class NotifyDAO extends DBContext {
                 n.setNotifyId(rs.getInt("notifyId"));
                 n.setNotificationDate(rs.getDate("notifyDate"));
                 n.setMessageContent(rs.getString("messageContent"));
-                n.setMarkRead(rs.getBoolean("isRead"));
+                n.setMarkRead(rs.getBoolean("markRead"));
                 notifications.add(n);
             }
         }
@@ -47,4 +46,5 @@ public class NotifyDAO extends DBContext {
             st.executeUpdate();
         }
     }
+
 }
