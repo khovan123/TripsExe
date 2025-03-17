@@ -3,6 +3,7 @@ package model;
 import java.sql.Date;
 
 public class User {
+
     private int userId;
     private String username;
     private String password;
@@ -152,6 +153,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", avatarUrl=" + avatarUrl + ", premiumExpirationDate=" + premiumExpirationDate + ", premiumAccount=" + premiumAccount + ", postList=" + postList + ", friends=" + friends + ", notifyList=" + notifyList + '}';
+        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", fullName=" + fullName + ", additionalName=" + additionalName + ", avatarUrl=" + avatarUrl + ", overview=" + overview + ", dob=" + dob + ", gender=" + gender + ", premiumExpirationDate=" + premiumExpirationDate + ", premiumAccount=" + premiumAccount + ", postList=" + postList + ", friends=" + friends + ", notifyList=" + notifyList + '}';
     }
+
 }
