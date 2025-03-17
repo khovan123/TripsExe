@@ -26,6 +26,7 @@ public class AuthServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("Hello");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
@@ -53,21 +54,24 @@ public class AuthServlet extends HttpServlet {
                     request.getRequestDispatcher("/pages/SignInPage.jsp").forward(request, response);
                     return;
                 }
+                HttpSession session = request.getSession(true);
+                session.setAttribute("userId", user.getUserId());
+                session.setAttribute("fullName", user.getFullName());
 
                 Cookie cookie1 = new Cookie("userId", String.valueOf(user.getUserId()));
                 response.addCookie(cookie1);
-                cookie1.setDomain("localhost");
+//                cookie1.setDomain("localhost");
                 cookie1.setHttpOnly(true);
                 cookie1.setMaxAge(60 * 60 * 24 * 7);
 
                 if (remember != null) {
                     Cookie cookie2 = new Cookie("logIned", "true");
                     response.addCookie(cookie2);
-                    cookie2.setDomain("localhost");
+//                    cookie2.setDomain("localhost");
                     cookie2.setHttpOnly(true);
                     cookie2.setMaxAge(60 * 60 * 24 * 7);
                 }
-                response.sendRedirect("/pages/AuthPage.jsp");
+                request.getRequestDispatcher("chat").forward(request, response);
             } catch (SQLException e) {
                 request.setAttribute("error", e.getMessage());
                 request.getRequestDispatcher("/pages/ErrorPage.jsp").forward(request, response);

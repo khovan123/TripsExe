@@ -1,4 +1,5 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@page
+contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -66,80 +67,34 @@
             </div>
           </div>
           <ul class="px-5 flex flex-col">
-            <li
-              class="flex items-start rounded-md gap-2 px-4 py-2 mb-[15px] cursor-pointer bg-[#141E2E]"
-              onclick="toggleSelection(this)"
-            >
-              <img
-                src="./../public/images/avatar.png"
-                alt="User Profile"
-                class="w-12 h-12 rounded-full"
-              />
-              <div class="flex flex-col flex-1">
-                <p class="font-bold">Minh Phan</p>
-                <p class="text-sm text-gray-400">Minh Phan sent a photo.</p>
-              </div>
-            </li>
-            <li
-              class="flex items-start rounded-md gap-2 px-4 py-2 mb-[15px] cursor-pointer"
-              onclick="toggleSelection(this)"
-            >
-              <img
-                src="./../public/images/avatar.png"
-                alt="User Profile"
-                class="w-12 h-12 rounded-full"
-              />
-              <div class="flex flex-col flex-1">
-                <p class="font-bold">Huy Quang</p>
-                <p class="text-sm text-gray-400">
-                  You missed a call from Huy Quang 🤙
-                </p>
-              </div>
-            </li>
-            <li
-              class="flex items-start rounded-md gap-2 px-4 py-2 mb-[15px] cursor-pointer"
-              onclick="toggleSelection(this)"
-            >
-              <img
-                src="./../public/images/avatar.png"
-                alt="User Profile"
-                class="w-12 h-12 rounded-full"
-              />
-              <div class="flex flex-col flex-1">
-                <p class="font-bold">Duyên Võ</p>
-                <p class="text-sm text-gray-400">
-                  Day sweetness why cordinally 😊
-                </p>
-              </div>
-            </li>
-            <li
-              class="flex items-start rounded-md gap-2 px-4 py-2 mb-[15px] cursor-pointer"
-              onclick="toggleSelection(this)"
-            >
-              <img
-                src="./../public/images/avatar.png"
-                alt="User Profile"
-                class="w-12 h-12 rounded-full"
-              />
-              <div class="flex flex-col flex-1">
-                <p class="font-bold">Thư Nguyễn</p>
-                <p class="text-sm text-gray-400">Happy birthday🎂</p>
-              </div>
-            </li>
-            <li
-              class="flex items-start rounded-md gap-2 px-4 py-2 mb-[15px] cursor-pointer"
-              onclick="toggleSelection(this)"
-            >
-              <img
-                src="./../public/images/avatar.png"
-                alt="User Profile"
-                class="w-12 h-12 rounded-full"
-              />
-              <div class="flex flex-col flex-1">
-                <p class="font-bold">Kiệt Nguyễn</p>
-                <p class="text-sm text-gray-400">Thank you!</p>
-              </div>
-            </li>
+            <c:forEach var="friend" items="${friends}">
+              <li
+                onclick="openChat('${friend.getUserId()}')"
+                class="flex items-start bg-[#141E2E] rounded-md gap-2 px-5 py-2"
+              >
+                <span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="45"
+                    height="45"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-user-round bg-red-500 rounded-full"
+                  >
+                    <circle cx="12" cy="8" r="5" />
+                    <path d="M20 21a8 8 0 0 0-16 0" />
+                  </svg>
+                </span>
+                <div class="grow">
+                  <p class="font-bold">${friend.getFullName()}</p>
+                  <p class="text-sm text-gray-400">...</p>
+                </div>
+              </li>
+            </c:forEach>
           </ul>
         </aside>
 
@@ -386,4 +341,81 @@
       </section>
     </main>
   </body>
+  <script>
+    const currentUserId = ${userId};
+    const fullName = '${fullName}';
+    let ws = null;
+    let currentRoomId = null;
+
+    function openChat(friendId) {
+        if (ws) {
+            ws.close();
+        }
+        currentRoomId = "room_" + Math.min(currentUserId, friendId) + "_" + Math.max(currentUserId, friendId);
+        ws = new WebSocket("ws://localhost:8080/TripsExeWeb/chatendpoint/" + currentRoomId);
+
+        ws.onopen = function () {
+            console.log("Connected to room: " + currentRoomId);
+            ws.send("userId=" + currentUserId + "&fullName=" + fullName);
+        }
+        ;
+
+        ws.onopen = function () {
+            console.log("Connected to room: " + currentRoomId);
+            ws.send("userId=" + currentUserId + "&fullName=" + fullName);
+        };
+
+        ws.onmessage = function (event) {
+            let chatBox = document.getElementById("chat-box");
+            let messageData = event.data.toString().split(":", 2);
+            let senderId = messageData[0];
+            let content = messageData[1] || event.data;
+            let isCurrentUser = senderId == currentUserId;
+            console.log(isCurrentUser);
+            let lineStyle = isCurrentUser ? 'justify-end' : 'items-start gap-2';
+            let messageStyle = isCurrentUser ? "bg-[#0F6FEC]" : "bg-[#202227]";
+            const icon = isCurrentUser ? '' : `<span>
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                            width="45"
+                            height="45"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-user-round bg-red-500 rounded-full">
+                            <circle cx="12" cy="8" r="5" />
+                            <path d="M20 21a8 8 0 0 0-16 0" />
+                            </svg>
+                            </span>`;
+            chatBox.innerHTML += `
+                <div class="flex ` + lineStyle + `">` + icon +
+                    `<div>
+                        <p class="text-sm py-2 px-3 rounded-md ` + messageStyle + `">` + content + `</p>
+                    </div>
+                </div>`;
+            chatBox.scrollIntoView({behavior: 'smooth', block: 'end'});
+        };
+
+        ws.onerror = function (error) {
+            console.error("WebSocket error: ", error);
+        };
+
+        ws.onclose = function () {
+            let chatBox = document.getElementById("chat-box");
+            chatBox.innerHTML = '';
+            console.log("WebSocket closed");
+        };
+    }
+    function sendMessage() {
+        let message = document.getElementById("message").value;
+        if (ws && message) {
+            ws.send(message);
+            document.getElementById("message").value = "";
+        } else {
+            console.log("WebSocket chưa sẵn sàng hoặc tin nhắn rỗng");
+        }
+    }
+  </script>
 </html>

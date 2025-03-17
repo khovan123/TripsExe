@@ -8,16 +8,21 @@ public class DBContext implements DBInfor {
 
     }
 
-    public Connection getConnection() {
-        Connection conn = null;
+    public Connection getConnection() throws SQLException {
         try {
             Class.forName(driverName);
-            conn = DriverManager.getConnection(url, user, pass);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            Connection conn = DriverManager.getConnection(url, user, pass);
+            if (conn != null) {
+                System.out.println("Database connected successfully");
+            }
+            return conn;
+        } catch (ClassNotFoundException e) {
+            System.err.println("JDBC Driver not found: " + e.getMessage());
+            throw new SQLException("Driver not found");
+        } catch (SQLException e) {
+            System.err.println("Database connection failed: " + e.getMessage());
+            throw e;
         }
-        return conn;
     }
 
     public void close(Connection conn, PreparedStatement ps, ResultSet rs) throws SQLException {
