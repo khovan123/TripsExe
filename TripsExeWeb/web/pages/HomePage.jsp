@@ -6,11 +6,19 @@
         <title>JSP Page</title>
         <script src="https://unpkg.com/@tailwindcss/browser@4.0.0"></script>
         <!--<script src="https://cdn.tailwindcss.com"></script>-->
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                margin: 0;
+            }
+        </style>
     </head>
-    <body class="bg-[#191a1f] box-border">
+    <body class="bg-[#191a1f]">
         <jsp:include page="/components/NavigationBar.jsp"/> 
 
-        <div class="px-[128px] pt-6 text-white min-h-fit flex">
+        <div class="px-[128px] pt-20 text-white min-h-fit flex">
 
             <aside class="w-1/4 h-fit mr-6 border border-[#202227] bg-[#141519] rounded-md">
                 <img src="./../public/images/profile-background.jpg" alt="User Background" class="w-full h-14 object-cover rounded-t-lg">
@@ -67,7 +75,7 @@
                         <span class="font-bold text-white group-hover:text-[#0f6fec] duration-300">Settings</span>
                     </a>
                 </nav>
-                <a href="#" class="block mt-4 py-3 text-[#0f6fec] text-sm font-medium text-center hover:underline border-t-[1px] border-[#202227]">View Profile</a>
+                <a href="#" class="block mt-4 py-3 text-[#0f6fec] text-sm font-medium text-center hover:cursor-pointer border-t-[1px] border-[#202227]">View Profile</a>
             </aside>
 
             <main class="w-2/4 mr-6 overflow-y-auto">
