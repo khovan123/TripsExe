@@ -91,9 +91,9 @@
                                 </div>-->
 
                 <div class="p-5 mb-5 border border-[#202227] bg-[#141519] rounded-md">
-                    <div class="flex space-x-3 mb-4">
-                        <img src="./../public/images/avatar.png" alt="User Profile" class="w-10 h-10 rounded-full">
-                        <textarea placeholder="Share your thoughts..." class="w-full min-h-[60px] bg-[#191A1F] text-gray-400 p-3 rounded-md focus:outline-none resize-none overflow-hidden border-none"></textarea>
+                    <div class="flex mb-4">
+                        <img src="./../public/images/avatar.png" alt="User Profile" class="w-10 h-10 rounded-full mr-3">
+                        <textarea placeholder="Share your thoughts..." class="flex-1 min-h-[60px] bg-[#191A1F] text-gray-400 p-3 rounded-md focus:outline-none resize-none overflow-hidden border-none"></textarea>
                     </div>
                     <div class="flex space-x-3">
                         <button class="flex items-center text-gray-400 hover:cursor-pointer hover:text-[#0f6fec] duration-300 bg-[#202227] py-[4px] px-[8px] rounded-lg">

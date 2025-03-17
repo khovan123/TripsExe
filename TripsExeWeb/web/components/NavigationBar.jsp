@@ -49,7 +49,7 @@
     <ul class="flex items-center">
       <li class="ml-2">
         <a
-          href=""
+            href="./ChattingPage.jsp"
           class="size-[40px] flex items-center justify-center bg-[#202227] rounded-md group"
         >
           <svg
@@ -71,7 +71,7 @@
 
       <li class="ml-2">
         <a
-          href=""
+          href="./SettingPage.jsp"
           class="size-[40px] flex items-center justify-center bg-[#202227] rounded-md group"
         >
           <svg
