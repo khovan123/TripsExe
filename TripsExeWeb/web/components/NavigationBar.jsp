@@ -27,8 +27,8 @@
 
             <div class="flex-1 flex flex-row justify-end">
                 <a
-                    href="/TripsExeWeb/pages/HomePage.jsp"
                     class="text-gray-300 hover:text-[#0f6fec] px-[16px] duration-300"
+                    href="/TripsExeWeb/pages/HomePage.jsp"
                     >Home</a
                 >
                 <a
@@ -52,9 +52,8 @@
         <ul class="flex items-center">
             <li class="ml-2">
                 <a
-                    href="./ChattingPage.jsp"
-                    class="size-[40px] flex items-center justify-center bg-[#202227] rounded-md group"
-                    >
+                    href="/TripsExeWeb/chat"
+                    class="size-[40px] flex items-center justify-center bg-[#202227] rounded-md group">
                     <svg
                         stroke="currentColor"
                         class="text-gray-400 group-hover:text-white duration-300"

@@ -1,16 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    String userId = null;   
-    Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie c : cookies) {  
-                if (c.getName().equals("userId")) {
-                    userId = (String) c.getValue();
-                    break;
-                }
-            }
-        }            
+    int id = -1;
+    if(request.getSession(false) != null && request.getSession(false).getAttribute("userId") != null){
+        id = (Integer) request.getSession(false).getAttribute("userId");
+    }
 %>
 <html>
     <head>
@@ -18,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1><%=userId%></h1>
+        <h1><%=id%></h1>
+        <a href="AuthPage2.jsp">click me</a>
     </body>
 </html>
