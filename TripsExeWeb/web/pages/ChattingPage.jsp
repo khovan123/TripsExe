@@ -109,7 +109,7 @@
                                 class="w-12 h-12 rounded-full"
                                 />
                             <div>
-                                <p class="font-bold">Minh Phan</p>
+                                <p class="font-bold">${fullName}</p>
                                 <div
                                     class="text-sm text-gray-400 flex justify-start items-center"
                                     >
@@ -190,78 +190,6 @@
 
                     <div class="grow h-4/5 overflow-y-auto bg-[#141519] py-4 rounded">
                         <div class="flex flex-col gap-5" id="chat-box">
-                            <!--                            <div class="flex items-start gap-2">
-                                                            <img
-                                                                src="./../public/images/avatar.png"
-                                                                alt="User Profile"
-                                                                class="w-10 h-10 rounded-full"
-                                                                />
-                                                            <div class="flex flex-col">
-                                                                <p
-                                                                    class="text-[15px] font-normal text-[#C5C6CC] bg-[#202227] py-2 px-4 rounded-md"
-                                                                    >
-                                                                    How promotion excellent curiosity yet attempted happiness
-                                                                    Gay prosperous impression 🎉
-                                                                </p>
-                                                                <span class="text-xs text-gray-300 pt-1">1:42 PM</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex justify-end">
-                                                            <div class="flex flex-col">
-                                                                <p
-                                                                    class="text-[15px] font-normal bg-[#0F6FEC] py-2 px-4 rounded-md"
-                                                                    >
-                                                                    Congratulations!
-                                                                </p>
-                                                                <span class="text-xs text-gray-300 text-end pt-1"
-                                                                      >1:52 PM</span
-                                                                >
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex items-start gap-2">
-                                                            <img
-                                                                src="./../public/images/avatar.png"
-                                                                alt="User Profile"
-                                                                class="w-10 h-10 rounded-full"
-                                                                />
-                                                            <div class="flex flex-col">
-                                                                <p
-                                                                    class="text-[15px] font-normal text-[#C5C6CC] bg-[#202227] py-2 px-4 rounded-md"
-                                                                    >
-                                                                    👋
-                                                                </p>
-                                                                <span class="text-xs text-gray-300 pt-1">1:52 PM</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex justify-end">
-                                                            <div class="flex flex-col">
-                                                                <p
-                                                                    class="text-[15px] font-normal bg-[#0F6FEC] py-2 px-4 rounded-md"
-                                                                    >
-                                                                    And sir dare view but over man so at within mr to simple
-                                                                    assure Mr disposing.
-                                                                </p>
-                                                                <span class="text-xs text-gray-300 text-end pt-1"
-                                                                      >1:52 PM</span
-                                                                >
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex items-start gap-2">
-                                                            <img
-                                                                src="./../public/images/avatar.png"
-                                                                alt="User Profile"
-                                                                class="w-10 h-10 rounded-full"
-                                                                />
-                                                            <div class="flex flex-col">
-                                                                <p
-                                                                    class="text-[15px] font-normal text-[#C5C6CC] bg-[#202227] py-2 px-4 rounded-md"
-                                                                    >
-                                                                    Traveling alteration impression 🎉 six all uncommonly
-                                                                    Chamber hearing joy highest private.
-                                                                </p>
-                                                                <span class="text-xs text-gray-300 pt-1">1:52 PM</span>
-                                                            </div>-->
-                            <!--</div>-->
                         </div>
                     </div>
                     <!-- Message Input -->
