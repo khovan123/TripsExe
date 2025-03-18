@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +17,27 @@
                 margin: 0;
                 padding: 0;
             }
+            .scrollbar::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .scrollbar::-webkit-scrollbar-track {
+                border-radius: 100vh;
+                background: #191a1f;
+            }
+
+            .scrollbar::-webkit-scrollbar-track:hover {
+                background: #303135;
+            }
+
+            .scrollbar::-webkit-scrollbar-thumb {
+                background: #757679;
+                border-radius: 100vh;
+            }
+
+            .scrollbar::-webkit-scrollbar-thumb:hover {
+                background: #8c8d8f;
+            }
         </style>
     </head>
     <body class="bg-[#191a1f]">
@@ -26,17 +48,19 @@
                 >
                 <aside class="w-1/4 border-r-[1px] border-[#202227]">
                     <div
-                        class="flex justify-between items-center px-5 py-6 border-b-[1px] border-[#202227]"
+                        class="flex justify-start items-center px-5 py-6 border-b-[1px] border-[#202227] gap-2"
                         >
-                        <h5 class="text-xl font-bold">Active chats</h5>
+                        <h5 class="text-xl font-bold">Active chats:</h5>
+                        <h5 class="text-xl font-bold text-[#37b24d] bg-[#37b24d]/20 px-2 rounded-lg">${friends.size()}</h5>
+
                     </div>
                     <div class="p-5">
                         <div class="relative">
                             <input
                                 placeholder="Search for chats"
-                                class="pl-3 py-2 px-3 rounded-md placeholder:text-gray-400 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-[#191A1F] text-white w-64"
+                                class="w-full pl-3 py-2 px-3 rounded-md placeholder:text-gray-400 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-[#191A1F] text-white"
                                 />
-                            <svg
+                            <svg                              
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                                 viewBox="0 0 30 30"
@@ -54,7 +78,7 @@
                         <c:forEach var="friend" items="${friends}" varStatus="loop">
                             <li
                                 onclick="openChat('${friend.getUserId()}');
-                                        toggleSelection(this);"
+                                        toggleSelection(this, '${fn:escapeXml(friend.getFullName())}');"
                                 class="flex items-start rounded-md gap-2 px-4 py-2 mb-[15px] cursor-pointer transition-all duration-200 ${loop.first ? 'bg-[#0D6EFD]' : ''}"
                                 >
                                 <img
@@ -79,21 +103,21 @@
                             <img
                                 src='<c:url value="/public/images/avatar.png"/>'
                                 alt="User Profile"
-                                class="w-12 h-12 rounded-full"
+                                class="w-12 h-12 rounded-full border-2 border-gray-400"
                                 />
-                            <div>
-                                <p class="font-bold">${fullName}</p>
+                            <div>   
+                                <p class="font-bold" id="friend-name">?</p>
                                 <div
                                     class="text-sm text-gray-400 flex justify-start items-center"
                                     >
                                     <svg
-                                        class="text-[#0cbc87] mr-1"
+                                        class="text-[#37b24d] mr-1"
                                         stroke="currentColor"
                                         fill="currentColor"
                                         stroke-width="0"
                                         viewBox="0 0 512 512"
-                                        height="1em"
-                                        width="1em"
+                                        height="0.8em"
+                                        width="0.8em"
                                         xmlns="http://www.w3.org/2000/svg"
                                         >
                                     <path
@@ -161,8 +185,8 @@
                         </div>
                     </div>
 
-                    <div class="grow h-4/5 overflow-y-auto bg-[#141519] py-4 rounded">
-                        <div class="flex flex-col gap-5" id="chat-box">
+                    <div class="grow h-4/5 overflow-y-auto bg-[#141519] rounded scrollbar">
+                        <div class="flex flex-col gap-5 py-4" id="chat-box">
                         </div>
                     </div>
                     <!-- Message Input -->
@@ -274,7 +298,7 @@
                 let content = messageData[1] || event.data;
                 let isCurrentUser = senderId == currentUserId;
                 console.log(event.data);
-                let lineStyle = isCurrentUser ? "justify-end" : "items-start gap-2";
+                let lineStyle = isCurrentUser ? "justify-end pr-4" : "items-start gap-2";
                 let messageStyle = isCurrentUser ? "bg-[#0F6FEC]" : "bg-[#202227]";
                 const icon = isCurrentUser
                         ? ""
@@ -330,12 +354,14 @@
             }
         }
 
-        function toggleSelection(selectedLi) {
+        function toggleSelection(selectedLi, fullname) {
             const allLi = document.querySelectorAll("li");
             allLi.forEach((li) => {
                 li.classList.remove("bg-[#0D6EFD]");
             });
             selectedLi.classList.add("bg-[#0D6EFD]");
+            let friendName = document.getElementById("friend-name");
+            friendName.innerHTML = fullname;
         }
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -344,6 +370,8 @@
                 firstLi.classList.add("bg-[#0D6EFD]");
                 const firstFriendId = "${friends.size() > 0 ? friends[0].getUserId() : ''}";
                 if (firstFriendId) {
+                    let friendName = document.getElementById("friend-name");
+                    friendName.innerHTML = '${friends[0].getFullName()}';
                     openChat(firstFriendId);
                 }
             } else {
