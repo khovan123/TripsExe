@@ -1,11 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/CRUD/FriendDAO.java</file>
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/CRUD/NotifyDAO.java</file>
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/web/pages/HomePage.jsp</file>
         </group>
+=======
+        <group/>
+>>>>>>> origin/master
     </open-files>
 </project-private>
