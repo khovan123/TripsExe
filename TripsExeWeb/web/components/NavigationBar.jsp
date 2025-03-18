@@ -116,7 +116,7 @@
             </li>
 
             <li class="ml-2">
-                <a href="">
+                <a href="#">
                     <img
                         src='<c:url value="/public/images/dog-avatar.jpg"/>'
                         alt="alt"
