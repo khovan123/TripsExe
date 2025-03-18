@@ -71,7 +71,7 @@ public class AuthServlet extends HttpServlet {
                     cookie2.setHttpOnly(true);
                     cookie2.setMaxAge(60 * 60 * 24 * 7);
                 }
-                request.getRequestDispatcher("chat").forward(request, response);
+                response.sendRedirect("chat");
             } catch (SQLException e) {
                 request.setAttribute("error", e.getMessage());
                 request.getRequestDispatcher("/pages/ErrorPage.jsp").forward(request, response);
