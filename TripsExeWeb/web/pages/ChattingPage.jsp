@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,26 +17,10 @@
                 padding: 0;
             }
         </style>
-        <script>
-            function toggleSelection(selectedLi) {
-                const allLi = document.querySelectorAll("li");
-                allLi.forEach((li) => {
-                    li.classList.remove("bg-[#141E2E]");
-                });
-                selectedLi.classList.add("bg-[#141E2E]");
-            }
-
-            window.onload = function () {
-                const firstLi = document.querySelector("li");
-                if (firstLi) {
-                    firstLi.classList.add("bg-[#141E2E]");
-                }
-            };
-        </script>
     </head>
     <body class="bg-[#191a1f]">
         <jsp:include page="/components/NavigationBar.jsp" />
-        <main class="pt-20 px-[128px] max-h-screen">
+        <main class="pt-20 px-[128px] h-[95vh]">
             <section
                 class="flex text-white h-[100%] border border-[#202227] bg-[#141519] rounded-md"
                 >
@@ -67,29 +51,18 @@
                         </div>
                     </div>
                     <ul class="px-5 flex flex-col">
-                        <c:forEach var="friend" items="${friends}">
+                        <c:forEach var="friend" items="${friends}" varStatus="loop">
                             <li
-                                onclick="openChat('${friend.getUserId()}')"
-                                class="flex items-start bg-[#141E2E] rounded-md gap-2 px-5 py-2"
+                                onclick="openChat('${friend.getUserId()}');
+                                        toggleSelection(this);"
+                                class="flex items-start rounded-md gap-2 px-4 py-2 mb-[15px] cursor-pointer transition-all duration-200 ${loop.first ? 'bg-[#0D6EFD]' : ''}"
                                 >
-                                <span>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="45"
-                                        height="45"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        class="lucide lucide-user-round bg-red-500 rounded-full"
-                                        >
-                                    <circle cx="12" cy="8" r="5" />
-                                    <path d="M20 21a8 8 0 0 0-16 0" />
-                                    </svg>
-                                </span>
-                                <div class="grow">
+                                <img
+                                    src='<c:url value="/public/images/dog-avatar.jpg"/>'
+                                    alt="User Profile"
+                                    class="w-12 h-12 object-cover rounded-full border-2 border-gray-400"
+                                    />
+                                <div class="flex flex-col flex-1">
                                     <p class="font-bold">${friend.getFullName()}</p>
                                     <p class="text-sm text-gray-400">...</p>
                                 </div>
@@ -104,7 +77,7 @@
                         >
                         <div class="grow flex items-start gap-2">
                             <img
-                                src="./../public/images/avatar.png"
+                                src='<c:url value="/public/images/avatar.png"/>'
                                 alt="User Profile"
                                 class="w-12 h-12 rounded-full"
                                 />
@@ -191,76 +164,76 @@
                     <div class="grow h-4/5 overflow-y-auto bg-[#141519] py-4 rounded">
                         <div class="flex flex-col gap-5" id="chat-box">
                             <!--                            <div class="flex items-start gap-2">
-                                                            <img
-                                                                src="./../public/images/avatar.png"
-                                                                alt="User Profile"
-                                                                class="w-10 h-10 rounded-full"
-                                                                />
-                                                            <div class="flex flex-col">
-                                                                <p
-                                                                    class="text-[15px] font-normal text-[#C5C6CC] bg-[#202227] py-2 px-4 rounded-md"
-                                                                    >
-                                                                    How promotion excellent curiosity yet attempted happiness
-                                                                    Gay prosperous impression 🎉
-                                                                </p>
-                                                                <span class="text-xs text-gray-300 pt-1">1:42 PM</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex justify-end">
-                                                            <div class="flex flex-col">
-                                                                <p
-                                                                    class="text-[15px] font-normal bg-[#0F6FEC] py-2 px-4 rounded-md"
-                                                                    >
-                                                                    Congratulations!
-                                                                </p>
-                                                                <span class="text-xs text-gray-300 text-end pt-1"
-                                                                      >1:52 PM</span
-                                                                >
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex items-start gap-2">
-                                                            <img
-                                                                src="./../public/images/avatar.png"
-                                                                alt="User Profile"
-                                                                class="w-10 h-10 rounded-full"
-                                                                />
-                                                            <div class="flex flex-col">
-                                                                <p
-                                                                    class="text-[15px] font-normal text-[#C5C6CC] bg-[#202227] py-2 px-4 rounded-md"
-                                                                    >
-                                                                    👋
-                                                                </p>
-                                                                <span class="text-xs text-gray-300 pt-1">1:52 PM</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex justify-end">
-                                                            <div class="flex flex-col">
-                                                                <p
-                                                                    class="text-[15px] font-normal bg-[#0F6FEC] py-2 px-4 rounded-md"
-                                                                    >
-                                                                    And sir dare view but over man so at within mr to simple
-                                                                    assure Mr disposing.
-                                                                </p>
-                                                                <span class="text-xs text-gray-300 text-end pt-1"
-                                                                      >1:52 PM</span
-                                                                >
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex items-start gap-2">
-                                                            <img
-                                                                src="./../public/images/avatar.png"
-                                                                alt="User Profile"
-                                                                class="w-10 h-10 rounded-full"
-                                                                />
-                                                            <div class="flex flex-col">
-                                                                <p
-                                                                    class="text-[15px] font-normal text-[#C5C6CC] bg-[#202227] py-2 px-4 rounded-md"
-                                                                    >
-                                                                    Traveling alteration impression 🎉 six all uncommonly
-                                                                    Chamber hearing joy highest private.
-                                                                </p>
-                                                                <span class="text-xs text-gray-300 pt-1">1:52 PM</span>
-                                                            </div>-->
+                                                                          <img
+                                                                              src="./../public/images/avatar.png"
+                                                                              alt="User Profile"
+                                                                              class="w-10 h-10 rounded-full"
+                                                                              />
+                                                                          <div class="flex flex-col">
+                                                                              <p
+                                                                                  class="text-[15px] font-normal text-[#C5C6CC] bg-[#202227] py-2 px-4 rounded-md"
+                                                                                  >
+                                                                                  How promotion excellent curiosity yet attempted happiness
+                                                                                  Gay prosperous impression 🎉
+                                                                              </p>
+                                                                              <span class="text-xs text-gray-300 pt-1">1:42 PM</span>
+                                                                          </div>
+                                                                      </div>
+                                                                      <div class="flex justify-end">
+                                                                          <div class="flex flex-col">
+                                                                              <p
+                                                                                  class="text-[15px] font-normal bg-[#0F6FEC] py-2 px-4 rounded-md"
+                                                                                  >
+                                                                                  Congratulations!
+                                                                              </p>
+                                                                              <span class="text-xs text-gray-300 text-end pt-1"
+                                                                                    >1:52 PM</span
+                                                                              >
+                                                                          </div>
+                                                                      </div>
+                                                                      <div class="flex items-start gap-2">
+                                                                          <img
+                                                                              src="./../public/images/avatar.png"
+                                                                              alt="User Profile"
+                                                                              class="w-10 h-10 rounded-full"
+                                                                              />
+                                                                          <div class="flex flex-col">
+                                                                              <p
+                                                                                  class="text-[15px] font-normal text-[#C5C6CC] bg-[#202227] py-2 px-4 rounded-md"
+                                                                                  >
+                                                                                  👋
+                                                                              </p>
+                                                                              <span class="text-xs text-gray-300 pt-1">1:52 PM</span>
+                                                                          </div>
+                                                                      </div>
+                                                                      <div class="flex justify-end">
+                                                                          <div class="flex flex-col">
+                                                                              <p
+                                                                                  class="text-[15px] font-normal bg-[#0F6FEC] py-2 px-4 rounded-md"
+                                                                                  >
+                                                                                  And sir dare view but over man so at within mr to simple
+                                                                                  assure Mr disposing.
+                                                                              </p>
+                                                                              <span class="text-xs text-gray-300 text-end pt-1"
+                                                                                    >1:52 PM</span
+                                                                              >
+                                                                          </div>
+                                                                      </div>
+                                                                      <div class="flex items-start gap-2">
+                                                                          <img
+                                                                              src="./../public/images/avatar.png"
+                                                                              alt="User Profile"
+                                                                              class="w-10 h-10 rounded-full"
+                                                                              />
+                                                                          <div class="flex flex-col">
+                                                                              <p
+                                                                                  class="text-[15px] font-normal text-[#C5C6CC] bg-[#202227] py-2 px-4 rounded-md"
+                                                                                  >
+                                                                                  Traveling alteration impression 🎉 six all uncommonly
+                                                                                  Chamber hearing joy highest private.
+                                                                              </p>
+                                                                              <span class="text-xs text-gray-300 pt-1">1:52 PM</span>
+                                                                          </div>-->
                             <!--</div>-->
                         </div>
                     </div>
@@ -343,8 +316,8 @@
         </main>
     </body>
     <script>
-        const currentUserId = ${userId};
-        const fullName = '${fullName}';
+        const currentUserId = "${userId}";
+        const fullName = "${fullName}";
         let ws = null;
         let currentRoomId = null;
 
@@ -352,14 +325,14 @@
             if (ws) {
                 ws.close();
             }
-            currentRoomId = "room_" + Math.min(currentUserId, friendId) + "_" + Math.max(currentUserId, friendId);
-            ws = new WebSocket("ws://localhost:8080/TripsExeWeb/chatendpoint/" + currentRoomId);
-
-            ws.onopen = function () {
-                console.log("Connected to room: " + currentRoomId);
-                ws.send("userId=" + currentUserId + "&fullName=" + fullName);
-            }
-            ;
+            currentRoomId =
+                    "room_" +
+                    Math.min(currentUserId, friendId) +
+                    "_" +
+                    Math.max(currentUserId, friendId);
+            ws = new WebSocket(
+                    "ws://localhost:8080/TripsExeWeb/chatendpoint/" + currentRoomId
+                    );
 
             ws.onopen = function () {
                 console.log("Connected to room: " + currentRoomId);
@@ -373,29 +346,39 @@
                 let content = messageData[1] || event.data;
                 let isCurrentUser = senderId == currentUserId;
                 console.log(event.data);
-                let lineStyle = isCurrentUser ? 'justify-end' : 'items-start gap-2';
+                let lineStyle = isCurrentUser ? "justify-end" : "items-start gap-2";
                 let messageStyle = isCurrentUser ? "bg-[#0F6FEC]" : "bg-[#202227]";
-                const icon = isCurrentUser ? '' : `<span>
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                            width="45"
-                            height="45"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="lucide lucide-user-round bg-red-500 rounded-full">
-                            <circle cx="12" cy="8" r="5" />
-                            <path d="M20 21a8 8 0 0 0-16 0" />
-                            </svg>
-                            </span>`;
-                chatBox.innerHTML += `<div class="flex ` + lineStyle + `">` + icon +
+                const icon = isCurrentUser
+                        ? ""
+                        : `<span>
+            <svg xmlns="http://www.w3.org/2000/svg"
+            width="45"
+            height="45"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-user-round bg-red-500 rounded-full">
+            <circle cx="12" cy="8" r="5" />
+            <path d="M20 21a8 8 0 0 0-16 0" />
+            </svg>
+            </span>`;
+                chatBox.innerHTML +=
+                        `<div class="flex ` +
+                        lineStyle +
+                        `">` +
+                        icon +
                         `<div>
-                        <p class="text-sm py-2 px-3 rounded-md ` + messageStyle + `">` + content + `</p>
-                    </div>
-                </div>`;
-                chatBox.scrollIntoView({behavior: 'smooth', block: 'end'});
+          <p class="text-sm py-2 px-3 rounded-md ` +
+                        messageStyle +
+                        `">` +
+                        content +
+                        `</p>
+        </div>
+        </div>`;
+                chatBox.scrollIntoView({behavior: "smooth", block: "end"});
             };
 
             ws.onerror = function (error) {
@@ -404,10 +387,11 @@
 
             ws.onclose = function () {
                 let chatBox = document.getElementById("chat-box");
-                chatBox.innerHTML = '';
+                chatBox.innerHTML = "";
                 console.log("WebSocket closed");
             };
         }
+
         function sendMessage() {
             let message = document.getElementById("message").value;
             if (ws && message) {
@@ -417,5 +401,26 @@
                 console.log("WebSocket chưa sẵn sàng hoặc tin nhắn rỗng");
             }
         }
+
+        function toggleSelection(selectedLi) {
+            const allLi = document.querySelectorAll("li");
+            allLi.forEach((li) => {
+                li.classList.remove("bg-[#0D6EFD]");
+            });
+            selectedLi.classList.add("bg-[#0D6EFD]");
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const firstLi = document.querySelector("li");
+            if (firstLi) {
+                firstLi.classList.add("bg-[#0D6EFD]");
+                const firstFriendId = "${friends.size() > 0 ? friends[0].getUserId() : ''}";
+                if (firstFriendId) {
+                    openChat(firstFriendId);
+                }
+            } else {
+                console.log("Không tìm thấy thẻ li nào.");
+            }
+        });
     </script>
 </html>
