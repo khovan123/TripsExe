@@ -328,7 +328,7 @@
         </div>
         </div>`;
                 if (friendAvatarUrl != null) {
-                    let friendAvatarChatBoxEl = document.querySelectorAll('#chat-box .friend-avatar');
+                    let friendAvatarChatBoxEl = document.querySelectorAll('#chat-box img');
                     friendAvatarChatBoxEl.forEach(item => {
                         item.src = friendAvatarUrl;
                     })
@@ -425,7 +425,9 @@
                 if (firstFriendId) {
                     let friendName = document.getElementById("friend-name");
                     friendName.innerHTML = '${friends[0].getFullName()}';
+                    let friendAvatarEl = document.getElementById("friend-avatar");
                     friendAvatarUrl = '/TripsExeWeb/${friends[0].getAvatarUrl()}';
+                    friendAvatarEl.src = friendAvatarUrl;
                     openChat(firstFriendId);
                 }
             } else {
