@@ -57,12 +57,17 @@
                     <div class="p-5">
                         <div class="relative">
                             <input
+                                id="search"
+                                type="text"
                                 placeholder="Search for chats"
+                                onkeyup="handleSearch()"
+                                onfocus="handleSearch()"
                                 class="w-full pl-3 py-2 px-3 rounded-md placeholder:text-gray-400 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-[#191A1F] text-white"
                                 />
-                            <svg                              
+                            <svg                                      
+                                onclick="handleSearch()"
                                 xmlns="http://www.w3.org/2000/svg"
-                                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"
                                 viewBox="0 0 30 30"
                                 width="20px"
                                 height="20px"
@@ -74,33 +79,34 @@
                             </svg>
                         </div>
                     </div>
-                    <ul class="px-5 flex flex-col">
+                    <ul class="px-5 flex flex-col" id="search-suggestions">
                         <c:forEach var="friend" items="${friends}" varStatus="loop">
                             <li
                                 onclick="openChat('${friend.getUserId()}');
-                                        toggleSelection(this, '${fn:escapeXml(friend.getFullName())}');"
-                                class="flex items-start rounded-md gap-2 px-4 py-2 mb-[15px] cursor-pointer transition-all duration-200 ${loop.first ? 'bg-[#0D6EFD]' : ''}"
+                                        toggleSelection(this, '${fn:escapeXml(friend.getFullName())}', '<c:url value="${friend.getAvatarUrl()}"/>');"
+                                class="flex items-start rounded-md gap-2 px-4 py-2 mb-[15px] cursor-pointer transition-all duration-200 hover:bg-[#0D6EFD]/80"
                                 >
-                                <img
-                                    src='<c:url value="/public/images/dog-avatar.jpg"/>'
+                                <img                                    
+                                    src='<c:url value="${friend.getAvatarUrl()}"/>'
                                     alt="User Profile"
                                     class="w-12 h-12 object-cover rounded-full border-2 border-gray-400"
                                     />
                                 <div class="flex flex-col flex-1">
-                                    <p class="font-bold">${friend.getFullName()}</p>
+                                    <p class="font-bold" id="search-name">${friend.getFullName()}</p>
                                     <p class="text-sm text-gray-400">...</p>
                                 </div>
                             </li>
                         </c:forEach>
-                    </ul>
+                    </ul>                    
                 </aside>
 
                 <aside class="w-3/4 flex flex-col px-5 py-6">
                     <div
                         class="flex items-center justify-between pb-3 border-b-[1px] border-[#202227]"
                         >
-                        <div class="grow flex items-start gap-2">
+                        <div class="flex items-start gap-2 cursor-pointer hover:bg-white/25 rounded-lg px-[6px] py-[6px]">
                             <img
+                                id="friend-avatar"
                                 src='<c:url value="/public/images/avatar.png"/>'
                                 alt="User Profile"
                                 class="w-12 h-12 rounded-full border-2 border-gray-400"
@@ -128,7 +134,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-row">
+                        <div class="grow flex flex-row justify-end">
                             <button
                                 class="w-10 h-10 mr-[8px] rounded-full bg-[#0f6fec1a] text-[#0f6fec] flex items-center justify-center hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-300"
                                 >
@@ -272,7 +278,9 @@
         const fullName = "${fullName}";
         let ws = null;
         let currentRoomId = null;
-
+        let friendAvatarUrl = null;
+        let liSelectedPre = null;
+        let isSearch = false;
         function openChat(friendId) {
             if (ws) {
                 ws.close();
@@ -297,26 +305,15 @@
                 let senderId = messageData[0];
                 let content = messageData[1] || event.data;
                 let isCurrentUser = senderId == currentUserId;
-                console.log(event.data);
                 let lineStyle = isCurrentUser ? "justify-end pr-4" : "items-start gap-2";
                 let messageStyle = isCurrentUser ? "bg-[#0F6FEC]" : "bg-[#202227]";
                 const icon = isCurrentUser
                         ? ""
-                        : `<span>
-            <svg xmlns="http://www.w3.org/2000/svg"
-            width="45"
-            height="45"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-user-round bg-red-500 rounded-full">
-            <circle cx="12" cy="8" r="5" />
-            <path d="M20 21a8 8 0 0 0-16 0" />
-            </svg>
-            </span>`;
+                        : `<img
+                                src='<c:url value="/public/images/avatar.png"/>'
+                                alt="User Profile"
+                                class="w-12 h-12 rounded-full friend-avatar"
+                                />`;
                 chatBox.innerHTML +=
                         `<div class="flex ` +
                         lineStyle +
@@ -330,8 +327,15 @@
                         `</p>
         </div>
         </div>`;
+                if (friendAvatarUrl != null) {
+                    let friendAvatarChatBoxEl = document.querySelectorAll('#chat-box .friend-avatar');
+                    friendAvatarChatBoxEl.forEach(item => {
+                        item.src = friendAvatarUrl;
+                    })
+                }
                 chatBox.scrollIntoView({behavior: "smooth", block: "end"});
-            };
+            }
+            ;
 
             ws.onerror = function (error) {
                 console.error("WebSocket error: ", error);
@@ -354,29 +358,93 @@
             }
         }
 
-        function toggleSelection(selectedLi, fullname) {
-            const allLi = document.querySelectorAll("li");
+        function toggleSelection(selectedLi, fullname, avatarUrl) {
+            let searchEl = document.getElementById("search");
+            const allLi = document.querySelectorAll("#search-suggestions li");
+            if (searchEl.value != null) {
+                searchEl.value = '';
+                allLi.forEach((li) => {
+                    li.classList.remove("hidden");
+                })
+            }
+
             allLi.forEach((li) => {
                 li.classList.remove("bg-[#0D6EFD]");
+                li.classList.add("hover:bg-[#0D6EFD]/80")
             });
+            liSelectedPre = selectedLi;
             selectedLi.classList.add("bg-[#0D6EFD]");
+            selectedLi.classList.remove("hover:bg-[#0D6EFD]/80");
             let friendName = document.getElementById("friend-name");
             friendName.innerHTML = fullname;
+            friendAvatarUrl = avatarUrl;
+            let friendAvatarEl = document.getElementById("friend-avatar");
+            friendAvatarEl.src = avatarUrl;
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const firstLi = document.querySelector("li");
+        function handleSearch() {
+            isSearch = true;
+            let searchEl = document.getElementById("search");
+            let inputText = searchEl.value.toString().toLowerCase();
+            let searchSuggestionsEl = document.getElementById("search-suggestions");
+            let suggestionItemEl = searchSuggestionsEl.getElementsByTagName('li');
+            if (inputText.length == 0) {
+                for (let item of suggestionItemEl) {
+                    item.classList.add("hidden");
+                    item.classList.remove("bg-[#0D6EFD]");
+                    item.classList.add("hover:bg-[#0D6EFD]/80");
+                }
+            } else {
+                for (let item of suggestionItemEl) {
+                    let nameEl = item.querySelector("#search-name");
+                    let name = nameEl.textContent || nameEl.innerText;
+                    if (name.toLowerCase().indexOf(inputText) > -1) {
+                        item.classList.remove("hidden");
+                    }
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const messageInput = document.getElementById("message");
+            messageInput.addEventListener("keypress", (event) => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    sendMessage();
+                }
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const firstLi = document.querySelector("#search-suggestions li");
             if (firstLi) {
+                liSelectedPre = firstLi;
                 firstLi.classList.add("bg-[#0D6EFD]");
+                firstLi.classList.remove("hover:bg-[#0D6EFD]/80");
                 const firstFriendId = "${friends.size() > 0 ? friends[0].getUserId() : ''}";
                 if (firstFriendId) {
                     let friendName = document.getElementById("friend-name");
                     friendName.innerHTML = '${friends[0].getFullName()}';
+                    friendAvatarUrl = '/TripsExeWeb/${friends[0].getAvatarUrl()}';
                     openChat(firstFriendId);
                 }
             } else {
-                console.log("Không tìm thấy thẻ li nào.");
+                console.log("error:404");
             }
-        });
+
+            document.addEventListener("click", (event) => {
+                const searchInput = document.getElementById("search");
+                const suggestionItemEl = document.querySelectorAll("#search-suggestions li");
+                if (event.target.value === undefined) {
+                    searchInput.value = '';
+                    for (let item of suggestionItemEl) {
+                        item.classList.remove("hidden");
+                        liSelectedPre.classList.add("bg-[#0D6EFD]");
+                        liSelectedPre.classList.remove("hover:bg-[#0D6EFD]/80");
+                    }
+                }
+            });
+        }
+        );
     </script>
 </html>

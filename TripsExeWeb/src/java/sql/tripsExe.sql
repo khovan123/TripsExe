@@ -43,11 +43,11 @@ CREATE TABLE Messages (
 GO
 INSERT INTO UserTBL (username, email, password, fullName, additionalName, dob, gender, phoneNumber, avatarUrl, overview, premiumExpirationDate, premiumAccount, createdAt, updatedAt)
 VALUES 
-    ('user1', 'user1@example.com', 'pass123', 'Nguyen Van A', 'NVA', '1990-05-15', 1, '0901234567', 'http://example.com/avatar1.jpg', 'Tôi là người vui tính', '2025-12-31 23:59:59', 1, GETDATE(), GETDATE()),
-    ('user2', 'user2@example.com', 'pass456', 'Tran Thi B', NULL, '1995-08-20', 0, '0912345678', NULL, 'Yêu thích công nghệ', NULL, 0, GETDATE(), GETDATE()),
-    ('user3', 'user3@example.com', 'pass789', 'Le Van C', 'LVC', '1988-11-10', 1, '0923456789', 'http://example.com/avatar3.jpg', NULL, NULL, 0, GETDATE(), GETDATE()),
-    ('user4', 'user4@example.com', 'pass101', 'Pham Thi D', NULL, '1992-03-25', 0, '0934567890', NULL, 'Thích du lịch', '2024-06-30 23:59:59', 1, GETDATE(), GETDATE()),
-    ('user5', 'user5@example.com', 'pass112', 'Hoang Van E', 'HVE', '1993-07-07', 1, '0945678901', 'http://example.com/avatar5.jpg', 'Người yêu âm nhạc', NULL, 0, GETDATE(), GETDATE());
+    ('user1', 'user1@example.com', 'pass123', 'Nguyen Van A', 'NVA', '1990-05-15', 1, '0901234567', '/public/images/avatar.png', 'Tôi là người vui tính', '2025-12-31 23:59:59', 1, GETDATE(), GETDATE()),
+    ('user2', 'user2@example.com', 'pass456', 'Tran Thi B', NULL, '1995-08-20', 0, '0912345678', '/public/images/avatar.png', 'Yêu thích công nghệ', NULL, 0, GETDATE(), GETDATE()),
+    ('user3', 'user3@example.com', 'pass789', 'Le Van C', 'LVC', '1988-11-10', 1, '0923456789', '/public/images/dog-avatar.jpg', NULL, NULL, 0, GETDATE(), GETDATE()),
+    ('user4', 'user4@example.com', 'pass101', 'Pham Thi D', NULL, '1992-03-25', 0, '0934567890', '/public/images/avatar.png', 'Thích du lịch', '2024-06-30 23:59:59', 1, GETDATE(), GETDATE()),
+    ('user5', 'user5@example.com', 'pass112', 'Hoang Van E', 'HVE', '1993-07-07', 1, '0945678901', '/public/images/dog-avatar.jpg', 'Người yêu âm nhạc', NULL, 0, GETDATE(), GETDATE());
 
 GO
 INSERT INTO FriendTBL (userId1, userId2)
