@@ -367,6 +367,7 @@
                     li.classList.remove("hidden");
                 })
             }
+
             allLi.forEach((li) => {
                 li.classList.remove("bg-[#0D6EFD]");
                 li.classList.add("hover:bg-[#0D6EFD]/80")
@@ -428,7 +429,7 @@
                     openChat(firstFriendId);
                 }
             } else {
-                console.log("Không tìm thấy thẻ li nào.");
+                console.log("error:404");
             }
 
             document.addEventListener("click", (event) => {
