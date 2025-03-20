@@ -1,7 +1,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
-<section class="fixed z-10 px-[128px] bg-[#0f0f10] w-full h-fit py-1 flex items-center justify-center">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@page contentType="text/html" pageEncoding="UTF-8"%> 
+<!DOCTYPE html>
+<section
+    class="fixed z-10 px-[128px] bg-[#0f0f10] w-full h-fit py-1 flex items-center justify-center"
+    >
+    <nav class="w-full flex items-center justify-between py-1 bg-[#0f0f10]">
+        <div class="flex flex-row items-center flex-1">
+            <div class="relative">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                    viewBox="0 0 30 30"
+                    width="20px"
+                    height="20px"
+                    fill="currentColor"
+                    >
+                <path
+                    d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
+                    />
+                </svg>
+                <input
+                    placeholder="Search..."
+                    class="pl-10 py-2 px-3 rounded-md placeholder:text-gray-400 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-[#202227] text-white w-64"
+                    />
+            </div>
+    class="fixed z-10 px-[128px] bg-[#0f0f10] w-full h-fit py-1 flex items-center justify-center"
+    >
     <nav class="w-full flex items-center justify-between py-1 bg-[#0f0f10]">
         <div class="flex flex-row items-center flex-1">
             <div class="relative">
