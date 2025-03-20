@@ -64,14 +64,18 @@
                 Already have an account? <a href="/TripsExeWeb/pages/SignInPage.jsp" class="text-blue-500 hover:underline">Sign in here</a>
             </p>
             <form action="/TripsExeWeb/signUp" method="POST" class="flex flex-col gap-6">
-                <div class="">
+                <div>
                     <input name="email" type="email" placeholder="Enter your email" value="${email!=null?email:''}" class="w-full bg-[#191A1F] text-white rounded-md focus:outline-none border-1 border-[#303135] px-5 py-2 focus:border-blue-500 text-lg placeholder:text-[#ccc]" required>
                     <p class="text-[#ccc] text-sm text-left mt-1">We'll never share your email with anyone else.</p>
                 </div>
-                <div class="">
+                <div>
+                    <input name="fullName" type="text" placeholder="Enter your fullname" value="${fullName!=null?fullName:''}" class="w-full bg-[#191A1F] text-white rounded-md focus:outline-none border-1 border-[#303135] px-5 py-2 focus:border-blue-500 text-lg placeholder:text-[#ccc]" required>
+                    <p class="text-[#ccc] text-sm text-left mt-1">Who you are?</p>
+                </div>
+                <div>
                     <input name="password" type="password" placeholder="Enter new password" class="w-full bg-[#191A1F] text-white rounded-md focus:outline-none border-1 border-[#303135] px-5 py-2 focus:border-blue-500 text-lg placeholder:text-[#ccc]" required>
                 </div>
-                <div class="">
+                <div>
                     <p class="text-[#ccc] text-left text-sm pb-5">Easy peasy!</p>
                     <input name="confirm-password" type="password" placeholder="Confirm password" class="w-full bg-[#191A1F] text-white rounded-md focus:outline-none border-1 border-[#303135] px-5 py-2 focus:border-blue-500 text-lg placeholder:text-[#ccc]" required>
                 </div>

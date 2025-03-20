@@ -1,6 +1,6 @@
 package controller;
 
-import CRUD.FriendsDAO;
+import CRUD.FriendDAO;
 import CRUD.NotifyDAO;
 import CRUD.UserDAO;
 import java.io.IOException;
@@ -16,13 +16,13 @@ import model.User;
 public class AddFriendServlet extends HttpServlet {
 
     private UserDAO userDAO;
-    private FriendsDAO friendsDAO;
+    private FriendDAO friendsDAO;
     private NotifyDAO notifyDAO;
 
     @Override
     public void init() throws ServletException {
         userDAO = new UserDAO();
-        friendsDAO = new FriendsDAO();
+        friendsDAO = new FriendDAO();
         notifyDAO = new NotifyDAO();
     }
 

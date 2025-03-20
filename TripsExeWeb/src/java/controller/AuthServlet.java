@@ -26,6 +26,7 @@ public class AuthServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
@@ -40,72 +41,66 @@ public class AuthServlet extends HttpServlet {
         password = password.trim();
 
         if (request.getRequestURI().endsWith("/signIn")) {
+            User user = null;
             try {
-                User user = userDAO.getUserByEmail(email);
-                if (user == null) {
-                    request.setAttribute("error1", "Email is not correct!");
-                    request.getRequestDispatcher("/pages/SignInPage.jsp").forward(request, response);
-                    return;
-                }
-
-                if (!user.getPassword().equals(password)) {
-                    request.setAttribute("error2", "Password is not correct!");
-                    request.getRequestDispatcher("/pages/SignInPage.jsp").forward(request, response);
-                    return;
-                }
-
-                Cookie cookie1 = new Cookie("userId", String.valueOf(user.getUserId()));
-                response.addCookie(cookie1);
-                cookie1.setDomain("localhost");
-                cookie1.setHttpOnly(true);
-                cookie1.setMaxAge(60 * 60 * 24 * 7);
-
-                if (remember != null) {
-                    Cookie cookie2 = new Cookie("logIned", "true");
-                    response.addCookie(cookie2);
-                    cookie2.setDomain("localhost");
-                    cookie2.setHttpOnly(true);
-                    cookie2.setMaxAge(60 * 60 * 24 * 7);
-                }
-                response.sendRedirect("/pages/AuthPage.jsp");
+                user = userDAO.getUserByEmail(email);
             } catch (SQLException e) {
-                request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("/pages/ErrorPage.jsp").forward(request, response);
+                session.setAttribute("email", email);
+                session.setAttribute("error1", "Email is not correct!");
+                response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
+                return;
             }
+
+            if (!user.getPassword().equals(password)) {
+                session.setAttribute("email", email);
+                request.setAttribute("error2", "Password is not correct!");
+                request.getRequestDispatcher("/pages/SignInPage.jsp").forward(request, response);
+                return;
+            }
+
+            session.setAttribute("userId", user.getUserId());
+            session.setAttribute("fullName", user.getFullName());
+
+            if (remember != null) {
+                Cookie cookie2 = new Cookie("logIned", "true");
+                response.addCookie(cookie2);
+                cookie2.setHttpOnly(true);
+                cookie2.setMaxAge(60 * 60 * 24 * 7);
+            }
+
+            response.sendRedirect(request.getContextPath() + "/pages/HomePage.jsp");
+
         } else if (request.getRequestURI().endsWith("/signUp")) {
             if (confirmPassword == null || confirmPassword.trim().isEmpty()) {
-                request.setAttribute("error", "Authentication failed!");
-                request.getRequestDispatcher("/pages/ErrorPage.jsp").forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
                 return;
             }
             if (!confirmPassword.equals(password)) {
-                request.setAttribute("error3", "Confirm password must be correct!");
-                request.getRequestDispatcher("/pages/SignUpPage.jsp").forward(request, response);
+                session.setAttribute("error3", "Confirm password must be correct!");
+                response.sendRedirect(request.getContextPath() + "/pages/SignUpPage.jsp");
                 return;
             }
             try {
                 try {
                     if (userDAO.getUserByEmail(email) != null) {
-                        request.setAttribute("email", email);
-                        request.setAttribute("error1", "Email already exists!");
-                        request.getRequestDispatcher("/pages/SignUpPage.jsp").forward(request, response);
+                        session.setAttribute("error1", "Email already exists!");
+                        response.sendRedirect(request.getContextPath() + "/pages/SignUpPage.jsp");
                         return;
                     }
                 } catch (SQLException e) {
-
+                    session.setAttribute("error", e.getMessage());
+                    response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
+                    return;
                 }
                 userDAO.addUser(email, password);
                 User user = userDAO.getUserByEmail(email);
                 if (user == null) {
-                    request.setAttribute("error", "Create failed!");
-                    request.getRequestDispatcher("/pages/ErrorPage.jsp").forward(request, response);
+                    response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
                     return;
                 }
-                Cookie cookie1 = new Cookie("userId", String.valueOf(user.getUserId()));
-                response.addCookie(cookie1);
-                cookie1.setDomain("localhost");
-                cookie1.setHttpOnly(true);
-                cookie1.setMaxAge(60 * 60 * 24 * 7);
+
+                session.setAttribute("userId", user.getUserId());
+                session.setAttribute("fullName", user.getFullName());
 
                 if (remember != null) {
                     Cookie cookie2 = new Cookie("logIned", "true");
@@ -114,10 +109,10 @@ public class AuthServlet extends HttpServlet {
                     cookie2.setHttpOnly(true);
                     cookie2.setMaxAge(60 * 60 * 24 * 7);
                 }
-                response.sendRedirect("/pages/AuthPage.jsp");
+                response.sendRedirect(request.getContextPath() + "/pages/AuthPage.jsp");
             } catch (SQLException e) {
-                request.setAttribute("error", e.getMessage());
-                request.getRequestDispatcher("/pages/ErrorPage.jsp").forward(request, response);
+                session.setAttribute("error", e.getMessage());
+                response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
             }
         }
     }
