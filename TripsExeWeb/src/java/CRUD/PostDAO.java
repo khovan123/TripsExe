@@ -11,21 +11,15 @@ import java.util.List;
 public class PostDAO extends DBContext {
 
     public void addPost(Post post) throws SQLException {
-    boolean hasImage = post.getImageUrl() != null;
+        String sql = "INSERT INTO PostTBL (userId, content, imageUrl) VALUES(?,?,?)";
 
-    String sql = hasImage
-            ? "INSERT INTO PostTBL(title, content, imageUrl) VALUES(?,?,?)"
-            : "INSERT INTO PostTBL(title, content) VALUES(?,?)";
-
-    try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-        st.setString(1, post.getTitle());
-        st.setString(2, post.getContent());
-        if (hasImage) {
+        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
+            st.setInt(1, post.getUserId());
+            st.setString(2, post.getContent());
             st.setString(3, post.getImageUrl());
+            st.executeUpdate();
         }
-        st.executeUpdate();
     }
-}
 
     public Post getPostById(int postId) throws SQLException {
         String sql = "SELECT * FROM PostTBL WHERE postId = ?";
@@ -35,8 +29,8 @@ public class PostDAO extends DBContext {
             if (rs.next()) {
                 Post p = new Post();
                 p.setPostId(rs.getInt("postId"));
-                p.setTitle(rs.getString("title"));
-                p.setPostDate(rs.getDate("postDate"));
+                p.setUserId(rs.getInt("userId"));
+                p.setPostDate(rs.getDate("timestamp"));
                 p.setContent(rs.getString("content"));
                 p.setImageUrl(rs.getString("imageUrl"));
                 return p;
@@ -46,13 +40,11 @@ public class PostDAO extends DBContext {
     }
 
     public void updatePost(Post post) throws SQLException {
-        String sql = "UPDATE PostTBL SET title = ?, postDate = ?, content = ?, imageUrl = ? WHERE postId = ?";
+        String sql = "UPDATE PostTBL SET content = ?, imageUrl = ? WHERE postId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
-            st.setString(1, post.getTitle());
-            st.setTimestamp(2, new java.sql.Timestamp(post.getPostDate().getTime())); // Chuyển Date -> Timestamp
-            st.setString(3, post.getContent());
-            st.setString(4, post.getImageUrl());
-            st.setInt(5, post.getPostId());
+            st.setString(1, post.getContent());
+            st.setString(2, post.getImageUrl());
+            st.setInt(3, post.getPostId());
             st.executeUpdate();
         }
     }
@@ -64,16 +56,18 @@ public class PostDAO extends DBContext {
             st.executeUpdate();
         }
     }
-    
-      public List<Post> getAllPosts() throws SQLException {
+
+    public List<Post> getAllPosts(int userId) throws SQLException {
         List<Post> posts = new ArrayList<>();
-        String sql = "SELECT * FROM PostTBL ORDER BY postDate DESC";
-        try (PreparedStatement st = getConnection().prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+        String sql = "SELECT * FROM PostTBL WHERE userId = ? ORDER BY timestamp DESC";
+        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
+            st.setInt(1, userId);
+            ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Post post = new Post();
                 post.setPostId(rs.getInt("postId"));
-                post.setTitle(rs.getString("title"));
-                post.setPostDate(rs.getDate("postDate"));
+                post.setUserId(rs.getInt("userId"));
+                post.setPostDate(rs.getDate("timestamp"));
                 post.setContent(rs.getString("content"));
                 post.setImageUrl(rs.getString("imageUrl"));
                 posts.add(post);

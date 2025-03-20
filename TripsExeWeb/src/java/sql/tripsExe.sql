@@ -81,3 +81,12 @@ SELECT userId, fullName FROM UserTBL WHERE userId = 2
 SELECT * FROM Messages WHERE roomId = 'room_1_2' ORDER BY timestamp
 
 INSERT INTO Messages(userId, roomId, fullName, content)  VALUES (1, 'room_1_2', 'Nguyen Van A', 'Thang ngu')
+
+GO
+create table PostTBL(
+    postId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    userId INT NOT NULL,
+    content VARCHAR(500) NOT NULL,
+    imageUrl VARCHAR(255) NULL,
+    timestamp DATETIME DEFAULT GETDATE()
+);

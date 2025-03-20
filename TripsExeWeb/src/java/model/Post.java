@@ -6,23 +6,15 @@ public class Post {
 
     private int postId;
     private int userId;
-    private String title;
-    private Date postDate;
     private String content;
     private String imageUrl;
+    private Date postDate;
     private CommentsOfPost comments;
     private LikesOfPost likes;
 
     public Post() {
-    }
-
-    public Post(int postId, int userId, String title, Date postDate, String content, String imageUrl) {
-        this.postId = postId;
-        this.userId = userId;
-        this.title = title;
-        this.postDate = postDate;
-        this.content = content;
-        this.imageUrl = imageUrl;
+        this.imageUrl = null;
+        this.postDate = null;
         this.comments = new CommentsOfPost();
         this.likes = new LikesOfPost();
     }
@@ -41,14 +33,6 @@ public class Post {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-    
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public Date getPostDate() {
@@ -81,10 +65,5 @@ public class Post {
 
     public LikesOfPost getLikes() {
         return likes;
-    }
-
-    @Override
-    public String toString() {
-        return "Post{" + "postId=" + postId + ", title=" + title + ", postDate=" + postDate + ", content=" + content + ", imageUrl=" + imageUrl + ", comments=" + comments + ", likes=" + likes + '}';
     }
 }

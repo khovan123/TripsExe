@@ -254,7 +254,7 @@
 
             if (chatBtn) {
                 chatBtn.addEventListener("click", () => {
-                    window.location.href = "/TripsExeWeb/pages/ChattingPage.jsp";
+                    window.location.href = "/TripsExeWeb/chat";
                 });
             }
 
