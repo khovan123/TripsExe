@@ -18,7 +18,7 @@ public class ChatServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session == null || session.getAttribute("userId") == null) {
-            response.sendRedirect(request.getContextPath() + "/signIn");
+            response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
             return;
         }
 
@@ -27,13 +27,17 @@ public class ChatServlet extends HttpServlet {
 
         try {
             List<User> friends = friendDAO.getAll_Profile_OfFriends(userId);
-            request.setAttribute("friends", friends);
-            request.setAttribute("userId", userId);
-            request.setAttribute("fullName", fullName);
-            request.getRequestDispatcher("/pages/ChattingPage.jsp").forward(request, response);
+//            request.setAttribute("friends", friends);
+//            request.setAttribute("userId", userId);
+//            request.setAttribute("fullName", fullName);
+            session.setAttribute("friends", friends);
+            session.setAttribute("userId", userId);
+            session.setAttribute("fullName", fullName);
+//            request.getRequestDispatcher("/pages/ChattingPage.jsp").forward(request, response);
+            response.sendRedirect(request.getContextPath() + "/pages/ChattingPage.jsp");
         } catch (SQLException e) {
-            request.setAttribute("error", "Error fetching friends: " + e.getMessage());
-            request.getRequestDispatcher("/pages/ErrorPage.jsp").forward(request, response);
+            session.setAttribute("error", e.getMessage());
+            response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
         }
     }
 

@@ -48,7 +48,7 @@ public class FriendDAO extends DBContext {
     }
 
     public User getProfileOfFriendById(int userId) throws SQLException {
-        String sql = "SELECT userId, fullName FROM UserTBL WHERE userId = ?";
+        String sql = "SELECT userId, fullName, avatarUrl FROM UserTBL WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setInt(1, userId);
             ResultSet rs = st.executeQuery();
@@ -56,6 +56,7 @@ public class FriendDAO extends DBContext {
                 User friend = new User();
                 friend.setUserId(rs.getInt("userId"));
                 friend.setFullName(rs.getString("fullName"));
+                friend.setAvatarUrl(rs.getString("avatarUrl"));
                 return friend;
             } else {
                 throw new SQLException();
