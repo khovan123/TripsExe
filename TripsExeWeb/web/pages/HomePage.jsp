@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Home Page</title>
         <script src="https://unpkg.com/@tailwindcss/browser@4.0.0"></script>
         <!--<script src="https://cdn.tailwindcss.com"></script>-->
         <style>
@@ -96,7 +96,7 @@
                         <textarea placeholder="Share your thoughts..." class="flex-1 min-h-[60px] bg-[#191A1F] text-gray-400 p-3 rounded-md focus:outline-none resize-none overflow-hidden border-none"></textarea>
                     </div>
                     <div class="flex space-x-3">
-                        <button class="flex items-center text-gray-400 hover:cursor-pointer hover:text-[#0f6fec] duration-300 bg-[#202227] py-[4px] px-[8px] rounded-lg">
+                        <button id="open-photo-dialog" class="flex items-center text-gray-400 hover:cursor-pointer hover:text-[#0f6fec] duration-300 bg-[#202227] py-[4px] px-[8px] rounded-lg">
                             <svg class="text-[#0CBC87] w-[12px] mr-[8px]" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="text-success pe-2" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"></path></svg>
                             <span class="text-sm font-medium">Photo</span>
                         </button>
@@ -313,5 +313,107 @@
                 </div>
             </aside>
         </div>
+        <div
+            id="photo-dialog"
+            class="fixed inset-0 bg-black/50 flex items-center justify-center hidden"
+            >
+            <div class="bg-[#141519] rounded-lg p-6 w-full max-w-[500px] relative">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-white text-lg font-bold">Add post photo</h2>
+                    <button
+                        id="close-photo-dialog"
+                        class="text-gray-400 hover:text-white hover:cursor-pointer"
+                        >
+                        <svg
+                            class="w-7 h-7"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="mb-4">
+                    <textarea
+                        placeholder="Share your thoughts..."
+                        class="w-full min-h-[60px] bg-[#191A1F] text-gray-400 p-3 rounded-md focus:outline-none resize-none border-none text-white placeholder:text-gray-400"
+                        ></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-400 text-sm mb-2">Upload attachment</label>
+                    <div
+                        class="border-2 border-dashed border-gray-500 rounded-lg p-6 text-center"
+                        >
+                        <svg
+                            class="mx-auto w-8 h-8 text-gray-400 mb-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                            />
+                        </svg>
+                        <p class="text-gray-400 text-sm">
+                            Drag here or click to upload photo.
+                        </p>
+                        <input type="file" class="hidden" accept="image/*" />
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-3">
+                    <button
+                        id="cancel-photo-dialog"
+                        class="px-4 py-2 bg-transparent text-red-500 border border-red-500 rounded-md hover:bg-red-500 hover:text-white transition-all duration-200"
+                        >
+                        Cancel
+                    </button>
+                    <button
+                        class="px-4 py-2 bg-[#0CBC87] text-white rounded-md hover:bg-[#0AA875] transition-all duration-200"
+                        >
+                        Post
+                    </button>
+                </div>
+            </div>
+        </div>
     </body>
+    <script>
+        const openPhotoDialogBtn = document.getElementById("open-photo-dialog");
+        const photoDialog = document.getElementById("photo-dialog");
+        const closePhotoDialogBtn = document.getElementById("close-photo-dialog");
+        const cancelPhotoDialogBtn = document.getElementById("cancel-photo-dialog");
+
+        // Mở dialog khi click vào button "Photo"
+        openPhotoDialogBtn.addEventListener("click", () => {
+            photoDialog.classList.remove("hidden");
+        });
+
+        // Đóng dialog khi click vào nút "X" hoặc "Cancel"
+        closePhotoDialogBtn.addEventListener("click", () => {
+            photoDialog.classList.add("hidden");
+        });
+        cancelPhotoDialogBtn.addEventListener("click", () => {
+            photoDialog.classList.add("hidden");
+        });
+
+        // Đóng dialog khi click bên ngoài dialog
+        photoDialog.addEventListener("click", (e) => {
+            if (e.target === photoDialog) {
+                photoDialog.classList.add("hidden");
+            }
+        });
+    </script>
 </html>
