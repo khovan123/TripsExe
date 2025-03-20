@@ -27,13 +27,9 @@ public class ChatServlet extends HttpServlet {
 
         try {
             List<User> friends = friendDAO.getAll_Profile_OfFriends(userId);
-//            request.setAttribute("friends", friends);
-//            request.setAttribute("userId", userId);
-//            request.setAttribute("fullName", fullName);
             session.setAttribute("friends", friends);
             session.setAttribute("userId", userId);
             session.setAttribute("fullName", fullName);
-//            request.getRequestDispatcher("/pages/ChattingPage.jsp").forward(request, response);
             response.sendRedirect(request.getContextPath() + "/pages/ChattingPage.jsp");
         } catch (SQLException e) {
             session.setAttribute("error", e.getMessage());

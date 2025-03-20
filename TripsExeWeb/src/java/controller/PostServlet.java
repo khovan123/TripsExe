@@ -1,18 +1,15 @@
 package controller;
 
 import CRUD.PostDAO;
-import CRUD.UserDAO;
-import java.io.IOException;
-import java.io.PrintWriter;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import model.Post;
+import CRUD.*;
+import java.io.*;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.*;
+import jakarta.servlet.http.*;
+import java.sql.*;
+import model.*;
 
-@WebServlet(name = "PostServlet", urlPatterns = {"/post"})
+@WebServlet(urlPatterns = {"/post-add"})
 public class PostServlet extends HttpServlet {
 
     private UserDAO userDAO;
@@ -33,49 +30,29 @@ public class PostServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String requestURI = request.getRequestURI();
-
-        if (!requestURI.endsWith("/post")) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid request endpoint.");
+        HttpSession session = request.getSession(false);
+        if (session.getAttribute("userId") == null) {
+            response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
             return;
         }
+        if (requestURI.endsWith("/post-add")) {
+            int userId = (Integer) session.getAttribute("userId");
+            String content = request.getParameter("content");
+            String imageUrl = request.getParameter("imageUrl");
 
-        String title = request.getParameter("postTitle");
-        String content = request.getParameter("postContent");
-        String imageUrl = request.getParameter("postImage");
+            Post p = new Post();
+            p.setUserId(userId);
+            p.setContent(content);
+            p.setImageUrl(imageUrl);
 
-        if (title == null || title.trim().isEmpty() || content == null || content.trim().isEmpty()) {
-            request.setAttribute("errorMsg", "Error: Title and content cannot be null");
-            request.getRequestDispatcher("something.jsp").forward(request, response);
-            return;
-        }
-
-        if (imageUrl != null && !imageUrl.trim().isEmpty()) {
-            if (!isValidImageUrl(imageUrl)) {
-                request.setAttribute("errorMsg", "Error: Invalid image URL format. Accepted formats: .jpg, .jpeg, .png, .gif");
-                request.getRequestDispatcher("error.jsp").forward(request, response);
-                return;
+            try {
+                postDAO.addPost(p);
+                response.sendRedirect(request.getContextPath() + "/pages/HomePage.jsp");
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
             }
         }
-
-        Post p = new Post();
-        p.setTitle(title);
-        p.setContent(content);
-        p.setImageUrl(imageUrl);
-
-        try {
-            postDAO.addPost(p);
-
-            request.setAttribute("postSuccess", "Post has been successfully created!");
-            request.getRequestDispatcher("success.jsp").forward(request, response);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            request.setAttribute("errorMsg", "Error: Unable to create post. Please try again.");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
-        }
-    }
-
-    private boolean isValidImageUrl(String url) {
-        return url.matches("^(https?:\\/\\/.*\\.(\\w+))$");
     }
 
     @Override

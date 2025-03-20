@@ -1,17 +1,19 @@
 package controller;
 
-import CRUD.UserDAO;
-import java.io.IOException;
+import CRUD.*;
+import java.io.*;
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 import java.sql.*;
-import model.User;
+import java.util.List;
+import model.*;
 
 @WebServlet(urlPatterns = {"/signIn", "/signUp"})
 public class AuthServlet extends HttpServlet {
 
     private UserDAO userDAO;
+    private PostDAO postDAO;
 
     @Override
     public void init() throws ServletException {
@@ -33,8 +35,8 @@ public class AuthServlet extends HttpServlet {
         String confirmPassword = request.getParameter("confirm-password");
 
         if (email == null || email.trim().isEmpty() || password == null || password.trim().isEmpty()) {
-            request.setAttribute("error", "Authentication failed!");
-            request.getRequestDispatcher("/pages/ErrorPage.jsp").forward(request, response);
+            session.setAttribute("error", "Authentication failed!");
+            response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
             return;
         }
         email = email.trim();
@@ -53,11 +55,19 @@ public class AuthServlet extends HttpServlet {
 
             if (!user.getPassword().equals(password)) {
                 session.setAttribute("email", email);
-                request.setAttribute("error2", "Password is not correct!");
-                request.getRequestDispatcher("/pages/SignInPage.jsp").forward(request, response);
+                session.setAttribute("error2", "Password is not correct!");
+                response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
                 return;
             }
 
+            try {
+                List<Post> posts = postDAO.getAllPosts(user.getUserId());
+                session.setAttribute("posts", posts);
+            } catch (SQLException e) {
+                response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
+                return;
+            }
+            
             session.setAttribute("userId", user.getUserId());
             session.setAttribute("fullName", user.getFullName());
 
@@ -67,9 +77,7 @@ public class AuthServlet extends HttpServlet {
                 cookie2.setHttpOnly(true);
                 cookie2.setMaxAge(60 * 60 * 24 * 7);
             }
-
             response.sendRedirect(request.getContextPath() + "/pages/HomePage.jsp");
-
         } else if (request.getRequestURI().endsWith("/signUp")) {
             if (confirmPassword == null || confirmPassword.trim().isEmpty()) {
                 response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
