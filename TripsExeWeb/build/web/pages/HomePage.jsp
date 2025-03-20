@@ -79,17 +79,6 @@
             </aside>
 
             <main class="w-2/4 mr-6 overflow-y-auto">
-                <!--                <div class="bg-[#1a1a1b] rounded-lg p-4 mb-4">
-                                    <div class="flex items-center space-x-2 mb-4">
-                                        <h3 class="text-gray-400">Post a Story</h3>
-                                    </div>
-                                    <div class="flex space-x-2">
-                                        <img src="https://via.placeholder.com/40" alt="User Story" class="w-10 h-10 rounded-full">
-                                        <img src="https://via.placeholder.com/40" alt="User Story" class="w-10 h-10 rounded-full">
-                                        <img src="https://via.placeholder.com/40" alt="User Story" class="w-10 h-10 rounded-full">
-                                    </div>
-                                </div>-->
-
                 <div class="p-5 mb-5 border border-[#202227] bg-[#141519] rounded-md">
                     <div class="flex mb-4">
                         <img src="./../public/images/avatar.png" alt="User Profile" class="w-10 h-10 rounded-full mr-3">
@@ -101,15 +90,15 @@
                             <span class="text-sm font-medium">Photo</span>
                         </button>
                         <button class="flex items-center space-x-1 text-gray-400 hover:cursor-pointer hover:text-[#0f6fec] duration-300 bg-[#202227] py-[4px] px-[8px] rounded-lg">
-                            <svg class="text-[#4F9EF8] w-[12px] mr-[8px]" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="text-info pe-2" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0"></path><path d="M9 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6"></path><path d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"></path></svg>
+                            <svg class="text-[#4F9EF8] w-[12px] mr-[8px] text-info pe-2" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0"></path><path d="M9 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6"></path><path d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"></path></svg>
                             <span class="text-sm font-medium">Video</span>
                         </button>
                         <button class="flex items-center space-x-1 text-gray-400 hover:cursor-pointer hover:text-[#0f6fec] duration-300 bg-[#202227] py-[4px] px-[8px] rounded-lg">
-                            <svg class="text-[#D6293E] w-[12px] mr-[8px]" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="text-danger pe-2" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5m9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5M11.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"></path></svg>
+                            <svg class="text-[#D6293E] w-[12px] mr-[8px] text-danger pe-2" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5m9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5M11.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"></path></svg>
                             <span class="text-sm font-medium">Event</span>
                         </button>
                         <button class="flex items-center space-x-1 text-gray-400 hover:cursor-pointer hover:text-[#0f6fec] duration-300 bg-[#202227] py-[4px] px-[8px] rounded-lg">
-                            <svg class="text-[#F7C32E] w-[12px] mr-[8px]" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="text-warning pe-2" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5M4.285 9.567a.5.5 0 0 1 .683.183A3.5 3.5 0 0 0 8 11.5a3.5 3.5 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683M10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8"></path></svg>
+                            <svg class="text-[#F7C32E] w-[12px] mr-[8px] text-warning pe-2" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5M4.285 9.567a.5.5 0 0 1 .683.183A3.5 3.5 0 0 0 8 11.5a3.5 3.5 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683M10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8"></path></svg>
                             <span class="text-sm font-medium">Feeling/Activity</span>
                         </button>
                     </div>
@@ -126,9 +115,6 @@
                             </div>
                             <p class="text-sm text-gray-400">Web Developer at FSoft</p>
                         </div>
-                        <!--                        <button class="ml-auto text-gray-400 hover:text-white px-1 py-2 relative group p-10">
-                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"></path></svg>
-                                                </button>-->
                     </div>
 
                     <p class="text-gray-300 mb-4">Một FE Dev có các triệu chứng như đau lưng, mỏi gối, rụng tóc,... nhưng iu nghề <3 </p>
@@ -154,7 +140,7 @@
                     <div class="mb-4 flex items-center space-x-3">
                         <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
                         <div class="relative py-2 w-full">
-                            <input placeholder="Add a comment..." class="w-full min-h-[40px] bg-[#202227] text-gray-400 pl-3 pr-10 py-2 rounded-md focus:outline-none resize-none overflow-hidden border-1 border-gray-700 text-white placeholder:text-gray-400"></input>
+                            <input placeholder="Add a comment..." class="w-full min-h-[40px] bg-[#202227] text-gray-400 pl-3 pr-10 py-2 rounded-md focus:outline-none resize-none overflow-hidden border-1 border-gray-700 text-white placeholder:text-gray-400"/>
                             <button class="flex items-center justify-center w-12 h-10 absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#0f6fec] hover:cursor-pointer duration-300">
                                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
@@ -176,46 +162,8 @@
                                     <span class="mr-3 text-gray-400">•</span>
                                     <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Reply</button>
                                     <span class="mr-3 text-gray-400">•</span>
-                                    <!--<button class="hover:text-white">View 2 replies</button>-->
                                     <span class="cursor-default select-none">45 minutes ago</span>
                                 </div>
-
-                                <!--                                <div class="space-y-3 mt-3 ml-10">
-                                                                     Reply 1: Dennis Barrett 
-                                                                    <div class="flex space-x-3">
-                                                                        <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
-                                                                        <div class="flex-1">
-                                                                            <div class="bg-[#191A1F] p-3 rounded-lg">
-                                                                                <p class="font-semibold text-white">Dennis Barrett</p>
-                                                                                <p class="text-gray-300">See reserved goodness felicity shy civility domestic had but. Drawings offended yet answered Jennings perceive.</p>
-                                                                            </div>
-                                                                            <div class="flex space-x-3 text-gray-400 text-sm mt-1">
-                                                                                <button class="hover:text-white">Like (5)</button>
-                                                                                <button class="hover:text-white">Reply</button>
-                                                                                <span>2 hours ago</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                
-                                                                     Reply 2: Lori Ferguson 
-                                                                    <div class="flex space-x-3">
-                                                                        <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
-                                                                        <div class="flex-1">
-                                                                            <div class="bg-[#191A1F] p-3 rounded-lg">
-                                                                                <p class="font-semibold text-white">Lori Ferguson</p>
-                                                                                <p class="text-gray-300">Wishing calling is warrant settled was lucky.</p>
-                                                                            </div>
-                                                                            <div class="flex space-x-3 text-gray-400 text-sm mt-1">
-                                                                                <button class="hover:text-white">Like (0)</button>
-                                                                                <button class="hover:text-white">Reply</button>
-                                                                                <span>35 minutes ago</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                
-                                                                     Load More Replies 
-                                                                    <button class="text-gray-400 hover:text-white text-sm ml-10">... Load more replies</button>
-                                                                </div>-->
                             </div>
                         </div>
 
@@ -231,13 +179,11 @@
                                     <span class="mr-3 text-gray-400">•</span>
                                     <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Reply</button>
                                     <span class="mr-3 text-gray-400">•</span>
-                                    <!--<button class="hover:text-white">View 2 replies</button>-->
                                     <span class="cursor-default select-none">50 minutes ago</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Load More Comments -->
                         <button class="text-gray-400 text-sm hover:text-[#0f6fec] hover:cursor-pointer">... Load more comments</button>
                     </div>
                 </div>

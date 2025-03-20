@@ -13,7 +13,7 @@
             }
         } 
     if(logIned!=null && logIned.equals("true")){
-        response.sendRedirect("AuthPage.jsp");
+        response.sendRedirect(request.getContextPath()+"HomePage.jsp");
     }
 %>
 <html>
@@ -67,7 +67,7 @@
             </p>
             <form action="/TripsExeWeb/signIn" method="POST" class="flex flex-col gap-4">
                 <div class="relative">
-                    <input name="email" type="email" placeholder="user@demo.com" class="w-full bg-[#191A1F] text-white rounded-md focus:outline-none border-1 border-[#303135] px-5 py-2 focus:border-blue-500 text-lg placeholder:text-[#ccc]" required>
+                    <input name="email" value="${email!=null?email:''}" type="email" placeholder="user@demo.com" class="w-full bg-[#191A1F] text-white rounded-md focus:outline-none border-1 border-[#303135] px-5 py-2 focus:border-blue-500 text-lg placeholder:text-[#ccc]" required>
                     <c:if test="${error1!=null}">
                         <p class="text-red-600 text-left">${error1}</p>
                     </c:if>

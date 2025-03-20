@@ -79,17 +79,6 @@
             </aside>
 
             <main class="w-2/4 mr-6 overflow-y-auto">
-                <!--                <div class="bg-[#1a1a1b] rounded-lg p-4 mb-4">
-                                    <div class="flex items-center space-x-2 mb-4">
-                                        <h3 class="text-gray-400">Post a Story</h3>
-                                    </div>
-                                    <div class="flex space-x-2">
-                                        <img src="https://via.placeholder.com/40" alt="User Story" class="w-10 h-10 rounded-full">
-                                        <img src="https://via.placeholder.com/40" alt="User Story" class="w-10 h-10 rounded-full">
-                                        <img src="https://via.placeholder.com/40" alt="User Story" class="w-10 h-10 rounded-full">
-                                    </div>
-                                </div>-->
-
                 <div class="p-5 mb-5 border border-[#202227] bg-[#141519] rounded-md">
                     <div class="flex mb-4">
                         <img src="./../public/images/avatar.png" alt="User Profile" class="w-10 h-10 rounded-full mr-3">
@@ -126,9 +115,6 @@
                             </div>
                             <p class="text-sm text-gray-400">Web Developer at FSoft</p>
                         </div>
-                        <!--                        <button class="ml-auto text-gray-400 hover:text-white px-1 py-2 relative group p-10">
-                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"></path></svg>
-                                                </button>-->
                     </div>
 
                     <p class="text-gray-300 mb-4">Một FE Dev có các triệu chứng như đau lưng, mỏi gối, rụng tóc,... nhưng iu nghề <3 </p>
@@ -176,46 +162,8 @@
                                     <span class="mr-3 text-gray-400">•</span>
                                     <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Reply</button>
                                     <span class="mr-3 text-gray-400">•</span>
-                                    <!--<button class="hover:text-white">View 2 replies</button>-->
                                     <span class="cursor-default select-none">45 minutes ago</span>
                                 </div>
-
-                                <!--                                <div class="space-y-3 mt-3 ml-10">
-                                                                     Reply 1: Dennis Barrett 
-                                                                    <div class="flex space-x-3">
-                                                                        <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
-                                                                        <div class="flex-1">
-                                                                            <div class="bg-[#191A1F] p-3 rounded-lg">
-                                                                                <p class="font-semibold text-white">Dennis Barrett</p>
-                                                                                <p class="text-gray-300">See reserved goodness felicity shy civility domestic had but. Drawings offended yet answered Jennings perceive.</p>
-                                                                            </div>
-                                                                            <div class="flex space-x-3 text-gray-400 text-sm mt-1">
-                                                                                <button class="hover:text-white">Like (5)</button>
-                                                                                <button class="hover:text-white">Reply</button>
-                                                                                <span>2 hours ago</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                
-                                                                     Reply 2: Lori Ferguson 
-                                                                    <div class="flex space-x-3">
-                                                                        <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
-                                                                        <div class="flex-1">
-                                                                            <div class="bg-[#191A1F] p-3 rounded-lg">
-                                                                                <p class="font-semibold text-white">Lori Ferguson</p>
-                                                                                <p class="text-gray-300">Wishing calling is warrant settled was lucky.</p>
-                                                                            </div>
-                                                                            <div class="flex space-x-3 text-gray-400 text-sm mt-1">
-                                                                                <button class="hover:text-white">Like (0)</button>
-                                                                                <button class="hover:text-white">Reply</button>
-                                                                                <span>35 minutes ago</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                
-                                                                     Load More Replies 
-                                                                    <button class="text-gray-400 hover:text-white text-sm ml-10">... Load more replies</button>
-                                                                </div>-->
                             </div>
                         </div>
 
@@ -231,13 +179,11 @@
                                     <span class="mr-3 text-gray-400">•</span>
                                     <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Reply</button>
                                     <span class="mr-3 text-gray-400">•</span>
-                                    <!--<button class="hover:text-white">View 2 replies</button>-->
                                     <span class="cursor-default select-none">50 minutes ago</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Load More Comments -->
                         <button class="text-gray-400 text-sm hover:text-[#0f6fec] hover:cursor-pointer">... Load more comments</button>
                     </div>
                 </div>
