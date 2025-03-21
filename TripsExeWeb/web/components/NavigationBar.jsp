@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%@page contentType="text/html" pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
 <section class="fixed z-10 px-[128px] bg-[#0f0f10] w-full h-fit py-1 flex items-center justify-center">
     <nav class="w-full flex items-center justify-between py-1 bg-[#0f0f10]">
@@ -142,7 +141,7 @@
                             >
                         <div>
                             <div class="flex items-center">
-                                <p class="font-semibold text-white mr-3">Khang Nguyễn</p>
+                                <p class="font-semibold text-white mr-3">Khang Nguy?n</p>
                             </div>
                             <p class="text-sm text-gray-400">Web Developer at FSoft</p>
                         </div>
@@ -181,10 +180,8 @@
         </ul>
     </nav>
 
-    <!-- Script để xử lý tất cả sự kiện click -->
     <script>
         (function () {
-            // Đóng gói logic trong IIFE để tránh xung đột
             const openUserDialogBtn = document.getElementById("open-user-dialog");
             const userDialog = document.getElementById("user-dialog");
             const viewProfileBtn = document.getElementById("view-profile-btn");
@@ -197,7 +194,6 @@
             const settingsBtn = document.getElementById("settings-btn");
             const notificationBtn = document.getElementById("notification-btn");
 
-            // Xử lý mở/ẩn dialog
             if (openUserDialogBtn && userDialog) {
                 openUserDialogBtn.addEventListener("click", (e) => {
                     e.preventDefault();
@@ -214,7 +210,6 @@
                 });
             }
 
-            // Xử lý điều hướng cho các nút
             if (viewProfileBtn) {
                 viewProfileBtn.addEventListener("click", () => {
                     window.location.href = "/TripsExeWeb/pages/UserProfile.jsp";
@@ -223,7 +218,6 @@
 
             if (signOutBtn) {
                 signOutBtn.addEventListener("click", () => {
-                    // Thay thế "#" bằng đường dẫn thực tế nếu cần
                     window.location.href = "#";
                 });
             }
