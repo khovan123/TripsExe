@@ -1,0 +1,38 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# Ignore build directories
+build/
+TripsExeWeb/build/
+
+# Ignore IDE-specific files
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# NetBeans
+nbproject/
+
+# Ignore temporary files and logs
+*.log
+*.tmp
+*.bak
+
+# Ignore Tomcat-specific files (if any)
+*.pid
+*.lck
+work/
+logs/
+
+# Ignore Maven build directory (if you use Maven)
+target/
+
+# Ignore compiled class files
+*.class
+
+# Ignore dependency directories
+lib/
+
+# Ignore build configuration file (if not needed)
+build.xml
