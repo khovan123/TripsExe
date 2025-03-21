@@ -5,6 +5,7 @@
 # Ignore build directories
 build/
 TripsExeWeb/build/
+TripsExeWeb/dist/
 
 # Ignore IDE-specific files
 # IntelliJ IDEA
