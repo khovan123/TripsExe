@@ -293,12 +293,10 @@
             ws = new WebSocket(
                     "ws://localhost:8080/TripsExeWeb/chatendpoint/" + currentRoomId
                     );
-
             ws.onopen = function () {
                 console.log("Connected to room: " + currentRoomId);
                 ws.send("userId=" + currentUserId + "&fullName=" + fullName);
             };
-
             ws.onmessage = function (event) {
                 let chatBox = document.getElementById("chat-box");
                 let messageData = event.data.toString().split(":", 2);
@@ -328,19 +326,17 @@
         </div>
         </div>`;
                 if (friendAvatarUrl != null) {
-                    let friendAvatarChatBoxEl = document.querySelectorAll('#chat-box img');
+                    let friendAvatarChatBoxEl = document.querySelectorAll('#chat-box .friend-avatar');
                     friendAvatarChatBoxEl.forEach(item => {
                         item.src = friendAvatarUrl;
-                    })
+                    });
                 }
                 chatBox.scrollIntoView({behavior: "smooth", block: "end"});
             }
             ;
-
             ws.onerror = function (error) {
                 console.error("WebSocket error: ", error);
             };
-
             ws.onclose = function () {
                 let chatBox = document.getElementById("chat-box");
                 chatBox.innerHTML = "";
@@ -365,24 +361,23 @@
                 searchEl.value = '';
                 allLi.forEach((li) => {
                     li.classList.remove("hidden");
-                })
+
+
+                    li.classList.remove("bg-[#0D6EFD]");
+                    li.classList.add("hover:bg-[#0D6EFD]/80")
+                });
+                liSelectedPre = selectedLi;
+                selectedLi.classList.add("bg-[#0D6EFD]");
+                selectedLi.classList.remove("hover:bg-[#0D6EFD]/80");
+                let friendName = document.getElementById("friend-name");
+                friendName.innerHTML = fullname;
+                friendAvatarUrl = avatarUrl;
+                let friendAvatarEl = document.getElementById("friend-avatar");
+                friendAvatarEl.src = avatarUrl;
             }
-
-            allLi.forEach((li) => {
-                li.classList.remove("bg-[#0D6EFD]");
-                li.classList.add("hover:bg-[#0D6EFD]/80")
-            });
-            liSelectedPre = selectedLi;
-            selectedLi.classList.add("bg-[#0D6EFD]");
-            selectedLi.classList.remove("hover:bg-[#0D6EFD]/80");
-            let friendName = document.getElementById("friend-name");
-            friendName.innerHTML = fullname;
-            friendAvatarUrl = avatarUrl;
-            let friendAvatarEl = document.getElementById("friend-avatar");
-            friendAvatarEl.src = avatarUrl;
         }
-
-        function handleSearch() {
+        function handleSearch()
+        {
             isSearch = true;
             let searchEl = document.getElementById("search");
             let inputText = searchEl.value.toString().toLowerCase();
@@ -405,6 +400,7 @@
             }
         }
 
+
         document.addEventListener("DOMContentLoaded", () => {
             const messageInput = document.getElementById("message");
             messageInput.addEventListener("keypress", (event) => {
@@ -415,7 +411,8 @@
             });
         });
 
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () =>
+        {
             const firstLi = document.querySelector("#search-suggestions li");
             if (firstLi) {
                 liSelectedPre = firstLi;
@@ -428,6 +425,7 @@
                     let friendAvatarEl = document.getElementById("friend-avatar");
                     friendAvatarUrl = '/TripsExeWeb/${friends[0].getAvatarUrl()}';
                     friendAvatarEl.src = friendAvatarUrl;
+
                     openChat(firstFriendId);
                 }
             } else {

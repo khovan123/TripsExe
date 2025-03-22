@@ -3,10 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< Upstream, based on origin/master
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/CRUD/PostDAO.java</file>
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/web/pages/ChattingPage.jsp</file>
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/model/Post.java</file>
+=======
+            <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/web/pages/ChattingPage.jsp</file>
+            <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/CRUD/FriendDAO.java</file>
+            <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/web/pages/SignInPage.jsp</file>
+            <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/model/User.java</file>
+            <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/web/components/NavigationBar.jsp</file>
+>>>>>>> e95de88 feat<Chatting>: add avatarUrl, searching feature, 'Enter' key
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/web/pages/HomePage.jsp</file>
+            <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/controller/AuthServlet.java</file>
+            <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/websocket/ChatServlet.java</file>
+            <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/CRUD/UserDAO.java</file>
         </group>
     </open-files>
 </project-private>
