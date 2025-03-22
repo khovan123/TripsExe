@@ -7,9 +7,10 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 import java.sql.*;
+import java.util.*;
 import model.*;
 
-@WebServlet(urlPatterns = {"/post-add"})
+@WebServlet(urlPatterns = {"/post-add", "/post-load"})
 public class PostServlet extends HttpServlet {
 
     private UserDAO userDAO;
@@ -24,6 +25,22 @@ public class PostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String requestURI = request.getRequestURI();
+        HttpSession session = request.getSession(false);
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
+            return;
+        }
+        if (requestURI.endsWith("/post-load")) {
+            try {
+                List<Post> posts = postDAO.getAllPosts(user.getUserId());
+                session.setAttribute("posts", posts);
+                response.sendRedirect(request.getContextPath() + "/pages/HomePage.jsp");
+            } catch (SQLException e) {
+                response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
+            }
+        }
     }
 
     @Override
@@ -31,23 +48,24 @@ public class PostServlet extends HttpServlet {
             throws ServletException, IOException {
         String requestURI = request.getRequestURI();
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("userId") == null) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
             response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
             return;
         }
         if (requestURI.endsWith("/post-add")) {
-            int userId = (Integer) session.getAttribute("userId");
+            int userId = user.getUserId();
             String content = request.getParameter("content");
             String imageUrl = request.getParameter("imageUrl");
-
+            String activity = request.getParameter("activity");
             Post p = new Post();
             p.setUserId(userId);
             p.setContent(content);
             p.setImageUrl(imageUrl);
-
+            p.setActivity(activity);
             try {
                 postDAO.addPost(p);
-                response.sendRedirect(request.getContextPath() + "/pages/HomePage.jsp");
+                response.sendRedirect(request.getContextPath() + "/post-load");
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");

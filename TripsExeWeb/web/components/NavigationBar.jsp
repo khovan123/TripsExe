@@ -123,7 +123,7 @@
                     class="size-[40px] flex items-center justify-center bg-[#202227] rounded-md hover:cursor-pointer focus:outline-none"
                     >
                     <img
-                        src='<c:url value="/public/images/dog-avatar.jpg"/>'
+                        src='<c:url value="${user.getAvatarUrl()}"/>'
                         alt="User Profile"
                         class="w-10 h-10 rounded-md object-cover"
                         />
@@ -218,13 +218,13 @@
 
             if (signOutBtn) {
                 signOutBtn.addEventListener("click", () => {
-                    window.location.href = "#";
+                    window.location.href = "/TripsExeWeb/sign-out";
                 });
             }
 
             if (homeBtn) {
                 homeBtn.addEventListener("click", () => {
-                    window.location.href = "/TripsExeWeb/pages/HomePage.jsp";
+                    window.location.href = "/TripsExeWeb/post-load";
                 });
             }
 

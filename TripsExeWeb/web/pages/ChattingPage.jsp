@@ -274,8 +274,8 @@
         </main>
     </body>
     <script>
-        const currentUserId = "${userId}";
-        const fullName = "${fullName}";
+        const currentUserId = "${user.getUserId()}";
+        const fullName = "${user.getFullName()}";
         let ws = null;
         let currentRoomId = null;
         let friendAvatarUrl = null;
