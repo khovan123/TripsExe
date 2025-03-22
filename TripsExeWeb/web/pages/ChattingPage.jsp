@@ -329,7 +329,7 @@
         </div>
         </div>`;
                 if (friendAvatarUrl != null) {
-                    let friendAvatarChatBoxEl = document.querySelectorAll('#chat-box img');
+                    let friendAvatarChatBoxEl = document.querySelectorAll('#chat-box .friend-avatar');
                     friendAvatarChatBoxEl.forEach(item => {
                         item.src = friendAvatarUrl;
                     });
