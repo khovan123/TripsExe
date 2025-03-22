@@ -4,8 +4,6 @@ import connectDB.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import model.User;
 
 public class UserDAO extends DBContext {
@@ -21,7 +19,7 @@ public class UserDAO extends DBContext {
     }
 
     public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ?, phoneNumber = ?, fullName = ?, additionalName = ?, avatarUrl = ?, overview = ?, dob = ?, gender = ?, premiumExpirationDate = ?, premiumAccount = ? WHERE userId = ?";
+        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ?, phoneNumber = ?, fullName = ?, additionalName = ?, overview = ?, dob = ?, gender = ? WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, user.getUsername());
             st.setString(2, user.getPassword());
@@ -33,8 +31,6 @@ public class UserDAO extends DBContext {
             st.setString(8, user.getOverview());
             st.setDate(9, user.getDob());
             st.setBoolean(10, user.isGender());
-            st.setDate(11, user.getPremiumExpirationDate());
-            st.setBoolean(12, user.isPremiumAccount());
             st.setInt(13, user.getUserId());
             st.executeUpdate();
         }
@@ -46,17 +42,6 @@ public class UserDAO extends DBContext {
             st.setInt(1, userId);
             st.executeUpdate();
         }
-    }
-
-    public List<User> getAllUsers() throws SQLException {
-        List<User> list = new ArrayList<>();
-        String sql = "SELECT * FROM UserTBL";
-        try (PreparedStatement st = getConnection().prepareStatement(sql); ResultSet rs = st.executeQuery()) {
-            while (rs.next()) {
-                list.add(mapResultSetToUser(rs));
-            }
-        }
-        return list;
     }
 
     public User getUserById(int userId) throws SQLException {
@@ -71,9 +56,47 @@ public class UserDAO extends DBContext {
             }
         }
     }
+//            (SELECT COUNT(DISTINCT l.userId) FROM LikeTBL l WHERE l.postId = p.postId) AS likes,
 
     public User getUserByEmail(String email) throws SQLException {
-        String sql = "SELECT * FROM UserTBL WHERE email = ?";
+        String sql = """
+                    SELECT 
+                         u.userId, 
+                     	u.username,
+                         u.email,
+                     	u.password,	
+                         u.fullName,
+                     	u.additionalName,
+                     	u.dob,
+                     	u.gender,
+                     	u.phoneNumber,
+                         u.avatarUrl,
+                     	u.overview,
+                     	u.premiumExpirationDate,
+                     	u.premiumAccount,
+                         COUNT(DISTINCT p.postId) AS posts, 
+                         COUNT(DISTINCT CASE WHEN f.userId1 = u.userId THEN f.userId2 
+                                             WHEN f.userId2 = u.userId THEN f.userId1 
+                                             END) AS friends
+                     FROM UserTBL u 
+                     LEFT JOIN PostTBL p ON p.userId = u.userId 
+                     LEFT JOIN FriendTBL f ON f.userId1 = u.userId OR f.userId2 = u.userId 
+                     WHERE u.email = ?
+                     GROUP BY u.userId, 
+                     	u.username,
+                         u.email,
+                     	u.password,	
+                         u.fullName,
+                     	u.additionalName,
+                     	u.dob,
+                     	u.gender,
+                     	u.phoneNumber,
+                         u.avatarUrl,
+                     	u.overview,
+                     	u.premiumExpirationDate,
+                     	u.premiumAccount
+                     ORDER BY u.userId;
+        """;
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
@@ -100,6 +123,8 @@ public class UserDAO extends DBContext {
         u.setGender(rs.getBoolean("gender"));
         u.setPremiumExpirationDate(rs.getDate("premiumExpirationDate"));
         u.setPremiumAccount(rs.getBoolean("premiumAccount"));
+        u.setPosts(rs.getInt("posts"));
+        u.setFriends(rs.getInt("friends"));
         return u;
     }
 }

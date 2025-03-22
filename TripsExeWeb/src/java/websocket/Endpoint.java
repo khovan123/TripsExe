@@ -1,15 +1,12 @@
 package websocket;
 
-import CRUD.ChatDAO;
+import CRUD.*;
 import jakarta.websocket.*;
 import jakarta.websocket.server.*;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import model.Message;
+import java.io.*;
+import java.sql.*;
+import java.util.*;
+import model.*;
 
 @ServerEndpoint("/chatendpoint/{roomId}")
 public class Endpoint {
@@ -21,6 +18,7 @@ public class Endpoint {
     public void onOpen(Session session, @PathParam("roomId") String roomId) {
         Map<Session, String> roomClients = rooms.computeIfAbsent(roomId, k -> Collections.synchronizedMap(new HashMap<>()));
         roomClients.put(session, roomId);
+        rooms.put(roomId, roomClients);
     }
 
     @OnMessage

@@ -119,17 +119,7 @@
                 font-size: 14px;
                 color: #D1D2D3;
             }
-            .dialog-footer .add-to-post .icons {
-                display: flex;
-                gap: 12px;
-                justify-content: space-between;
-            }
-            .dialog-footer .add-to-post .icons button {
-                background: none;
-                border: none;
-                cursor: pointer;
-                font-size: 20px;
-            }
+
             .dialog-footer .post-button {
                 width: 100%;
                 background: #4A4E54;
@@ -153,25 +143,25 @@
 
         <div class="px-[128px] pt-20 text-white min-h-fit flex">
             <aside class="w-1/4 h-fit mr-6 border border-[#202227] bg-[#141519] rounded-md">
-                <img src="./../public/images/profile-background.jpg" alt="User Background" class="w-full h-14 object-cover rounded-t-lg">
+                <img src='<c:url value="${user.getAvatarUrl()}"/>' alt="User Background" class="w-full h-14 object-cover rounded-t-lg">
                 <div class="relative">
-                    <img src="./../public/images/avatar.png" alt="User Profile" class="w-16 h-16 rounded-md border-[3px] object-cover border-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <img src='<c:url value="${user.getAvatarUrl()}"/>' alt="User Profile" class="w-16 h-16 rounded-md border-[3px] object-cover border-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 </div>
                 <div class="mx-5 mt-11 pb-4 flex flex-col justify-center border-b border-[#202227]">
-                    <h2 class="text-lg font-semibold text-center">Khang Nguyễn</h2>
-                    <p class="text-sm text-gray-400 text-center">Web Developer at FSoft</p>
-                    <p class="text-base text-gray-400 mt-4 text-center">I’d love to change the world, but they won’t give me the source code.</p>
+                    <h2 class="text-lg font-semibold text-center">${user.getFullName()}</h2>
+                    <p class="text-sm text-gray-400 text-center">${user.getAdditionalName()}</p>
+                    <p class="text-base text-gray-400 mt-4 text-center">${user.getOverview()}</p>
                     <div class="flex justify-between mt-4 text-center divide-x divide-gray-700">
                         <div class="flex-1">
-                            <p class="font-bold">256</p>
+                            <p class="font-bold">${user.getPosts()}</p>
                             <p class="text-sm text-gray-400">Post</p>
                         </div>
                         <div class="flex-1">
-                            <p class="font-bold">2.5K</p>
+                            <p class="font-bold">${user.getFriends()}</p>
                             <p class="text-sm text-gray-400">Followers</p>
                         </div>
                         <div class="flex-1">
-                            <p class="font-bold">365</p>
+                            <p class="font-bold">${user.getFriends()}</p>
                             <p class="text-sm text-gray-400">Following</p>
                         </div>
                     </div>
@@ -206,13 +196,13 @@
                         <span class="font-bold text-white group-hover:text-[#0f6fec] duration-300">Settings</span>
                     </a>
                 </nav>
-                <a href="#" class="block mt-4 py-3 text-[#0f6fec] text-sm font-medium text-center hover:cursor-pointer border-t-[1px] border-[#202227]">View Profile</a>
+                <a href="/TripsExeWeb/post-load-me" class="block mt-4 py-3 text-[#0f6fec] text-sm font-medium text-center hover:cursor-pointer border-t-[1px] border-[#202227]">View Profile</a>
             </aside>
 
             <main class="w-2/4 mr-6 overflow-y-auto">
                 <div class="p-5 mb-5 border border-[#202227] bg-[#141519] rounded-md">
                     <div class="flex mb-4">
-                        <img src="./../public/images/avatar.png" alt="User Profile" class="w-10 h-10 rounded-full mr-3">
+                        <img src='<c:url value="${user.getAvatarUrl()}"/>' alt="User Profile" class="w-10 h-10 rounded-full mr-3">
                         <textarea id="open-post-dialog" name="content" placeholder="Share your thoughts..." class="flex-1 min-h-[60px] bg-[#191A1F] text-gray-400 p-3 rounded-md focus:outline-none resize-none overflow-hidden border-none"></textarea>
                     </div>
                     <div class="flex space-x-3">
@@ -239,30 +229,33 @@
                 </c:if>
                 <c:if test="${posts!=null}">
                     <c:forEach var="post" items="${posts}">
-                        <div class="p-5 mb-5 border border-[#202227] bg-[#141519] rounded-md" id=post.getPostId()>
+                        <div class="p-5 mb-5 border border-[#202227] bg-[#141519] rounded-md" >
                             <div class="flex items-center space-x-3 mb-4">
-                                <img src="./../public/images/avatar.png" alt="User Profile" class="w-10 h-10 rounded-full">
+                                <img src='<c:url value="${post.getAvatarUrl()}"/>' alt="User Profile" class="w-10 h-10 rounded-full">
                                 <div>
                                     <div class="flex items-center">
-                                        <p class="font-semibold text-white mr-3">Khang Nguyễn</p>
+                                        <p class="font-semibold text-white mr-3">${post.getFullName()}</p>
                                         <span class="mr-3 text-gray-400">•</span>
-                                        <span class="text-sm text-gray-400 ">2 hours ago</span>
+                                        <span class="text-sm text-gray-400 ">${post.getPostDate()}</span>
                                     </div>
-                                    <p class="text-sm text-gray-400">Web Developer at FSoft</p>
+                                    <p class="text-sm text-gray-400">${post.getActivity()}</p>
                                 </div>
                             </div>
-                            <p class="text-gray-300 mb-4">Một FE Dev có các triệu chứng như đau lưng, mỏi gối, rụng tóc,... nhưng iu nghề <3 </p>
-                            <img src="./../public/images/post-image.jpg" alt="Post Image" class="w-full rounded-lg mb-4">
+                            <p class="text-gray-300 mb-4">${post.getContent()}</p>
+                            <img src='<c:url value="${post.getImageUrl()}"/>' alt="Post Image" class="w-full rounded-lg mb-4">
                             <div class="flex items-center justify-between text-gray-400 text-sm mb-4">
                                 <div class="flex space-x-4">
-                                    <button class="flex items-center hover:cursor-pointer hover:text-[#0f6fec] duration-300">
+                                    <button
+                                        id="like-btn-${post.getPostId()}"
+                                        onclick="toggleLike('${post.getPostId()}')" 
+                                        class="flex items-center hover:cursor-pointer duration-300 ${post.isLiked()?"text-[#0f6fec]":"hover:text-[#0f6fec]"}">
                                         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="pe-1" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"></path></svg>
-                                        <span>Liked (56)</span>
+                                        <span id="like-count-${post.getPostId()}">Liked (${post.getLikes()})</span>                                    
                                     </button>
                                     <button class="flex items-center space-x-1 hover:cursor-pointer hover:text-[#0f6fec] duration-300">
                                         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="pe-1" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"></path></svg>
-                                        <span>Comments (12)</span>
-                                    </button>
+                                        <span>Comments (${post.getComments()})</span>
+                                    </button>                        
                                 </div>
                                 <button class="flex items-center space-x-1 hover:cursor-pointer hover:text-[#0f6fec] duration-300">
                                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="flip-horizontal ps-1" height="16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"></path></svg>
@@ -270,131 +263,53 @@
                                 </button>
                             </div>
                             <div class="mb-4 flex items-center space-x-3">
-                                <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
+                                <img src='<c:url value="${user.getAvatarUrl()}"/>' alt="User Profile" class="w-8 h-8 rounded-full">
                                 <div class="relative py-2 w-full">
-                                    <input placeholder="Add a comment..." class="w-full min-h-[40px] bg-[#202227] text-gray-400 pl-3 pr-10 py-2 rounded-md focus:outline-none resize-none overflow-hidden border-1 border-gray-700 text-white placeholder:text-gray-400"/>
-                                    <button class="flex items-center justify-center w-12 h-10 absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#0f6fec] hover:cursor-pointer duration-300">
+                                    <input
+                                        id="comment-${post.getPostId()}-${user.getUserId()}"
+                                        onclick="openComment('${post.getPostId()}')"
+                                        placeholder="Add a comment..." 
+                                        class="w-full min-h-[40px] bg-[#202227] text-gray-400 pl-3 pr-10 py-2 rounded-md focus:outline-none resize-none overflow-hidden border-1 border-gray-700 text-white placeholder:text-gray-400"/>
+                                    <button                             
+                                        onclick="sendComment('${post.getPostId()}')"
+                                        class="flex items-center justify-center w-12 h-10 absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#0f6fec] hover:cursor-pointer duration-300">
                                         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
                                         </svg>
                                     </button>
                                 </div>
                             </div>
-                            <div class="space-y-4">
-                                <div class="flex space-x-3">
-                                    <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
-                                    <div class="flex-1">
-                                        <div class="bg-[#202227] p-3 rounded-lg">
-                                            <p class="font-bold text-base text-white mb-1">Minh Phan</p>
-                                            <p class="text-sm font-normal text-gray-300">Lưng t cũng không khác lưng m là mấy, tóc t cũng thế</p>
-                                        </div>
-                                        <div class="flex space-x-3 text-gray-400 text-sm mt-1">
-                                            <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Like (3)</button>
-                                            <span class="mr-3 text-gray-400">•</span>
-                                            <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Reply</button>
-                                            <span class="mr-3 text-gray-400">•</span>
-                                            <span class="cursor-default select-none">45 minutes ago</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flex space-x-3">
-                                    <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
-                                    <div class="flex-1">
-                                        <div class="bg-[#202227] p-3 rounded-lg">
-                                            <p class="font-bold text-base text-white mb-1">Huy Quang</p>
-                                            <p class="text-sm font-normal text-gray-300">Lưng m đau tuổi với lưng t</p>
-                                        </div>
-                                        <div class="flex space-x-3 text-gray-400 text-sm mt-1">
-                                            <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Like (2)</button>
-                                            <span class="mr-3 text-gray-400">•</span>
-                                            <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Reply</button>
-                                            <span class="mr-3 text-gray-400">•</span>
-                                            <span class="cursor-default select-none">50 minutes ago</span>
+                            <div class="space-y-4" id="static-comment-box-${post.getPostId()}">
+                                <c:forEach var="comment" items="${post.getCommentList()}">
+                                    <div class="flex space-x-3">
+                                        <img src='<c:url value="${post.getAvatarUrl()}"/>' alt="User Profile" class="w-8 h-8 rounded-full">
+                                        <div class="flex-1">
+                                            <div class="bg-[#202227] p-3 rounded-lg">
+                                                <p class="font-bold text-base text-white mb-1">${comment.getFullName()}</p>
+                                                <p class="text-sm font-normal text-gray-300">${comment.getText()}</p>
+                                                <c:if test="${comment.getImageUrl() != null}">
+                                                    <img src="${comment.getImageUrl()}" alt="Comment Image" class="max-w-[200px] mt-2 rounded-md">
+                                                </c:if>
+                                            </div>
+                                            <div class="flex space-x-3 text-gray-400 text-sm mt-1">
+                                                <span class="cursor-default select-none">${ comment.getTimestamp()}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <button class="text-gray-4 00 text-sm hover:text-[#0f6fec] hover:cursor-pointer">... Load more comments</button>
+                                </c:forEach>                                
+                            </div>
+                            <div class="space-y-4" id="comment-box-${post.getPostId()}">
+                            </div>
+                            <div class="space-y-4" id="load-more-${post.getPostId()}">
+                                <c:if test="${post.getCommentList().size() > 0}">
+                                    <div class="flex justify-center">
+                                        <button type="button" onclick="loadMoreComments('${post.getPostId()}')" class="text-gray-400 text-sm hover:text-[#0f6fec] hover:cursor-pointer">Load more comments</button>
+                                    </div>
+                                </c:if>
                             </div>
                         </div>
                     </c:forEach>
-                </c:if>
-                <div class="p-5 mb-5 border border-[#202227] bg-[#141519] rounded-md">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <img src="./../public/images/avatar.png" alt="User Profile" class="w-10 h-10 rounded-full">
-                        <div>
-                            <div class="flex items-center">
-                                <p class="font-semibold text-white mr-3">Khang Nguyễn</p>
-                                <span class="mr-3 text-gray-400">•</span>
-                                <span class="text-sm text-gray-400 ">2 hours ago</span>
-                            </div>
-                            <p class="text-sm text-gray-400">Web Developer at FSoft</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 mb-4">Một FE Dev có các triệu chứng như đau lưng, mỏi gối, rụng tóc,... nhưng iu nghề <3 </p>
-                    <img src="./../public/images/post-image.jpg" alt="Post Image" class="w-full rounded-lg mb-4">
-                    <div class="flex items-center justify-between text-gray-400 text-sm mb-4">
-                        <div class="flex space-x-4">
-                            <button class="flex items-center hover:cursor-pointer hover:text-[#0f6fec] duration-300">
-                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="pe-1" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"></path></svg>
-                                <span>Liked (56)</span>
-                            </button>
-                            <button class="flex items-center space-x-1 hover:cursor-pointer hover:text-[#0f6fec] duration-300">
-                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="pe-1" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"></path></svg>
-                                <span>Comments (12)</span>
-                            </button>
-                        </div>
-                        <button class="flex items-center space-x-1 hover:cursor-pointer hover:text-[#0f6fec] duration-300">
-                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="flip-horizontal ps-1" height="16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"></path></svg>
-                            <span>Share (3)</span>
-                        </button>
-                    </div>
-                    <div class="mb-4 flex items-center space-x-3">
-                        <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
-                        <div class="relative py-2 w-full">
-                            <input placeholder="Add a comment..." class="w-full min-h-[40px] bg-[#202227] text-gray-400 pl-3 pr-10 py-2 rounded-md focus:outline-none resize-none overflow-hidden border-1 border-gray-700 text-white placeholder:text-gray-400"/>
-                            <button class="flex items-center justify-center w-12 h-10 absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#0f6fec] hover:cursor-pointer duration-300">
-                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex space-x-3">
-                            <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
-                            <div class="flex-1">
-                                <div class="bg-[#202227] p-3 rounded-lg">
-                                    <p class="font-bold text-base text-white mb-1">Minh Phan</p>
-                                    <p class="text-sm font-normal text-gray-300">Lưng t cũng không khác lưng m là mấy, tóc t cũng thế</p>
-                                </div>
-                                <div class="flex space-x-3 text-gray-400 text-sm mt-1">
-                                    <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Like (3)</button>
-                                    <span class="mr-3 text-gray-400">•</span>
-                                    <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Reply</button>
-                                    <span class="mr-3 text-gray-400">•</span>
-                                    <span class="cursor-default select-none">45 minutes ago</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex space-x-3">
-                            <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
-                            <div class="flex-1">
-                                <div class="bg-[#202227] p-3 rounded-lg">
-                                    <p class="font-bold text-base text-white mb-1">Huy Quang</p>
-                                    <p class="text-sm font-normal text-gray-300">Lưng m đau tuổi với lưng t</p>
-                                </div>
-                                <div class="flex space-x-3 text-gray-400 text-sm mt-1">
-                                    <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Like (2)</button>
-                                    <span class="mr-3 text-gray-400">•</span>
-                                    <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Reply</button>
-                                    <span class="mr-3 text-gray-400">•</span>
-                                    <span class="cursor-default select-none">50 minutes ago</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="text-gray-4 00 text-sm hover:text-[#0f6fec] hover:cursor-pointer">... Load more comments</button>
-                    </div>
-                </div>
+                </c:if>                
             </main>
 
             <aside class="w-1/4">
@@ -412,55 +327,7 @@
                             <button class="w-10 h-10 rounded-full bg-[#0f6fec1a] text-[#0f6fec] flex items-center justify-center hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-400">
                                 <span><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c-17.67 0-32-14.33-32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
                             </button>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <img src="./../public/images/avatar.png" alt="User Profile" class="w-12 h-12 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Huy Quang</p>
-                                    <p class="text-sm text-gray-400">BE Developer</p>
-                                </div>
-                            </div>
-                            <button class="w-10 h-10 rounded-full bg-[#0f6fec1a] text-[#0f6fec] flex items-center justify-center hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-400">
-                                <span><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c-17.67 0-32-14.33-32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                            </button>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <img src="./../public/images/avatar.png" alt="User Profile" class="w-12 h-12 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Duyên Võ</p>
-                                    <p class="text-sm text-gray-400">Chicken Gang</p>
-                                </div>
-                            </div>
-                            <button class="w-10 h-10 rounded-full bg-[#0f6fec1a] text-[#0f6fec] flex items-center justify-center hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-400">
-                                <span><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c-17.67 0-32-14.33-32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                            </button>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <img src="./../public/images/avatar.png" alt="User Profile" class="w-12 h-12 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Kiệt Nguyễn</p>
-                                    <p class="text-sm text-gray-400">Designer</p>
-                                </div>
-                            </div>
-                            <button class="w-10 h-10 rounded-full bg-[#0f6fec1a] text-[#0f6fec] flex items-center justify-center hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-400">
-                                <span><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c-17.67 0-32-14.33-32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                            </button>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <img src="./../public/images/avatar.png" alt="User Profile" class="w-12 h-12 rounded-full">
-                                <div>
-                                    <p class="font-semibold">Thư Nguyễn</p>
-                                    <p class="text-sm text-gray-400">Designer, Freelancer</p>
-                                </div>
-                            </div>
-                            <button class="w-10 h-10 rounded-full bg-[#0f6fec1a] text-[#0f6fec] flex items-center justify-center hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-400">
-                                <span><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c-17.67 0-32-14.33-32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
-                            </button>
-                        </div>
+                        </div>                                               
                     </div>
                     <button class="block w-full py-[8px] mt-4 rounded bg-[#0f6fec1a] text-sm font-medium text-[#0f6fec] hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-400">View more</button>
                 </div>
@@ -471,12 +338,12 @@
             <form class="dialog hidden" action="/TripsExeWeb/post-add" method="post">
                 <div class="dialog-header">
                     <h2>Create post</h2>
-                    <button id="close-create-post-dialog">✕</button>
+                    <button type="button" id="close-create-post-dialog">✕</button>
                 </div>
 
                 <div class="user-info">
-                    <img src="./../public/images/avatar.png" alt="User Avatar">
-                    <p>Khang Nguyễn</p>
+                    <img src='<c:url value="${user.getAvatarUrl()}"/>' alt="User Avatar">
+                    <p>${user.getFullName()}</p>                   
                 </div>
 
                 <div>
@@ -487,7 +354,7 @@
                     <div class="bg-[#141519] rounded-lg p-6 w-full max-w-[500px] relative">
                         <div class="flex items-center justify-between mb-6">
                             <h2 class="text-white text-lg font-bold">Add photo</h2>
-                            <button id="close-photo-dialog" class="text-gray-400 hover:text-white hover:cursor-pointer">
+                            <button type="button" id="close-photo-dialog" class="text-gray-400 hover:text-white hover:cursor-pointer">                               
                                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
@@ -506,18 +373,62 @@
                     </div>
                 </div>
 
+                <div id="activity-dialog" class="bg-black/50 flex items-center justify-center hidden">                   
+                    <div class="rounded-lg p-6 w-full max-w-[500px] relative">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-white text-lg font-bold">Share your activity</h2>
+                            <button type="button" id="close-activity-dialog" class="text-gray-400 hover:text-white hover:cursor-pointer">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mb-4">
+                            <input placeholder="Add activity" type="text" name="activity" id="activity"/>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="dialog-footer">
                     <div class="add-to-post">
-                        <div class="icons">
-                            <button id="open-photo-dialog-from-create">📷</button>
-                            <button>👤</button>
-                            <button>😊</button>
-                            <button>📍</button>
-                            <button>GIF</button>
+                        <div class="flex gap-4">
+                            <button type="button" id="open-photo-dialog-from-create" class="cursor-pointer ">
+                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                     width="16" 
+                                     height="16" 
+                                     viewBox="0 0 24 24" 
+                                     fill="none" 
+                                     stroke="#45BD62" 
+                                     stroke-width="2.25" 
+                                     stroke-linecap="round" 
+                                     stroke-linejoin="round" 
+                                     class="lucide lucide-images">
+                                <path d="M18 22H4a2 2 0 0 1-2-2V6"/>
+                                <path d="m22 13-1.296-1.296a2.41 2.41 0 0 0-3.408 0L11 18"/>
+                                <circle cx="12" cy="8" r="2"/><rect width="16" height="16" x="6" y="2" rx="2"/>
+                                </svg>
+                            </button>
+                            <button type="button" id="open-activity-dialog-from-create" class="cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                     width="16" 
+                                     height="16" 
+                                     viewBox="0 0 24 24" 
+                                     fill="none" 
+                                     stroke="#EEB428" 
+                                     stroke-width="2.25" 
+                                     stroke-linecap="round" 
+                                     stroke-linejoin="round" 
+                                     class="lucide lucide-smile">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                <line x1="9" x2="9.01" y1="9" y2="9"/>
+                                <line x1="15" x2="15.01" y1="9" y2="9"/>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                     <button type="submit" class="post-button">Post</button>
-                </div>
+                </div>              
             </form>
         </div>
     </body>
@@ -529,10 +440,17 @@
         const createPostDialogChild = createPostDialog.querySelector(".dialog");
         const closeCreatePostDialogBtn = document.getElementById("close-create-post-dialog");
         const openPhotoDialogFromCreateBtn = document.getElementById("open-photo-dialog-from-create");
-        const textarea = createPostDialog.querySelector('textarea');
+        const textareaEl = createPostDialog.querySelector('textarea');
+        const openActivityDialogFromCreateBtn = document.getElementById("open-activity-dialog-from-create");
+        const activityDialog = document.getElementById("activity-dialog");
+        const closeActivityDialogBtn = document.getElementById("close-activity-dialog");
 
         closePhotoDialogBtn.addEventListener("click", () => {
             photoDialog.classList.add("hidden");
+        });
+
+        closeActivityDialogBtn.addEventListener("click", () => {
+            activityDialog.classList.add("hidden");
         });
 
         openCreatePostDialogBtn.addEventListener("click", () => {
@@ -557,14 +475,175 @@
             }
         });
 
-        openPhotoDialogFromCreateBtn.addEventListener("click", () => {
-            createPostDialog.classList.add("hidden");
+        openPhotoDialogFromCreateBtn.addEventListener("click", (e) => {
+            e.preventDefault();
             photoDialog.classList.remove("hidden");
+            activityDialog.classList.add("hidden");
         });
 
-        textarea.addEventListener('input', function () {
+        openActivityDialogFromCreateBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            activityDialog.classList.remove("hidden");
+            photoDialog.classList.add("hidden");
+        });
+
+        textareaEl.addEventListener('input', function () {
             let postBtn = this.closest('.dialog').querySelector('.post-button');
             postBtn.classList.toggle('enabled', this.value.length > 0);
         });
+
+        const currentUserId = "${user.getUserId()}";
+        const fullName = "${user.getFullName()}";
+        let wsComment = null;
+        let currentPostId = null;
+        let commentOffset = {};
+
+        function openComment(postId) {
+            if (wsComment && currentPostId === postId) {
+                return;
+            }
+            if (wsComment) {
+                wsComment.close();
+            }
+            currentPostId = postId;
+            if (!commentOffset[postId]) {
+                commentOffset[postId] = 3;
+            }
+
+            wsComment = new WebSocket("ws://localhost:8080/TripsExeWeb/commentendpoint/" + postId);
+
+            wsComment.onopen = function () {
+                console.log("Connected to room: " + postId);
+                wsComment.send("userId=" + currentUserId + "&fullName=" + fullName);
+            };
+
+            wsComment.onmessage = function (event) {
+                let commentBox = document.getElementById("comment-box-" + currentPostId);
+                let data = event.data;
+                console.log(data);
+
+                if (data.startsWith("remainingCmt:")) {
+                    let remaining = parseInt(data.split(":")[1]);
+                    let loadMoreBtn = document.querySelector('#load-more-' + currentPostId + ' .flex.justify-center');
+                    if (loadMoreBtn) {
+                        loadMoreBtn.style.display = remaining > 0 ? "flex" : "none";
+                    }
+                    return;
+                }
+
+                let comment = JSON.parse(data);
+                let content = '';
+                if (comment.imageUrl) {
+                    content = '<p class="text-sm font-normal text-gray-300">' + comment.text + '</p>' +
+                            '<img src="/TripsExeWeb' + comment.imageUrl + '" alt="Comment Image" class="max-w-[200px] mt-2 rounded-md">';
+                } else {
+                    content = '<p class="text-sm font-normal text-gray-300">' + comment.text + '</p>';
+                }
+
+                commentBox.innerHTML +=
+                        '<div class="flex space-x-3">' +
+                        '<img src="/TripsExeWeb' + comment.avatarUrl + '" alt="User Profile" class="w-8 h-8 rounded-full">' +
+                        '<div class="flex-1">' +
+                        '<div class="bg-[#202227] p-3 rounded-lg">' +
+                        '<p class="font-bold text-base text-white mb-1">' + comment.fullName + '</p>' +
+                        content +
+                        '</div>' +
+                        '<div class="flex space-x-3 text-gray-400 text-sm mt-1">' +
+                        '<button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Like (0)</button>' +
+                        '<span class="mr-3 text-gray-400">•</span>' +
+                        '<button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Reply</button>' +
+                        '<span class="mr-3 text-gray-400">•</span>' +
+                        '<span class="cursor-default select-none">' + new Date(comment.timestamp).toLocaleString() + '</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+            };
+
+            wsComment.onerror = function (error) {
+                console.error("WebSocket error: ", error);
+            };
+
+            wsComment.onclose = function () {
+                let commentBox = document.getElementById("comment-box-" + postId);
+                commentBox.innerHTML = "";
+                commentOffset[currentPostId] = 5;
+                console.log("WebSocket closed at: " + postId);
+            };
+        }
+
+        function sendComment(postId) {
+            let id = "comment-" + postId + "-${user.getUserId()}";
+            let comment = document.getElementById(id).value;
+            if (wsComment && comment && currentPostId === postId) {
+                wsComment.send(comment);
+                document.getElementById(id).value = "";
+                commentOffset[postId]++;
+            } else {
+                console.log("WebSocket chưa sẵn sàng hoặc tin nhắn rỗng");
+            }
+        }
+
+        function loadMoreComments(postId) {
+            if (!wsComment || currentPostId !== postId) {
+                openComment(postId);
+                setTimeout(function () {
+                    wsComment.send("load:" + commentOffset[postId]);
+                }, 100);
+            } else {
+                wsComment.send("load:" + commentOffset[postId]);
+            }
+            commentOffset[postId] += 5;
+        }
+
+        let wsLike = null;
+        function toggleLike(postId) {
+            if (!wsLike || currentPostId !== postId) {
+                if (wsLike) {
+                    wsLike.close();
+                }
+                currentPostId = postId;
+                wsLike = new WebSocket("ws://localhost:8080/TripsExeWeb/likeendpoint/" + currentPostId);
+
+                wsLike.onopen = function () {
+                    console.log("Like WebSocket opened for post: " + postId);
+                    wsLike.send("userId=" + currentUserId);
+                };
+
+                wsLike.onmessage = function (event) {
+                    let likeCountSpan = document.getElementById("like-count-" + currentPostId);
+                    let likeBtn = document.getElementById("like-btn-" + currentPostId);
+                    let data = event.data;
+                    if (data.startsWith("update:")) {
+                        let updates = data.split("&");
+                        let count = parseInt(updates[0].split(":")[1]);
+                        likeCountSpan.innerHTML = "Liked (" + count + ")";
+                        if (updates[1].split(":")[1] === "1") {
+                            likeBtn.classList.add("text-[#0f6fec]");
+                        } else {
+                            likeBtn.classList.remove("text-[#0f6fec]");
+                        }
+                    } else {
+                        console.log("Like error: " + data);
+                    }
+                };
+
+                wsLike.onerror = function (error) {
+                    console.error("Like WebSocket error for post " + currentPostId + ": ", error);
+                };
+
+                wsLike.onclose = function () {
+                    console.log("Like WebSocket closed for post: " + currentPostId);
+                };
+            } else {
+                wsLike.send("like");
+            }
+        }
+
+        window.onload = function () {
+            if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+                console.log("Page reloaded, fetching data from /post-load");
+                window.location.href = "/TripsExeWeb/post-load";
+            }
+        };
     </script>
 </html>

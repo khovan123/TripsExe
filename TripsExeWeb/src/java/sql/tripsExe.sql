@@ -86,7 +86,91 @@ GO
 create table PostTBL(
     postId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     userId INT NOT NULL,
+    activity VARCHAR(255) NULL, 
     content VARCHAR(500) NOT NULL,
     imageUrl VARCHAR(255) NULL,
     timestamp DATETIME DEFAULT GETDATE()
 );
+
+INSERT INTO PostTBL (userId, activity, content, imageUrl, timestamp)
+VALUES 
+    (1, 'Feeling happy 😊', 'Just got a new job! Excited for this journey.', NULL, '2025-03-01 08:30:00'),
+    (1, 'Traveling ✈️', 'Exploring the beautiful city of Paris!', 'paris_trip.jpg', '2025-03-02 14:15:00'),
+    (1, 'Having dinner 🍽️', 'Delicious homemade pasta tonight.', 'pasta_dinner.jpg', '2025-03-02 19:00:00'),
+    (1, 'Watching a movie 🎬', 'Just finished watching Inception. Mind blown! 🤯', NULL, '2025-03-03 21:45:00'),
+    (2, 'Working out 💪', 'Early morning gym session. Feeling pumped!', 'gym_morning.jpg', '2025-03-04 06:00:00'),
+    (2, 'Sharing a memory 📸', 'Throwback to last year’s beach vacation.', 'beach_memory.jpg', '2025-03-05 12:30:00'),
+    (2, 'Celebrating 🎉', 'Happy Birthday to me! Thank you for all the wishes!', 'birthday_party.jpg', '2025-03-06 18:00:00'),
+    (3, 'Gaming 🎮', 'Just hit rank 1 in my favorite game! Let’s go!', 'gaming_victory.jpg', '2025-03-07 22:00:00'),
+    (3, 'Enjoying nature 🌿', 'Hiking in the mountains, what a view!', 'mountain_hike.jpg', '2025-03-08 09:15:00'),
+    (1, 'Pet lover 🐶', 'Meet my new puppy, Charlie!', 'cute_puppy.jpg', '2025-03-09 16:45:00');
+SELECT p.*, u.fullName ,u.avatarUrl FROM PostTBL p JOIN UserTBL u ON p.userId = u.userId WHERE p.userId = 1 ORDER BY timestamp DESC;
+
+CREATE TABLE LikeTBL (
+    postId INT NOT NULL,
+    userId INT NOT NULL,
+    PRIMARY KEY (postId, userId)
+);
+
+CREATE TABLE CommentTBL (
+    postId INT NOT NULL,
+    userId INT NOT NULL,
+    text VARCHAR(500) NOT NULL,
+    imageUrl VARCHAR(255) NULL,
+    timestamp DATETIME DEFAULT GETDATE(),
+    PRIMARY KEY (postId, userId, timestamp)
+);
+
+SELECT p.*, u.fullName, u.avatarUrl, COUNT(DISTINCT l.userId) AS likes, COUNT(DISTINCT c.userId) AS comments FROM PostTBL p JOIN UserTBL u ON p.userId = u.userId LEFT JOIN LikeTBL l ON p.postId = l.postId LEFT JOIN CommentTBL c ON p.postId = c.postId WHERE p.postId = 1 GROUP BY p.postId, p.userId, p.activity, p.content, p.imageUrl, p.timestamp, u.fullName, u.avatarUrl ORDER BY p.timestamp DESC;
+
+SELECT 
+    p.*, 
+    u.fullName, 
+    u.avatarUrl, 
+    (SELECT COUNT(DISTINCT l.userId) FROM LikeTBL l WHERE l.postId = p.postId) AS likes,
+    (SELECT COUNT(*) FROM CommentTBL c WHERE c.postId = p.postId) AS comments
+FROM PostTBL p 
+JOIN UserTBL u ON p.userId = u.userId 
+ORDER BY p.timestamp DESC;
+
+
+SELECT *, (SELECT COUNT(DISTINCT p.postId) FROM PostTBL p WHERE p.userId = u.userId) AS posts FROM UserTBL u WHERE email = 'user1@example.com';
+
+SELECT 
+    u.userId, 
+	u.username,
+    u.email,
+	u.password,	
+    u.fullName,
+	u.additionalName,
+	u.dob,
+	u.gender,
+	u.phoneNumber,
+    u.avatarUrl,
+	u.overview,
+	u.premiumExpirationDate,
+	u.premiumAccount,
+    COUNT(DISTINCT p.postId) AS posts, 
+    COUNT(DISTINCT CASE WHEN f.userId1 = u.userId THEN f.userId2 
+                        WHEN f.userId2 = u.userId THEN f.userId1 
+                        END) AS friends
+FROM UserTBL u 
+LEFT JOIN PostTBL p ON p.userId = u.userId 
+LEFT JOIN FriendTBL f ON f.userId1 = u.userId OR f.userId2 = u.userId 
+WHERE u.email = 'user1@example.com'
+GROUP BY u.userId, 
+	u.username,
+    u.email,
+	u.password,	
+    u.fullName,
+	u.additionalName,
+	u.dob,
+	u.gender,
+	u.phoneNumber,
+    u.avatarUrl,
+	u.overview,
+	u.premiumExpirationDate,
+	u.premiumAccount
+ORDER BY u.userId;
+
+SELECT * FROM UserTBL

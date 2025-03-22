@@ -6,10 +6,9 @@ import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
 import java.sql.*;
-import java.util.List;
 import model.*;
 
-@WebServlet(urlPatterns = {"/signIn", "/signUp"})
+@WebServlet(urlPatterns = {"/signIn", "/signUp", "/sign-out"})
 public class AuthServlet extends HttpServlet {
 
     private UserDAO userDAO;
@@ -18,11 +17,18 @@ public class AuthServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         userDAO = new UserDAO();
+        postDAO = new PostDAO();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        if (request.getRequestURI().endsWith("/sign-out")) {
+            for (Cookie cookie : request.getCookies()) {
+                cookie.setMaxAge(0);
+            }
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+        }
     }
 
     @Override
@@ -60,16 +66,7 @@ public class AuthServlet extends HttpServlet {
                 return;
             }
 
-            try {
-                List<Post> posts = postDAO.getAllPosts(user.getUserId());
-                session.setAttribute("posts", posts);
-            } catch (SQLException e) {
-                response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
-                return;
-            }
-            
-            session.setAttribute("userId", user.getUserId());
-            session.setAttribute("fullName", user.getFullName());
+            session.setAttribute("user", user);
 
             if (remember != null) {
                 Cookie cookie2 = new Cookie("logIned", "true");
@@ -77,7 +74,7 @@ public class AuthServlet extends HttpServlet {
                 cookie2.setHttpOnly(true);
                 cookie2.setMaxAge(60 * 60 * 24 * 7);
             }
-            response.sendRedirect(request.getContextPath() + "/pages/HomePage.jsp");
+            response.sendRedirect(request.getContextPath() + "/post-load");
         } else if (request.getRequestURI().endsWith("/signUp")) {
             if (confirmPassword == null || confirmPassword.trim().isEmpty()) {
                 response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
@@ -107,8 +104,7 @@ public class AuthServlet extends HttpServlet {
                     return;
                 }
 
-                session.setAttribute("userId", user.getUserId());
-                session.setAttribute("fullName", user.getFullName());
+                session.setAttribute("user", user);
 
                 if (remember != null) {
                     Cookie cookie2 = new Cookie("logIned", "true");
@@ -117,7 +113,7 @@ public class AuthServlet extends HttpServlet {
                     cookie2.setHttpOnly(true);
                     cookie2.setMaxAge(60 * 60 * 24 * 7);
                 }
-                response.sendRedirect(request.getContextPath() + "/pages/AuthPage.jsp");
+                response.sendRedirect(request.getContextPath() + "/post-load");
             } catch (SQLException e) {
                 session.setAttribute("error", e.getMessage());
                 response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");

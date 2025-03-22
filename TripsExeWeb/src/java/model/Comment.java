@@ -1,33 +1,22 @@
 package model;
 
-import java.util.*;
+import java.sql.Date;
 
 public class Comment {
 
-    private int commentId;
     private int postId;
     private int userId;
-    private Date commentDate;
-    private String content;
+    private Date timestamp;
+    private String text;
     private String imageUrl;
+    private String fullName;
+    private String avatarUrl;
 
     public Comment() {
-    }
-
-    public Comment(int postId, int userId, Date commentDate, String content, String imageUrl) {
-        this.postId = postId;
-        this.userId = userId;
-        this.commentDate = commentDate;
-        this.content = content;
-        this.imageUrl = imageUrl;
-    }
-
-    public int getCommentId() {
-        return commentId;
-    }
-
-    public void setCommentId(int commentId) {
-        this.commentId = commentId;
+        this.imageUrl = null;
+        this.timestamp = null;
+        this.fullName = null;
+        this.avatarUrl = null;
     }
 
     public int getPostId() {
@@ -46,20 +35,20 @@ public class Comment {
         this.userId = userId;
     }
 
-    public Date getCommentDate() {
-        return commentDate;
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public void setCommentDate(Date commentDate) {
-        this.commentDate = commentDate;
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public String getContent() {
-        return content;
+    public String getText() {
+        return text;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getImageUrl() {
@@ -70,8 +59,19 @@ public class Comment {
         this.imageUrl = imageUrl;
     }
 
-    @Override
-    public String toString() {
-        return "Comment{" + "commentId=" + commentId + ", postId=" + postId + ", userId=" + userId + ", commentDate=" + commentDate + ", content=" + content + ", imageUrl=" + imageUrl + '}';
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }
