@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<!DOCTYPE html>
 <section class="fixed z-10 px-[128px] bg-[#0f0f10] w-full h-fit py-1 flex items-center justify-center">
     <nav class="w-full flex items-center justify-between py-1 bg-[#0f0f10]">
         <div class="flex flex-row items-center flex-1">
