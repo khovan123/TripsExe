@@ -4,6 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
 <<<<<<< Upstream, based on origin/master
+<<<<<<< Upstream, based on origin/master
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/CRUD/PostDAO.java</file>
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/web/pages/ChattingPage.jsp</file>
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/model/Post.java</file>
@@ -18,6 +19,12 @@
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/controller/AuthServlet.java</file>
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/websocket/ChatServlet.java</file>
             <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/CRUD/UserDAO.java</file>
+=======
+            <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/CRUD/PostDAO.java</file>
+            <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/web/pages/ChattingPage.jsp</file>
+            <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/src/java/model/Post.java</file>
+            <file>file:/D:/Codes/JAVAWEB/Project/TripsExe/TripsExeWeb/web/pages/HomePage.jsp</file>
+>>>>>>> 85033c5 feat<HomePage>: make dialog for postting and show post(--Demo)
         </group>
     </open-files>
 </project-private>
