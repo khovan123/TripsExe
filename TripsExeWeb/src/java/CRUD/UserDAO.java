@@ -4,8 +4,6 @@ import connectDB.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import model.User;
 
 public class UserDAO extends DBContext {
@@ -21,7 +19,7 @@ public class UserDAO extends DBContext {
     }
 
     public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ?, phoneNumber = ?, fullName = ?, additionalName = ?, avatarUrl = ?, overview = ?, dob = ?, gender = ?, premiumExpirationDate = ?, premiumAccount = ? WHERE userId = ?";
+        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ?, phoneNumber = ?, fullName = ?, additionalName = ?, overview = ?, dob = ?, gender = ? WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, user.getUsername());
             st.setString(2, user.getPassword());
@@ -33,8 +31,6 @@ public class UserDAO extends DBContext {
             st.setString(8, user.getOverview());
             st.setDate(9, user.getDob());
             st.setBoolean(10, user.isGender());
-            st.setDate(11, user.getPremiumExpirationDate());
-            st.setBoolean(12, user.isPremiumAccount());
             st.setInt(13, user.getUserId());
             st.executeUpdate();
         }

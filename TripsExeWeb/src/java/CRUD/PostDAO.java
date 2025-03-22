@@ -107,6 +107,51 @@ public class PostDAO extends DBContext {
             }
         });
         return posts;
-    }        
+    }
+
+    public List<Post> getAllPostsOfUser(int userId) throws SQLException {
+        List<Post> posts = new ArrayList<>();
+        String sql = """
+            SELECT 
+            p.*, 
+            u.fullName, 
+            u.avatarUrl, 
+            (SELECT COUNT(DISTINCT l.userId) FROM LikeTBL l WHERE l.postId = p.postId) AS likes,
+            (SELECT COUNT(*) FROM CommentTBL c WHERE c.postId = p.postId) AS comments
+            FROM PostTBL p 
+            JOIN UserTBL u ON p.userId = u.userId
+            WHERE p.userId = ?
+            ORDER BY p.timestamp DESC
+                     """;
+        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
+            st.setInt(1, userId);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Post post = new Post();
+                post.setPostId(rs.getInt("postId"));
+                post.setUserId(rs.getInt("userId"));
+                post.setPostDate(rs.getDate("timestamp"));
+                post.setContent(rs.getString("content"));
+                post.setImageUrl(rs.getString("imageUrl"));
+                post.setAvatarUrl(rs.getString("avatarUrl"));
+                post.setFullName(rs.getString("fullName"));
+                post.setActivity(rs.getString("activity"));
+                post.setLikes(rs.getInt("likes"));
+                post.setComments(rs.getInt("comments"));
+                posts.add(post);
+            }
+        }
+        posts.forEach(post -> {
+            try {
+                post.setCommentList(commentDAO.getCommentHistory(post.getPostId(), 0, 3));
+                if (likeDAO.isLiked(post.getPostId(), userId)) {
+                    post.setLiked(true);
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+        });
+        return posts;
+    }
 
 }

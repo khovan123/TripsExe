@@ -196,7 +196,7 @@
                         <span class="font-bold text-white group-hover:text-[#0f6fec] duration-300">Settings</span>
                     </a>
                 </nav>
-                <a href="#" class="block mt-4 py-3 text-[#0f6fec] text-sm font-medium text-center hover:cursor-pointer border-t-[1px] border-[#202227]">View Profile</a>
+                <a href="/TripsExeWeb/post-load-me" class="block mt-4 py-3 text-[#0f6fec] text-sm font-medium text-center hover:cursor-pointer border-t-[1px] border-[#202227]">View Profile</a>
             </aside>
 
             <main class="w-2/4 mr-6 overflow-y-auto">
@@ -255,7 +255,7 @@
                                     <button class="flex items-center space-x-1 hover:cursor-pointer hover:text-[#0f6fec] duration-300">
                                         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="pe-1" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"></path></svg>
                                         <span>Comments (${post.getComments()})</span>
-                                    </button>
+                                    </button>                        
                                 </div>
                                 <button class="flex items-center space-x-1 hover:cursor-pointer hover:text-[#0f6fec] duration-300">
                                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="flip-horizontal ps-1" height="16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"></path></svg>
@@ -327,7 +327,7 @@
                             <button class="w-10 h-10 rounded-full bg-[#0f6fec1a] text-[#0f6fec] flex items-center justify-center hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-400">
                                 <span><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c-17.67 0-32-14.33-32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
                             </button>
-                        </div>                        
+                        </div>                                               
                     </div>
                     <button class="block w-full py-[8px] mt-4 rounded bg-[#0f6fec1a] text-sm font-medium text-[#0f6fec] hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-400">View more</button>
                 </div>
@@ -343,7 +343,7 @@
 
                 <div class="user-info">
                     <img src='<c:url value="${user.getAvatarUrl()}"/>' alt="User Avatar">
-                    <p>${user.getFullName()}</p>
+                    <p>${user.getFullName()}</p>                   
                 </div>
 
                 <div>
@@ -354,7 +354,7 @@
                     <div class="bg-[#141519] rounded-lg p-6 w-full max-w-[500px] relative">
                         <div class="flex items-center justify-between mb-6">
                             <h2 class="text-white text-lg font-bold">Add photo</h2>
-                            <button type="button" id="close-photo-dialog" class="text-gray-400 hover:text-white hover:cursor-pointer">
+                            <button type="button" id="close-photo-dialog" class="text-gray-400 hover:text-white hover:cursor-pointer">                               
                                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
@@ -428,7 +428,7 @@
                         </div>
                     </div>
                     <button type="submit" class="post-button">Post</button>
-                </div>
+                </div>              
             </form>
         </div>
     </body>
@@ -440,8 +440,8 @@
         const createPostDialogChild = createPostDialog.querySelector(".dialog");
         const closeCreatePostDialogBtn = document.getElementById("close-create-post-dialog");
         const openPhotoDialogFromCreateBtn = document.getElementById("open-photo-dialog-from-create");
-        const textarea = createPostDialog.querySelector('textarea');
-        const openActivityDialogFromCreateBtn = document.getElementById("open-activity-dialog-from-create")
+        const textareaEl = createPostDialog.querySelector('textarea');
+        const openActivityDialogFromCreateBtn = document.getElementById("open-activity-dialog-from-create");
         const activityDialog = document.getElementById("activity-dialog");
         const closeActivityDialogBtn = document.getElementById("close-activity-dialog");
 
@@ -451,7 +451,7 @@
 
         closeActivityDialogBtn.addEventListener("click", () => {
             activityDialog.classList.add("hidden");
-        })
+        });
 
         openCreatePostDialogBtn.addEventListener("click", () => {
             createPostDialog.classList.remove("hidden");
@@ -485,13 +485,12 @@
             e.preventDefault();
             activityDialog.classList.remove("hidden");
             photoDialog.classList.add("hidden");
-        })
+        });
 
-        textarea.addEventListener('input', function () {
+        textareaEl.addEventListener('input', function () {
             let postBtn = this.closest('.dialog').querySelector('.post-button');
             postBtn.classList.toggle('enabled', this.value.length > 0);
         });
-
 
         const currentUserId = "${user.getUserId()}";
         const fullName = "${user.getFullName()}";
@@ -504,12 +503,13 @@
                 return;
             }
             if (wsComment) {
-                ws.close();
+                wsComment.close();
             }
             currentPostId = postId;
             if (!commentOffset[postId]) {
                 commentOffset[postId] = 3;
             }
+
             wsComment = new WebSocket("ws://localhost:8080/TripsExeWeb/commentendpoint/" + postId);
 
             wsComment.onopen = function () {
@@ -521,6 +521,7 @@
                 let commentBox = document.getElementById("comment-box-" + currentPostId);
                 let data = event.data;
                 console.log(data);
+
                 if (data.startsWith("remainingCmt:")) {
                     let remaining = parseInt(data.split(":")[1]);
                     let loadMoreBtn = document.querySelector('#load-more-' + currentPostId + ' .flex.justify-center');
@@ -529,6 +530,7 @@
                     }
                     return;
                 }
+
                 let comment = JSON.parse(data);
                 let content = '';
                 if (comment.imageUrl) {
@@ -600,7 +602,6 @@
                     wsLike.close();
                 }
                 currentPostId = postId;
-
                 wsLike = new WebSocket("ws://localhost:8080/TripsExeWeb/likeendpoint/" + currentPostId);
 
                 wsLike.onopen = function () {
@@ -612,12 +613,11 @@
                     let likeCountSpan = document.getElementById("like-count-" + currentPostId);
                     let likeBtn = document.getElementById("like-btn-" + currentPostId);
                     let data = event.data;
-
                     if (data.startsWith("update:")) {
                         let updates = data.split("&");
                         let count = parseInt(updates[0].split(":")[1]);
                         likeCountSpan.innerHTML = "Liked (" + count + ")";
-                        if (updates[1].split(":")[1] == "1") {
+                        if (updates[1].split(":")[1] === "1") {
                             likeBtn.classList.add("text-[#0f6fec]");
                         } else {
                             likeBtn.classList.remove("text-[#0f6fec]");
@@ -638,7 +638,6 @@
                 wsLike.send("like");
             }
         }
-
 
         window.onload = function () {
             if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {

@@ -140,9 +140,9 @@
                             >
                         <div>
                             <div class="flex items-center">
-                                <p class="font-semibold text-white mr-3">Khang Nguy?n</p>
+                                <p class="font-semibold text-white mr-3">${user.getFullName()}</p>
                             </div>
-                            <p class="text-sm text-gray-400">Web Developer at FSoft</p>
+                            <p class="text-sm text-gray-400">${user.getOverview()}</p>
                         </div>
                     </div>
 
@@ -211,7 +211,7 @@
 
             if (viewProfileBtn) {
                 viewProfileBtn.addEventListener("click", () => {
-                    window.location.href = "/TripsExeWeb/pages/UserProfile.jsp";
+                    window.location.href = "/TripsExeWeb/post-load-me";
                 });
             }
 
@@ -253,7 +253,7 @@
 
             if (settingsBtn) {
                 settingsBtn.addEventListener("click", () => {
-                    window.location.href = "./SettingPage.jsp";
+                    window.location.href = "/TripsExeWeb/pages/SettingPage.jsp";
                 });
             }
 

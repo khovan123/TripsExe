@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -21,14 +22,14 @@
         <div class="px-[128px] pt-20 text-white min-h-fit flex">
             <main class="w-4/6 mr-6">
                 <div class="mb-5 border border-[#202227] bg-[#141519] rounded-md">
-                    <img src="./../public/images/profile-background.jpg" alt="User Background" class="w-full h-[200px] object-cover rounded-t-lg">
+                    <img src='<c:url value="${user.getAvatarUrl()}"/>' alt="User Background" class="w-full h-[200px] object-cover rounded-t-lg">
                     <div class="px-5 flex flex-row">                    
                         <div class="relative">
-                            <img src="./../public/images/avatar.png" alt="User Profile" class="w-32 h-32 rounded-full border-[3px] object-cover border-white -mt-12">
+                            <img src='<c:url value="${user.getAvatarUrl()}"/>' alt="User Profile" class="w-32 h-32 rounded-full border-[3px] object-cover border-white -mt-12">
                         </div>
                         <div class="ml-6 mt-3">
                             <div class="flex flex-row items-center">
-                                <h1 class="text-lg font-bold pr-1">Nguyễn Khang</h1>
+                                <h1 class="text-lg font-bold pr-1">${user.getFullName()}</h1>
                                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="text-success small text-[#0CBC87]" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708"></path></svg>
                             </div>
                         </div>
@@ -57,7 +58,7 @@
                 </div>
                 <div class="p-5 mb-5 border border-[#202227] bg-[#141519] rounded-md">
                     <div class="flex mb-4">
-                        <img src="./../public/images/avatar.png" alt="User Profile" class="w-10 h-10 rounded-full mr-3">
+                        <img src='<c:url value="${user.getAvatarUrl()}"/>' alt="User Profile" class="w-10 h-10 rounded-full mr-3">
                         <textarea id="open-post-dialog" name="content" placeholder="Share your thoughts..." class="flex-1 min-h-[60px] bg-[#191A1F] text-gray-400 p-3 rounded-md focus:outline-none resize-none overflow-hidden border-none"></textarea>
                     </div>
                     <div class="flex space-x-3">
@@ -79,83 +80,92 @@
                         </button>
                     </div>
                 </div>
-                <div class="p-5 mb-5 border border-[#202227] bg-[#141519] rounded-md">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <img src="./../public/images/avatar.png" alt="User Profile" class="w-10 h-10 rounded-full">
-                        <div>
-                            <div class="flex items-center">
-                                <p class="font-semibold text-white mr-3">Khang Nguyễn</p>
-                                <span class="mr-3 text-gray-400">•</span>
-                                <span class="text-sm text-gray-400 ">2 hours ago</span>
-                            </div>
-                            <p class="text-sm text-gray-400">Web Developer at FSoft</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 mb-4">Một FE Dev có các triệu chứng như đau lưng, mỏi gối, rụng tóc,... nhưng iu nghề <3 </p>
-                    <img src="./../public/images/post-image.jpg" alt="Post Image" class="w-full rounded-lg mb-4">
-                    <div class="flex items-center justify-between text-gray-400 text-sm mb-4">
-                        <div class="flex space-x-4">
-                            <button class="flex items-center hover:cursor-pointer hover:text-[#0f6fec] duration-300">
-                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="pe-1" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"></path></svg>
-                                <span>Liked (56)</span>
-                            </button>
-                            <button class="flex items-center space-x-1 hover:cursor-pointer hover:text-[#0f6fec] duration-300">
-                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="pe-1" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"></path></svg>
-                                <span>Comments (12)</span>
-                            </button>
-                        </div>
-                        <button class="flex items-center space-x-1 hover:cursor-pointer hover:text-[#0f6fec] duration-300">
-                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="flip-horizontal ps-1" height="16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"></path></svg>
-                            <span>Share (3)</span>
-                        </button>
-                    </div>
-                    <div class="mb-4 flex items-center space-x-3">
-                        <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
-                        <div class="relative py-2 w-full">
-                            <input placeholder="Add a comment..." class="w-full min-h-[40px] bg-[#202227] text-gray-400 pl-3 pr-10 py-2 rounded-md focus:outline-none resize-none overflow-hidden border-1 border-gray-700 text-white placeholder:text-gray-400"/>
-                            <button class="flex items-center justify-center w-12 h-10 absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#0f6fec] hover:cursor-pointer duration-300">
-                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex space-x-3">
-                            <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
-                            <div class="flex-1">
-                                <div class="bg-[#202227] p-3 rounded-lg">
-                                    <p class="font-bold text-base text-white mb-1">Minh Phan</p>
-                                    <p class="text-sm font-normal text-gray-300">Lưng t cũng không khác lưng m là mấy, tóc t cũng thế</p>
-                                </div>
-                                <div class="flex space-x-3 text-gray-400 text-sm mt-1">
-                                    <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Like (3)</button>
-                                    <span class="mr-3 text-gray-400">•</span>
-                                    <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Reply</button>
-                                    <span class="mr-3 text-gray-400">•</span>
-                                    <span class="cursor-default select-none">45 minutes ago</span>
+                <c:if test="${postsMe==null}">
+                    <p class="text-center text-info mb-5">Add new friend to see new post!</p>
+                </c:if>
+                <c:if test="${postsMe!=null}">
+                    <c:forEach var="post" items="${postsMe}">
+                        <div class="p-5 mb-5 border border-[#202227] bg-[#141519] rounded-md" >
+                            <div class="flex items-center space-x-3 mb-4">
+                                <img src='<c:url value="${post.getAvatarUrl()}"/>' alt="User Profile" class="w-10 h-10 rounded-full">
+                                <div>
+                                    <div class="flex items-center">
+                                        <p class="font-semibold text-white mr-3">${post.getFullName()}</p>
+                                        <span class="mr-3 text-gray-400">•</span>
+                                        <span class="text-sm text-gray-400 ">${post.getPostDate()}</span>
+                                    </div>
+                                    <p class="text-sm text-gray-400">${post.getActivity()}</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="flex space-x-3">
-                            <img src="./../public/images/avatar.png" alt="User Profile" class="w-8 h-8 rounded-full">
-                            <div class="flex-1">
-                                <div class="bg-[#202227] p-3 rounded-lg">
-                                    <p class="font-bold text-base text-white mb-1">Huy Quang</p>
-                                    <p class="text-sm font-normal text-gray-300">Lưng m đau tuổi với lưng t</p>
+                            <p class="text-gray-300 mb-4">${post.getContent()}</p>
+                            <img src='<c:url value="${post.getImageUrl()}"/>' alt="Post Image" class="w-full rounded-lg mb-4">
+                            <div class="flex items-center justify-between text-gray-400 text-sm mb-4">
+                                <div class="flex space-x-4">
+                                    <button
+                                        id="like-btn-${post.getPostId()}"
+                                        onclick="toggleLike('${post.getPostId()}')" 
+                                        class="flex items-center hover:cursor-pointer duration-300 ${post.isLiked()?"text-[#0f6fec]":"hover:text-[#0f6fec]"}">
+                                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="pe-1" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a10 10 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733q.086.18.138.363c.077.27.113.567.113.856s-.036.586-.113.856c-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.2 3.2 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.8 4.8 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"></path></svg>
+                                        <span id="like-count-${post.getPostId()}">Liked (${post.getLikes()})</span>                                    
+                                    </button>
+                                    <button class="flex items-center space-x-1 hover:cursor-pointer hover:text-[#0f6fec] duration-300">
+                                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="pe-1" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"></path></svg>
+                                        <span>Comments (${post.getComments()})</span>
+                                    </button>                        
                                 </div>
-                                <div class="flex space-x-3 text-gray-400 text-sm mt-1">
-                                    <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Like (2)</button>
-                                    <span class="mr-3 text-gray-400">•</span>
-                                    <button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Reply</button>
-                                    <span class="mr-3 text-gray-400">•</span>
-                                    <span class="cursor-default select-none">50 minutes ago</span>
+                                <button class="flex items-center space-x-1 hover:cursor-pointer hover:text-[#0f6fec] duration-300">
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="flip-horizontal ps-1" height="16" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"></path></svg>
+                                    <span>Share (3)</span>
+                                </button>
+                            </div>
+                            <div class="mb-4 flex items-center space-x-3">
+                                <img src='<c:url value="${user.getAvatarUrl()}"/>' alt="User Profile" class="w-8 h-8 rounded-full">
+                                <div class="relative py-2 w-full">
+                                    <input
+                                        id="comment-${post.getPostId()}-${user.getUserId()}"
+                                        onclick="openComment('${post.getPostId()}')"
+                                        placeholder="Add a comment..." 
+                                        class="w-full min-h-[40px] bg-[#202227] text-gray-400 pl-3 pr-10 py-2 rounded-md focus:outline-none resize-none overflow-hidden border-1 border-gray-700 text-white placeholder:text-gray-400"/>
+                                    <button                             
+                                        onclick="sendComment('${post.getPostId()}')"
+                                        class="flex items-center justify-center w-12 h-10 absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#0f6fec] hover:cursor-pointer duration-300">
+                                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
+                            <div class="space-y-4" id="static-comment-box-${post.getPostId()}">
+                                <c:forEach var="comment" items="${post.getCommentList()}">
+                                    <div class="flex space-x-3">
+                                        <img src='<c:url value="${post.getAvatarUrl()}"/>' alt="User Profile" class="w-8 h-8 rounded-full">
+                                        <div class="flex-1">
+                                            <div class="bg-[#202227] p-3 rounded-lg">
+                                                <p class="font-bold text-base text-white mb-1">${comment.getFullName()}</p>
+                                                <p class="text-sm font-normal text-gray-300">${comment.getText()}</p>
+                                                <c:if test="${comment.getImageUrl() != null}">
+                                                    <img src="${comment.getImageUrl()}" alt="Comment Image" class="max-w-[200px] mt-2 rounded-md">
+                                                </c:if>
+                                            </div>
+                                            <div class="flex space-x-3 text-gray-400 text-sm mt-1">
+                                                <span class="cursor-default select-none">${ comment.getTimestamp()}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>                                
+                            </div>
+                            <div class="space-y-4" id="comment-box-${post.getPostId()}">
+                            </div>
+                            <div class="space-y-4" id="load-more-${post.getPostId()}">
+                                <c:if test="${post.getCommentList().size() > 0}">
+                                    <div class="flex justify-center">
+                                        <button type="button" onclick="loadMoreComments('${post.getPostId()}')" class="text-gray-400 text-sm hover:text-[#0f6fec] hover:cursor-pointer">Load more comments</button>
+                                    </div>
+                                </c:if>
+                            </div>
                         </div>
-                        <button class="text-gray-400 text-sm hover:text-[#0f6fec] hover:cursor-pointer">... Load more comments</button>
-                    </div>
-                </div>
+                    </c:forEach>
+                </c:if>                
             </main>
             <aside class="w-2/6">
                 <div class="p-5 mb-5 border border-[#202227] bg-[#141519] rounded-md">
@@ -183,5 +193,8 @@
                 </div>
             </aside>
         </div>
+        <script>
+            console.log(${user});
+        </script>
     </body>
 </html>

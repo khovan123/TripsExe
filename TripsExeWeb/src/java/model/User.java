@@ -157,4 +157,9 @@ public class User {
         this.friends = friends;
     }
 
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", fullName=" + fullName + ", additionalName=" + additionalName + ", avatarUrl=" + avatarUrl + ", overview=" + overview + ", dob=" + dob + ", gender=" + gender + ", premiumExpirationDate=" + premiumExpirationDate + ", premiumAccount=" + premiumAccount + ", posts=" + posts + ", friends=" + friends + ", notifyList=" + notifyList + '}';
+    }
+
 }
