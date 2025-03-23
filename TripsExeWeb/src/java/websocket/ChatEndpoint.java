@@ -9,7 +9,7 @@ import java.util.*;
 import model.*;
 
 @ServerEndpoint("/chatendpoint/{roomId}")
-public class Endpoint {
+public class ChatEndpoint {
 
     private static final Map<String, Map<Session, String>> rooms = Collections.synchronizedMap(new HashMap<>());
     private ChatDAO chatDAO = new ChatDAO();

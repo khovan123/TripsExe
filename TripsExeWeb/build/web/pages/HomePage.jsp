@@ -191,7 +191,7 @@
                         <img src="./../public/images/navigation/notification-icon.svg" class="w-[20px]"/>
                         <span class="font-bold text-white group-hover:text-[#0f6fec] duration-300">Notifications</span>
                     </a>
-                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-[#0f6fec] group">
+                    <a href="/TripsExeWeb/pages/SettingPage.jsp" class="flex items-center space-x-3 text-gray-300 hover:text-[#0f6fec] group">
                         <img src="./../public/images/navigation/setting-icon.svg" class="w-[20px]"/>
                         <span class="font-bold text-white group-hover:text-[#0f6fec] duration-300">Settings</span>
                     </a>

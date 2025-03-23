@@ -30,7 +30,7 @@ CREATE TABLE FriendTBL (
 );
 
 GO
-CREATE TABLE Messages (
+CREATE TABLE MessageTBL (
     messageId INT PRIMARY KEY IDENTITY(1,1),
     userId INT NOT NULL,
     roomId VARCHAR(50) NOT NULL,   
@@ -174,3 +174,9 @@ GROUP BY u.userId,
 ORDER BY u.userId;
 
 SELECT * FROM UserTBL
+
+CREATE TABLE DeleteAccountTBL(
+    userId INT,
+    timestamp DATETIME DEFAULT GETDATE(),
+	PRIMARY KEY (userId, timestamp),
+)

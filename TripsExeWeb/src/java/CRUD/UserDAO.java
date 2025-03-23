@@ -1,9 +1,7 @@
 package CRUD;
 
 import connectDB.DBContext;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import model.User;
 
 public class UserDAO extends DBContext {
@@ -19,19 +17,17 @@ public class UserDAO extends DBContext {
     }
 
     public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE UserTBL SET username = ?, password = ?, email = ?, phoneNumber = ?, fullName = ?, additionalName = ?, overview = ?, dob = ?, gender = ? WHERE userId = ?";
+        String sql = "UPDATE UserTBL SET username = ?, email = ?, phoneNumber = ?, fullName = ?, additionalName = ?, overview = ?, dob = ?, gender = ? WHERE userId = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setString(1, user.getUsername());
-            st.setString(2, user.getPassword());
-            st.setString(3, user.getEmail());
-            st.setString(4, user.getPhoneNumber());
-            st.setString(5, user.getFullName());
-            st.setString(6, user.getAdditionalName());
-            st.setString(7, user.getAvatarUrl());
-            st.setString(8, user.getOverview());
-            st.setDate(9, user.getDob());
-            st.setBoolean(10, user.isGender());
-            st.setInt(13, user.getUserId());
+            st.setString(2, user.getEmail());
+            st.setString(3, user.getPhoneNumber());
+            st.setString(4, user.getFullName());
+            st.setString(5, user.getAdditionalName());
+            st.setString(6, user.getOverview());
+            st.setDate(7, user.getDob());
+            st.setBoolean(8, user.isGender());
+            st.setInt(9, user.getUserId());
             st.executeUpdate();
         }
     }
@@ -126,5 +122,42 @@ public class UserDAO extends DBContext {
         u.setPosts(rs.getInt("posts"));
         u.setFriends(rs.getInt("friends"));
         return u;
+    }
+
+    public void signDeleteAccount(int userId) throws SQLException {
+        String sql = "INSERT INTO DeleteAccountTBL(userId) VALUES(?)";
+        try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+            pstm.setInt(1, userId);
+            pstm.executeUpdate();
+        }
+    }
+    
+    public void restoreAccount(int userId) throws SQLException {
+        String sql = "DELETE FROM DeleteAccountTBL WHERE userId = ?";
+        try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+            pstm.setInt(1, userId);
+            pstm.executeUpdate();
+        }
+    }
+
+    public boolean checkDeleteAction(int userId) throws SQLException {
+        String sql = "SELECT timestamp FROM DeleteAccountTBL WHERE userId = ?";
+        try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
+            pstm.setInt(1, userId);
+            ResultSet rs = pstm.executeQuery();
+            if (rs.next()) {
+                Timestamp deletedTime = rs.getTimestamp("timestamp");
+                Timestamp now = new Timestamp(System.currentTimeMillis());
+                long thirtyDaysMillis = 30L * 24 * 60 * 60 * 1000;
+                Timestamp thirtyDaysAgo = new Timestamp(deletedTime.getTime() + thirtyDaysMillis);
+                if(now.after(thirtyDaysAgo)){
+                    this.deleteUser(userId);
+                    return true;
+                }else{
+                    this.restoreAccount(userId);
+                }
+            }
+        }
+        return false;
     }
 }
