@@ -11,7 +11,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.PayPalService;
 
 @WebServlet(name = "ExecutePaymentServlet", urlPatterns = {"/execute_payment"})
 public class ExecutePaymentServlet extends HttpServlet {
