@@ -93,7 +93,7 @@
                                     />
                                 <div class="flex flex-col flex-1">
                                     <p class="font-bold" id="search-name">${friend.getFullName()}</p>
-                                    <p class="text-sm text-gray-400">...</p>
+                                    <p id="msg-${friend.getUserId()}" class="text-sm text-gray-400">...</p>
                                 </div>
                             </li>
                         </c:forEach>
@@ -298,6 +298,7 @@
                 ws.send("userId=" + currentUserId + "&fullName=" + fullName);
             };
             ws.onmessage = function (event) {
+                let msgFriendEl = document.getElementById("msg-" + friendId);
                 let chatBox = document.getElementById("chat-box");
                 let messageData = event.data.toString().split(":", 2);
                 let senderId = messageData[0];
@@ -305,6 +306,8 @@
                 let isCurrentUser = senderId == currentUserId;
                 let lineStyle = isCurrentUser ? "justify-end pr-4" : "items-start gap-2";
                 let messageStyle = isCurrentUser ? "bg-[#0F6FEC]" : "bg-[#202227]";
+                if (!isCurrentUser)
+                    msgFriendEl.innerText = content;
                 const icon = isCurrentUser
                         ? ""
                         : `<img
