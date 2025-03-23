@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f7fa;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background-color: #1c2526;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -18,74 +18,79 @@
         }
 
         .order-summary {
-            width: 350px;
-            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            padding: 25px;
+            width: 90%;
+            max-width: 320px;
+            background: #252f31;
+            border-radius: 16px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6);
+            padding: 20px;
             text-align: center;
             transition: transform 0.3s ease;
         }
 
         .order-summary:hover {
-            transform: scale(1.02);
+            transform: translateY(-5px);
         }
 
         .order-summary h2 {
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 18px;
+            font-weight: 600;
             margin-bottom: 15px;
-            color: #333;
+            color: #ffffff;
+            letter-spacing: 0.3px;
         }
 
         .order-summary p {
             display: flex;
             justify-content: space-between;
-            font-size: 15px;
-            margin: 10px 0;
-            color: #444;
+            font-size: 14px;
+            margin: 8px 0;
+            color: #b0b7b8;
         }
 
         .order-summary p.total {
-            font-weight: bold;
-            font-size: 18px;
-            border-top: 2px solid #ddd;
-            padding-top: 12px;
-            color: #000;
+            font-weight: 600;
+            font-size: 16px;
+            border-top: 1px solid #3a4445;
+            padding-top: 10px;
+            color: #ffffff;
+            margin-top: 10px;
         }
 
         .secure-checkout {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
-            color: #555;
-            margin-top: 12px;
+            font-size: 12px;
+            color: #b0b7b8;
+            margin-top: 10px;
         }
 
         .secure-checkout i {
             margin-right: 6px;
-            color: #28a745;
-            font-size: 14px;
+            color: #1a73e8;
+            font-size: 13px;
         }
 
         .save-btn {
-            background: linear-gradient(to right, #28a745, #218838);
-            color: #fff;
-            padding: 12px;
+            background: #1a73e8;
+            color: #ffffff;
+            padding: 10px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
-            margin-top: 18px;
+            font-size: 14px;
+            margin-top: 15px;
             width: 100%;
-            font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            letter-spacing: 0.5px;
         }
 
         .save-btn:hover {
-            background: linear-gradient(to right, #218838, #1e7e34);
-            transform: translateY(-2px);
+            background: #1557b0;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
         }
     </style>
 </head>

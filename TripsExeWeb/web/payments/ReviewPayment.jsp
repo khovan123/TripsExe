@@ -7,8 +7,8 @@
         <style>
             body {
                 font-family: 'Arial', sans-serif;
-                background-color: #f9f9f9;
-                color: #333;
+                background-color: #1c2526;
+                color: #b0b7b8;
                 margin: 0;
                 padding: 20px;
                 display: flex;
@@ -18,17 +18,17 @@
             }
 
             .container {
-                background: #ffffff;
+                background: #252f31;
                 padding: 20px;
                 border-radius: 10px;
-                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
                 width: 40%;
                 max-width: 450px;
                 text-align: center;
             }
 
             h2 {
-                color: #222;
+                color: #ffffff;
                 font-size: 20px;
                 margin-bottom: 15px;
             }
@@ -37,27 +37,27 @@
                 border-collapse: collapse;
                 width: 100%;
                 text-align: left;
-                background: #ffffff;
+                background: #2a3537;
                 border-radius: 8px;
                 overflow: hidden;
-                border: 1px solid #ddd;
+                border: 1px solid #3a4445;
                 font-size: 14px;
             }
 
             th, td {
                 padding: 10px;
-                border-bottom: 1px solid #ddd;
+                border-bottom: 1px solid #3a4445;
             }
 
             th {
-                background-color: #f7f7f7;
+                background-color: #2f3b3d;
                 font-weight: bold;
-                color: #333;
+                color: #ffffff;
                 text-align: center;
             }
 
             td {
-                color: #444;
+                color: #b0b7b8;
             }
 
             .pay-button {
@@ -68,8 +68,8 @@
                 padding: 10px 18px;
                 font-size: 14px;
                 cursor: pointer;
-                background: linear-gradient(to right, #4caf50, #388e3c);
-                color: white;
+                background: #1a73e8;
+                color: #ffffff;
                 border: none;
                 border-radius: 6px;
                 font-weight: bold;
@@ -77,7 +77,7 @@
             }
 
             input[type="submit"]:hover {
-                background: linear-gradient(to right, #388e3c, #2e7d32);
+                background: #1557b0;
                 transform: translateY(-2px);
             }
         </style>
