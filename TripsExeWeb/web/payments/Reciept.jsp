@@ -5,41 +5,86 @@
     <meta charset="UTF-8">
     <title>Payment Receipt</title>
     <style>
-        table {
-            border-collapse: collapse;
-            width: 50%;
-            margin: auto;
-            text-align: left;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-        }
-        h2 {
-            text-align: center;
-        }
-        .container {
+
+        html, body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            margin-top: 20px;
+            overflow: hidden;
         }
+
+        .container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 40%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #222;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            text-align: left;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f7f7f7;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+
+        td {
+            color: #444;
+        }
+
         .back-button {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
+            margin-top: 15px;
         }
+
         a {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 10px 18px;
+            font-size: 14px;
             text-decoration: none;
-            background-color: #007bff;
+            background: linear-gradient(to right, #007bff, #0056b3);
             color: white;
-            border-radius: 5px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
+            display: inline-block;
         }
+
         a:hover {
-            background-color: #0056b3;
+            background: linear-gradient(to right, #0056b3, #003d82);
+            transform: translateY(-2px);
         }
     </style>
 </head>
