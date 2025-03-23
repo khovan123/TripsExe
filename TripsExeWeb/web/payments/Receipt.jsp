@@ -12,9 +12,9 @@
         }
 
         html, body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background-color: #1c2526;
+            color: #b0b7b8;
             width: 100%;
             height: 100%;
             display: flex;
@@ -24,72 +24,134 @@
         }
 
         .container {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            width: 40%;
-            max-width: 450px;
+            background: #252f31;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6);
+            width: 90%;
+            max-width: 400px;
             text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            background-color: #28a745;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px;
+            position: relative;
+            animation: pulse 1.5s infinite;
+        }
+
+        .success-icon::before {
+            content: "✔";
+            font-size: 36px;
+            color: #ffffff;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(40, 167, 69, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+            }
+        }
+
+        .success-message {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .success-submessage {
+            font-size: 13px;
+            color: #b0b7b8;
+            margin-bottom: 20px;
+            line-height: 1.5;
         }
 
         h2 {
-            color: #222;
-            font-size: 20px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 600;
             margin-bottom: 15px;
+            letter-spacing: 0.3px;
         }
 
         table {
             border-collapse: collapse;
             width: 100%;
             text-align: left;
-            background: #ffffff;
-            border-radius: 8px;
+            background: #2a3537;
+            border-radius: 10px;
             overflow: hidden;
-            border: 1px solid #ddd;
-            font-size: 14px;
+            border: 1px solid #3a4445;
+            font-size: 13px;
+            margin-bottom: 20px;
         }
 
         th, td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
+            padding: 10px 12px;
+            border-bottom: 1px solid #3a4445;
         }
 
         th {
-            background-color: #f7f7f7;
-            font-weight: bold;
-            color: #333;
+            background-color: #2f3b3d;
+            font-weight: 600;
+            color: #ffffff;
             text-align: center;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
         }
 
         td {
-            color: #444;
+            color: #b0b7b8;
         }
 
         .back-button {
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         a {
-            padding: 10px 18px;
-            font-size: 14px;
+            padding: 10px 20px;
+            font-size: 13px;
             text-decoration: none;
-            background: linear-gradient(to right, #007bff, #0056b3);
-            color: white;
-            border-radius: 6px;
-            font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s ease;
+            background: #1a73e8;
+            color: #ffffff;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             display: inline-block;
+            letter-spacing: 0.5px;
         }
 
         a:hover {
-            background: linear-gradient(to right, #0056b3, #003d82);
-            transform: translateY(-2px);
+            background: #1557b0;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="success-icon"></div>
+        <div class="success-message">Your payment was successful</div>
+        <div class="success-submessage">Thank you for your payment. We will be in contact with more details shortly.</div>
         <h2>Payment Receipt</h2>
         <table>
             <tr>
