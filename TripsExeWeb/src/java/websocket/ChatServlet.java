@@ -17,19 +17,16 @@ public class ChatServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session == null || session.getAttribute("userId") == null) {
+        if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
             return;
         }
 
-        int userId = (Integer) session.getAttribute("userId");
-        String fullName = (String) session.getAttribute("fullName");
+        User user = (User) session.getAttribute("user");
 
         try {
-            List<User> friends = friendDAO.getAll_Profile_OfFriends(userId);
+            List<User> friends = friendDAO.getAll_Profile_OfFriends(user.getUserId());
             session.setAttribute("friends", friends);
-            session.setAttribute("userId", userId);
-            session.setAttribute("fullName", fullName);
             response.sendRedirect(request.getContextPath() + "/pages/ChattingPage.jsp");
         } catch (SQLException e) {
             session.setAttribute("error", e.getMessage());

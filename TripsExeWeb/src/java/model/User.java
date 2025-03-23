@@ -17,21 +17,19 @@ public class User {
     private boolean gender;
     private Date premiumExpirationDate;
     private boolean premiumAccount;
-    private PostsOfUser postList;
-    private FriendsOfUser friends;
+    private int posts;
+    private int friends;
     private NotifyOfUser notifyList;
 
     public User() {
-        this.postList = new PostsOfUser();
-        this.friends = new FriendsOfUser();
         this.notifyList = new NotifyOfUser();
     }
 
     public User(String password, String email) {
+        this.posts = 0;
         this.password = password;
         this.email = email;
-        this.postList = new PostsOfUser();
-        this.friends = new FriendsOfUser();
+        this.friends = 0;
         this.notifyList = new NotifyOfUser();
     }
 
@@ -139,21 +137,29 @@ public class User {
         this.premiumAccount = premiumAccount;
     }
 
-    public PostsOfUser getPostList() {
-        return postList;
-    }
-
-    public FriendsOfUser getFriends() {
-        return friends;
-    }
-
     public NotifyOfUser getNotifyList() {
         return notifyList;
     }
 
+    public int getPosts() {
+        return posts;
+    }
+
+    public void setPosts(int posts) {
+        this.posts = posts;
+    }
+
+    public int getFriends() {
+        return friends;
+    }
+
+    public void setFriends(int friends) {
+        this.friends = friends;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", fullName=" + fullName + ", additionalName=" + additionalName + ", avatarUrl=" + avatarUrl + ", overview=" + overview + ", dob=" + dob + ", gender=" + gender + ", premiumExpirationDate=" + premiumExpirationDate + ", premiumAccount=" + premiumAccount + ", postList=" + postList + ", friends=" + friends + ", notifyList=" + notifyList + '}';
+        return "User{" + "userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", fullName=" + fullName + ", additionalName=" + additionalName + ", avatarUrl=" + avatarUrl + ", overview=" + overview + ", dob=" + dob + ", gender=" + gender + ", premiumExpirationDate=" + premiumExpirationDate + ", premiumAccount=" + premiumAccount + ", posts=" + posts + ", friends=" + friends + ", notifyList=" + notifyList + '}';
     }
 
 }

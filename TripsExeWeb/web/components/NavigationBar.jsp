@@ -1,6 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%@page contentType="text/html" pageEncoding="UTF-8"%> 
-<!DOCTYPE html>
 <section class="fixed z-10 px-[128px] bg-[#0f0f10] w-full h-fit py-1 flex items-center justify-center">
     <nav class="w-full flex items-center justify-between py-1 bg-[#0f0f10]">
         <div class="flex flex-row items-center flex-1">
@@ -124,7 +122,7 @@
                     class="size-[40px] flex items-center justify-center bg-[#202227] rounded-md hover:cursor-pointer focus:outline-none"
                     >
                     <img
-                        src='<c:url value="/public/images/dog-avatar.jpg"/>'
+                        src='<c:url value="${user.getAvatarUrl()}"/>'
                         alt="User Profile"
                         class="w-10 h-10 rounded-md object-cover"
                         />
@@ -142,9 +140,9 @@
                             >
                         <div>
                             <div class="flex items-center">
-                                <p class="font-semibold text-white mr-3">Khang Nguyễn</p>
+                                <p class="font-semibold text-white mr-3">${user.getFullName()}</p>
                             </div>
-                            <p class="text-sm text-gray-400">Web Developer at FSoft</p>
+                            <p class="text-sm text-gray-400">${user.getOverview()}</p>
                         </div>
                     </div>
 
@@ -181,10 +179,8 @@
         </ul>
     </nav>
 
-    <!-- Script để xử lý tất cả sự kiện click -->
     <script>
         (function () {
-            // Đóng gói logic trong IIFE để tránh xung đột
             const openUserDialogBtn = document.getElementById("open-user-dialog");
             const userDialog = document.getElementById("user-dialog");
             const viewProfileBtn = document.getElementById("view-profile-btn");
@@ -197,7 +193,6 @@
             const settingsBtn = document.getElementById("settings-btn");
             const notificationBtn = document.getElementById("notification-btn");
 
-            // Xử lý mở/ẩn dialog
             if (openUserDialogBtn && userDialog) {
                 openUserDialogBtn.addEventListener("click", (e) => {
                     e.preventDefault();
@@ -214,23 +209,21 @@
                 });
             }
 
-            // Xử lý điều hướng cho các nút
             if (viewProfileBtn) {
                 viewProfileBtn.addEventListener("click", () => {
-                    window.location.href = "/TripsExeWeb/pages/UserProfile.jsp";
+                    window.location.href = "/TripsExeWeb/post-load-me";
                 });
             }
 
             if (signOutBtn) {
                 signOutBtn.addEventListener("click", () => {
-                    // Thay thế "#" bằng đường dẫn thực tế nếu cần
-                    window.location.href = "#";
+                    window.location.href = "/TripsExeWeb/sign-out";
                 });
             }
 
             if (homeBtn) {
                 homeBtn.addEventListener("click", () => {
-                    window.location.href = "/TripsExeWeb/pages/HomePage.jsp";
+                    window.location.href = "/TripsExeWeb/post-load";
                 });
             }
 
@@ -260,7 +253,7 @@
 
             if (settingsBtn) {
                 settingsBtn.addEventListener("click", () => {
-                    window.location.href = "./SettingPage.jsp";
+                    window.location.href = "/TripsExeWeb/pages/SettingPage.jsp";
                 });
             }
 

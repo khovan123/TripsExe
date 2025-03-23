@@ -1,0 +1,8 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# Ignore build directories
+build/
+TripsExeWeb/build/
+TripsExeWeb/dist/
