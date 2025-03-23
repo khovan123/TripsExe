@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import com.paypal.api.payments.Amount;
 import com.paypal.api.payments.Details;
@@ -15,6 +15,7 @@ import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
 import java.util.ArrayList;
 import java.util.List;
+import model.User;
 
 public class PayPalService {
     private static final String CLIENT_ID = "AUWNvCBJdnrY3SvqLh_b5debZif7oi_tP6YdNoW6pNyjBzcu-3IAVD9Mbp1nKTMXGqY-UyWvYhaww8Ei";
@@ -48,14 +49,13 @@ public class PayPalService {
     }
 
     private List<Transaction> getTransactionInformation(double amount, String description) {
-        // Khai báo Amount và Details
         Amount transactionAmount = new Amount();
         transactionAmount.setCurrency("USD");
-        transactionAmount.setTotal(String.format("%.2f", amount)); // Tổng 27.00
+        transactionAmount.setTotal(String.format("%.2f", amount));
 
         Details details = new Details();
-        details.setSubtotal(String.format("%.2f", 24.00)); // Giá gói
-        details.setTax(String.format("%.2f", 3.00)); // Phí xử lý (Handling Fee)
+        details.setSubtotal(String.format("%.2f", 2.00));
+        details.setTax(String.format("%.2f", 0.01));
         transactionAmount.setDetails(details);
 
         ItemList itemList = new ItemList();
@@ -64,7 +64,7 @@ public class PayPalService {
         Item premiumPackage = new Item();
         premiumPackage.setCurrency("USD")
                 .setName("Social - Network & Comm...")
-                .setPrice(String.format("%.2f", 24.00)) // Giá gói
+                .setPrice(String.format("%.2f", 2.00))
                 .setQuantity("1");
         items.add(premiumPackage);
         itemList.setItems(items);

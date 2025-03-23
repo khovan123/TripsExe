@@ -113,7 +113,7 @@
             <i class="fas fa-lock"></i> Secure checkout
         </div>
 
-        <form action="authorize_payment" method="POST">
+        <form action="/TripsExeWeb/authorize-payment" method="POST">
             <input type="hidden" name="amount" value="27.00">
             <input type="hidden" name="packageDescription" value="Social - Network & Communication">
             <button type="submit" class="save-btn">Proceed to Payment</button>
