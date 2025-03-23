@@ -66,6 +66,18 @@ public class AuthServlet extends HttpServlet {
                 return;
             }
 
+            try {
+                if (userDAO.checkDeleteAction(user.getUserId())) {
+                    session.setAttribute("error1", "Email is not existed!");
+                    response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
+                    return;
+                } else {
+                    userDAO.restoreAccount(user.getUserId());
+                }
+            } catch (SQLException e) {
+                //empty in deleteaccount waiting table
+            }
+
             session.setAttribute("user", user);
 
             if (remember != null) {

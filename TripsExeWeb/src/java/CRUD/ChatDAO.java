@@ -10,7 +10,7 @@ public class ChatDAO extends DBContext {
 
     public List<Message> getMessageHistory(String roomId) throws SQLException {
         List<Message> messageHistory = new ArrayList<>();
-        String sql = "SELECT * FROM Messages WHERE roomId = ? ORDER BY timestamp";
+        String sql = "SELECT * FROM MessageTBL WHERE roomId = ? ORDER BY timestamp";
         try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
             pstm.setString(1, roomId);
             ResultSet rs = pstm.executeQuery();
@@ -34,7 +34,7 @@ public class ChatDAO extends DBContext {
     }
 
     public void addMessage(Message message) throws SQLException {
-        String sql = "INSERT INTO Messages (userId, roomId, fullName, content) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO MessageTBL (userId, roomId, fullName, content) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pstm = getConnection().prepareStatement(sql)) {
             pstm.setInt(1, message.getUserId());
             pstm.setString(2, message.getRoomId());
@@ -43,5 +43,6 @@ public class ChatDAO extends DBContext {
             pstm.executeUpdate();
         }
     }
+
 
 }
