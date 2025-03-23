@@ -51,7 +51,7 @@ public class AuthorizePaymentServlet extends HttpServlet {
             return;
         }
         if (packageDescription == null || packageDescription.trim().isEmpty()) {
-            packageDescription = "Nâng cấp tài khoản Premium";
+            packageDescription = "Upgrade account to Premium";
         }
 
         int userId;
