@@ -12,9 +12,9 @@
             }
 
             html, body {
-                font-family: 'Arial', sans-serif;
-                background-color: #f8f9fa;
-                color: #333;
+                font-family: 'Segoe UI', 'Arial', sans-serif;
+                background-color: #1c2526;
+                color: #b0b7b8;
                 width: 100%;
                 height: 100%;
                 display: flex;
@@ -24,42 +24,52 @@
             }
 
             .container {
-                background: #ffffff;
-                padding: 25px 30px;
-                border-radius: 12px;
-                box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+                background: #252f31;
+                padding: 20px;
+                border-radius: 16px;
+                box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6);
                 text-align: center;
-                width: 400px;
-                max-width: 90%;
+                width: 90%;
+                max-width: 320px;
+                transition: transform 0.3s ease;
+            }
+
+            .container:hover {
+                transform: translateY(-5px);
             }
 
             h1 {
-                font-size: 22px;
+                font-size: 20px;
+                font-weight: 600;
                 color: #d9534f;
-                margin-bottom: 15px;
+                margin-bottom: 12px;
+                letter-spacing: 0.3px;
             }
 
             p {
-                font-size: 16px;
-                color: #555;
-                margin-bottom: 20px;
+                font-size: 14px;
+                color: #b0b7b8;
+                margin-bottom: 15px;
+                line-height: 1.5;
             }
 
             .back-button {
                 display: inline-block;
-                padding: 12px 18px;
-                font-size: 14px;
-                font-weight: bold;
+                padding: 10px 20px;
+                font-size: 13px;
+                font-weight: 600;
                 text-decoration: none;
-                background: linear-gradient(to right, #dc3545, #b52b37);
-                color: white;
-                border-radius: 6px;
-                transition: background 0.3s ease, transform 0.2s ease;
+                background: #1a73e8;
+                color: #ffffff;
+                border-radius: 8px;
+                transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+                letter-spacing: 0.5px;
             }
 
             .back-button:hover {
-                background: linear-gradient(to right, #b52b37, #8e1e28);
-                transform: translateY(-2px);
+                background: #1557b0;
+                transform: translateY(-3px);
+                box-shadow: 0 4px 12px rgba(26, 115, 232, 0.3);
             }
         </style>
     </head>
