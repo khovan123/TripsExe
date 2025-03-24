@@ -149,13 +149,13 @@
                     <div class="p-4">
                         <button
                             id="view-profile-btn"
-                            class="block w-full py-[8px] rounded bg-[#0f6fec1a] text-sm font-medium text-[#0f6fec] hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-400"
+                            class="block w-full py-[8px] rounded bg-[#0f6fec1a] text-sm font-medium text-[#0f6fec] hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-300"
                             >
                             View profile
                         </button>
                         <button
                             id="sign-out-btn"
-                            class="flex items-center mt-3 space-x-3 text-gray-300 hover:text-blue-600 transition-all duration-300 bg-transparent focus:outline-none"
+                            class="flex items-center mt-3 space-x-3 text-gray-300 hover:text-blue-600 transition-all duration-300 bg-transparent focus:outline-none cursor-pointer"
                             >
                             <svg
                                 class="w-5 h-5"
