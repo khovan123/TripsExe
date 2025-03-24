@@ -1,5 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<section class="fixed z-10 px-[128px] bg-[#0f0f10] w-full h-fit py-1 flex items-center justify-center">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<section
+    class="fixed z-10 px-[128px] bg-[#0f0f10] w-full h-fit py-1 flex items-center justify-center"
+    >
     <nav class="w-full flex items-center justify-between py-1 bg-[#0f0f10]">
         <div class="flex flex-row items-center flex-1">
             <div class="relative">
@@ -11,9 +13,9 @@
                     height="20px"
                     fill="currentColor"
                     >
-                <path
-                    d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
-                    />
+                    <path
+                        d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
+                        />
                 </svg>
                 <input
                     placeholder="Search..."
@@ -28,24 +30,24 @@
                     >
                     Home
                 </button>
-                <button
-                    id="pages-btn"
-                    class="text-gray-300 hover:text-[#0f6fec] px-[16px] duration-300 bg-transparent focus:outline-none hover:cursor-pointer"
-                    >
-                    Pages
-                </button>
-                <button
-                    id="account-btn"
-                    class="text-gray-300 hover:text-[#0f6fec] px-[16px] duration-300 bg-transparent focus:outline-none hover:cursor-pointer"
-                    >
-                    Account
-                </button>
-                <button
-                    id="my-network-btn"
-                    class="text-gray-300 hover:text-[#0f6fec] px-[16px] duration-300 bg-transparent focus:outline-none hover:cursor-pointer"
-                    >
-                    My Network
-                </button>
+                <!--                <button
+                                            id="pages-btn"
+                                            class="text-gray-300 hover:text-[#0f6fec] px-[16px] duration-300 bg-transparent focus:outline-none hover:cursor-pointer"
+                                            >
+                                            Pages
+                                        </button>
+                                        <button
+                                            id="account-btn"
+                                            class="text-gray-300 hover:text-[#0f6fec] px-[16px] duration-300 bg-transparent focus:outline-none hover:cursor-pointer"
+                                            >
+                                            Account
+                                        </button>
+                                        <button
+                                            id="my-network-btn"
+                                            class="text-gray-300 hover:text-[#0f6fec] px-[16px] duration-300 bg-transparent focus:outline-none hover:cursor-pointer"
+                                            >
+                                            My Network
+                                        </button>-->
             </div>
         </div>
 
@@ -65,9 +67,9 @@
                         width="15"
                         xmlns="http://www.w3.org/2000/svg"
                         >
-                    <path
-                        d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"
-                        />
+                        <path
+                            d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"
+                            />
                     </svg>
                 </button>
             </li>
@@ -87,9 +89,9 @@
                         width="15"
                         xmlns="http://www.w3.org/2000/svg"
                         >
-                    <path
-                        d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"
-                        />
+                        <path
+                            d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"
+                            />
                     </svg>
                 </button>
             </li>
@@ -109,11 +111,81 @@
                         width="15"
                         xmlns="http://www.w3.org/2000/svg"
                         >
-                    <path
-                        d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"
-                        />
+                        <path
+                            d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"
+                            />
                     </svg>
                 </button>
+
+                <div
+                    id="notification-dialog"
+                    class="absolute right-44 w-96 mt-2 bg-[#141519] border border-[#202227] rounded-md hidden z-50"
+                    >
+                    <div
+                        class="p-5 flex justify-between items-center border-b border-[#202227] sticky top-0"
+                        >
+                        <div class="flex items-center">
+                            <p class="font-semibold text-white">Notifications</p>
+                            <span class="ml-2 bg-[#d6293e1a] text-[#d6293e] text-sm font-medium px-2 py-0.5 rounded-md">2 new</span>
+                        </div>
+                        <!--<button class="text-[#0f6fec] text-sm hover:underline">Clear all</button>-->
+                    </div>
+
+                    <div class="p-2 space-y-1">
+                        <div class="p-4 flex items-start bg-[#202227] rounded-md">
+                            <img
+                                src='<c:url value="/public/images/avatar.png"/>'
+                                alt="Avatar"
+                                class="w-10 h-10 rounded-full"
+                                />
+                            <div class="mx-4">
+                                <p class="text-gray-500 text-sm">
+                                    <span class="font-semibold text-white">Minh Phan</span> sent
+                                    you a friend request.
+                                </p>
+<!--                                <div class="mt-2 flex space-x-2 w-fit">
+                                    <button
+                                        class="bg-[#0f6fec] text-white text-sm font-medium px-3 py-1 rounded hover:bg-[#0e5bd1] cursor-pointer duration-300"
+                                        >
+                                        Accept
+                                    </button>
+                                    <button
+                                        class="bg-[#d6293e1a] text-[#d6293e] text-sm font-medium px-3 py-1 rounded hover:bg-[#d6293e] cursor-pointer hover:text-white duration-300"
+                                        >
+                                        Delete
+                                    </button>
+                                </div>-->
+                            </div>
+                            <p class="text-gray-500 font-normal text-sm text-nowrap">47 min</p>
+                        </div>
+                        <div class="p-4 flex items-start bg-[#202227] rounded-md">
+                            <img
+                                src='<c:url value="/public/images/avatar.png"/>'
+                                alt="Avatar"
+                                class="w-10 h-10 rounded-full"
+                                />
+                            <div class="mx-4">
+                                <p class="text-gray-500 text-sm">
+                                    <span class="font-semibold text-white">Huy Quang</span> sent
+                                    you a friend request.
+                                </p>
+<!--                                <div class="mt-2 flex space-x-2 w-fit">
+                                    <button
+                                        class="bg-[#0f6fec] text-white text-sm font-medium px-3 py-1 rounded hover:bg-[#0e5bd1] cursor-pointer duration-300"
+                                        >
+                                        Accept
+                                    </button>
+                                    <button
+                                        class="bg-[#d6293e1a] text-[#d6293e] text-sm font-medium px-3 py-1 rounded hover:bg-[#d6293e] cursor-pointer hover:text-white duration-300"
+                                        >
+                                        Delete
+                                    </button>
+                                </div>-->
+                            </div>
+                            <p class="text-gray-500 font-normal text-sm text-nowrap">47 min</p>
+                        </div>
+                    </div>
+                </div>
             </li>
 
             <li class="ml-2 relative">
@@ -137,10 +209,12 @@
                             src='<c:url value="/public/images/dog-avatar.jpg"/>'
                             alt="User Profile"
                             class="w-12 h-12 rounded-full"
-                            >
+                            />
                         <div>
                             <div class="flex items-center">
-                                <p class="font-semibold text-white mr-3">${user.getFullName()}</p>
+                                <p class="font-semibold text-white mr-3">
+                                    ${user.getFullName()}
+                                </p>
                             </div>
                             <p class="text-sm text-gray-400">${user.getOverview()}</p>
                         </div>
@@ -149,13 +223,13 @@
                     <div class="p-4">
                         <button
                             id="view-profile-btn"
-                            class="block w-full py-[8px] rounded bg-[#0f6fec1a] text-sm font-medium text-[#0f6fec] hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-400"
+                            class="block w-full py-[8px] rounded bg-[#0f6fec1a] text-sm font-medium text-[#0f6fec] hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-300"
                             >
                             View profile
                         </button>
                         <button
                             id="sign-out-btn"
-                            class="flex items-center mt-3 space-x-3 text-gray-300 hover:text-blue-600 transition-all duration-300 bg-transparent focus:outline-none"
+                            class="flex items-center mt-3 space-x-3 text-gray-300 hover:text-blue-600 transition-all duration-300 bg-transparent focus:outline-none cursor-pointer"
                             >
                             <svg
                                 class="w-5 h-5"
@@ -164,12 +238,12 @@
                                 viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg"
                                 >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                                />
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                                    />
                             </svg>
                             <span>Sign Out</span>
                         </button>
@@ -181,17 +255,34 @@
 
     <script>
         (function () {
+            const notificationDialog = document.getElementById("notification-dialog");
             const openUserDialogBtn = document.getElementById("open-user-dialog");
             const userDialog = document.getElementById("user-dialog");
             const viewProfileBtn = document.getElementById("view-profile-btn");
             const signOutBtn = document.getElementById("sign-out-btn");
             const homeBtn = document.getElementById("home-btn");
-            const pagesBtn = document.getElementById("pages-btn");
-            const accountBtn = document.getElementById("account-btn");
-            const myNetworkBtn = document.getElementById("my-network-btn");
+            //            const pagesBtn = document.getElementById("pages-btn");
+            //            const accountBtn = document.getElementById("account-btn");
+            //            const myNetworkBtn = document.getElementById("my-network-btn");
             const chatBtn = document.getElementById("chat-btn");
             const settingsBtn = document.getElementById("settings-btn");
             const notificationBtn = document.getElementById("notification-btn");
+
+            if (notificationBtn && notificationDialog) {
+                notificationBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    notificationDialog.classList.toggle("hidden");
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (
+                            !notificationBtn.contains(e.target) &&
+                            !notificationDialog.contains(e.target)
+                            ) {
+                        notificationDialog.classList.add("hidden");
+                    }
+                });
+            }
 
             if (openUserDialogBtn && userDialog) {
                 openUserDialogBtn.addEventListener("click", (e) => {
@@ -227,23 +318,23 @@
                 });
             }
 
-            if (pagesBtn) {
-                pagesBtn.addEventListener("click", () => {
-                    window.location.href = "#";
-                });
-            }
-
-            if (accountBtn) {
-                accountBtn.addEventListener("click", () => {
-                    window.location.href = "#";
-                });
-            }
-
-            if (myNetworkBtn) {
-                myNetworkBtn.addEventListener("click", () => {
-                    window.location.href = "#";
-                });
-            }
+            //            if (pagesBtn) {
+            //                pagesBtn.addEventListener("click", () => {
+            //                    window.location.href = "#";
+            //                });
+            //            }
+            //
+            //            if (accountBtn) {
+            //                accountBtn.addEventListener("click", () => {
+            //                    window.location.href = "#";
+            //                });
+            //            }
+            //
+            //            if (myNetworkBtn) {
+            //                myNetworkBtn.addEventListener("click", () => {
+            //                    window.location.href = "#";
+            //                });
+            //            }
 
             if (chatBtn) {
                 chatBtn.addEventListener("click", () => {
