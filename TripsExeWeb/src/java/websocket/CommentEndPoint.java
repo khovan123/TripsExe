@@ -36,17 +36,12 @@ public class CommentEndPoint {
     @OnMessage
     public void onMessage(String message, Session session, @PathParam("postId") String postId) throws IOException {
         int postIdNum = Integer.parseInt(postId);
-        if (message.matches("^userId=([^&]+)&fullName=([^&]+)$")) {
-            String[] data = message.split("&");
-            String userId = data[0].split("=")[1].trim();
-            String fullName = data[1].split("=")[1].trim();
-            session.getUserProperties().put("userId", userId);
-            session.getUserProperties().put("fullName", fullName);
-            return;
-        }
-        if (message.startsWith("load:")) {
+
+        if (message.startsWith("{\"load\":")) {
+            Map<String, Map<String, Integer>> loadCmtWrapper = objectMapper.readValue(message, Map.class);
+            Map<String, Integer> loadCmtData = loadCmtWrapper.get("load");
+            int offset = loadCmtData.get("offset");
             try {
-                int offset = Integer.parseInt(message.split(":")[1]);
                 List<Comment> history = commentDAO.getCommentHistory(postIdNum, offset, PAGE_SIZE);
                 for (Comment cmt : history) {
                     String jsonMessage = objectMapper.writeValueAsString(cmt);
@@ -55,41 +50,43 @@ public class CommentEndPoint {
 
                 int totalComments = commentDAO.getTotalComments(postIdNum);
                 int remaining = totalComments - (offset + history.size());
-                session.getBasicRemote().sendText("remainingCmt:" + remaining);
+                session.getBasicRemote().sendText("{\"remain\":\"" + String.valueOf(remaining)+"\"}");
             } catch (SQLException e) {
                 System.err.println("Error fetching comment history: " + e.getMessage());
             }
-            return;
-        }
-        String userId = (String) session.getUserProperties().get("userId");
-        String fullName = (String) session.getUserProperties().get("fullName");
-        if (userId == null || fullName == null) {
-            session.getBasicRemote().sendText("Something went wrong");
-            return;
         }
 
-        try {
-            String[] msgdata = message.split("&&", 2);
-            boolean containsImg = msgdata.length == 2;
+        if (message.startsWith("{\"comment\":")) {
+            Map<String, Map<String, Object>> commentWrapper = objectMapper.readValue(message, Map.class);
+            Map<String, Object> commentData = commentWrapper.get("comment");
+//            String currnetPostId = String.valueOf(commentData.get("postId"));
+            String text = (String) commentData.get("text");
+            int userId = Integer.parseInt(String.valueOf(commentData.get("userId")));
+            String imageUrl = (String) commentData.get("imageUrl");
+            String fullName = (String) commentData.get("fullName");
+            String avatarUrl = (String) commentData.get("avatarUrl");
             Comment cmt = new Comment();
-            cmt.setText(containsImg ? msgdata[0] : message);
             cmt.setPostId(postIdNum);
-            cmt.setUserId(Integer.parseInt(userId));
+            cmt.setText(text);
+            cmt.setUserId(userId);
+            cmt.setImageUrl(imageUrl);
             cmt.setFullName(fullName);
-            cmt.setImageUrl(containsImg ? msgdata[1] : null);
-            commentDAO.addComment(cmt);
-            String jsonMessage = objectMapper.writeValueAsString(cmt);
-            Map<Session, Integer> postClients = posts.get(postIdNum);
-            if (postClients != null) {
-                for (Session client : postClients.keySet()) {
-                    if (client.isOpen()) {
-                        client.getBasicRemote().sendText(jsonMessage);
+            cmt.setAvatarUrl(avatarUrl);
+            try {
+                commentDAO.addComment(cmt);
+                String jsonMessage = objectMapper.writeValueAsString(cmt);
+                Map<Session, Integer> postClients = posts.get(postIdNum);
+                if (postClients != null) {
+                    for (Session client : postClients.keySet()) {
+                        if (client.isOpen()) {
+                            client.getBasicRemote().sendText(jsonMessage);
+                        }
                     }
                 }
+            } catch (IOException | NumberFormatException | SQLException e) {
+                System.err.println("Error saving comment to database: " + e.getMessage());
+                session.getBasicRemote().sendText("Error: Could not save comment, because: " + e.getMessage());
             }
-        } catch (IOException | NumberFormatException | SQLException e) {
-            System.err.println("Error saving comment to database: " + e.getMessage());
-            session.getBasicRemote().sendText("Error: Could not save comment, because: " + e.getMessage());
         }
     }
 

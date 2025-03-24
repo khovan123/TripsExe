@@ -12,12 +12,10 @@ import model.*;
 public class AuthServlet extends HttpServlet {
 
     private UserDAO userDAO;
-    private PostDAO postDAO;
 
     @Override
     public void init() throws ServletException {
         userDAO = new UserDAO();
-        postDAO = new PostDAO();
     }
 
     @Override
@@ -45,6 +43,7 @@ public class AuthServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
             return;
         }
+        
         email = email.trim();
         password = password.trim();
 
