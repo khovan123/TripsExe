@@ -6,7 +6,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Chat Interface</title>
+        <title>TripsExe | Chat</title>
         <!--<script src="https://unpkg.com/@tailwindcss/browser@4"></script>-->
         <script src="https://cdn.tailwindcss.com"></script>
         <style>
@@ -295,23 +295,28 @@
                     );
             ws.onopen = function () {
                 console.log("Connected to room: " + currentRoomId);
-                ws.send("userId=" + currentUserId + "&fullName=" + fullName);
+                let initobj = {
+                    "load": {
+                        "roomId": currentRoomId
+                    }
+                }
+                ws.send(JSON.stringify(initobj));
             };
             ws.onmessage = function (event) {
+                let data = event.data;
+                console.log(data);
+                let dataobj = JSON.parse(data);
                 let msgFriendEl = document.getElementById("msg-" + friendId);
                 let chatBox = document.getElementById("chat-box");
-                let messageData = event.data.toString().split(":", 2);
-                let senderId = messageData[0];
-                let content = messageData[1] || event.data;
-                let isCurrentUser = senderId == currentUserId;
+                let isCurrentUser = dataobj.userId == currentUserId;
                 let lineStyle = isCurrentUser ? "justify-end pr-4" : "items-start gap-2";
                 let messageStyle = isCurrentUser ? "bg-[#0F6FEC]" : "bg-[#202227]";
                 if (!isCurrentUser)
-                    msgFriendEl.innerText = content;
-                const icon = isCurrentUser
+                    msgFriendEl.innerText = dataobj.content;
+                const avatar = isCurrentUser
                         ? ""
                         : `<img
-                                src='<c:url value="/public/images/avatar.png"/>'
+                                src='<c:url value="?"/>'
                                 alt="User Profile"
                                 class="w-12 h-12 rounded-full friend-avatar"
                                 />`;
@@ -319,12 +324,12 @@
                         `<div class="flex ` +
                         lineStyle +
                         `">` +
-                        icon +
+                        avatar +
                         `<div>
           <p class="text-sm py-2 px-3 rounded-md ` +
                         messageStyle +
                         `">` +
-                        content +
+                        dataobj.content +
                         `</p>
         </div>
         </div>`;
@@ -350,7 +355,16 @@
         function sendMessage() {
             let message = document.getElementById("message").value;
             if (ws && message) {
-                ws.send(message);
+                let messageobj = {
+                    "message": {
+                        "userId": currentUserId,
+                        "roomId": currentRoomId,
+                        "fullName": '${user.getFullName()}',
+                        "content": message,
+                        "imageUrl": null
+                    }
+                }
+                ws.send(JSON.stringify(messageobj));
                 document.getElementById("message").value = "";
             } else {
                 console.log("WebSocket chưa sẵn sàng hoặc tin nhắn rỗng");
@@ -449,5 +463,12 @@
             });
         }
         );
+
+        window.onload = function () {
+            if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+                console.log("Page reloaded, fetching data from /post-load");
+                window.location.href = "/TripsExeWeb/chat";
+            }
+        };
     </script>
 </html>

@@ -1,24 +1,25 @@
 package controller;
 
-import CRUD.PostDAO;
 import CRUD.*;
 import java.io.*;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.http.*;
+import java.security.GeneralSecurityException;
 import java.sql.*;
 import java.util.*;
 import model.*;
+import service.UploadImageService;
 
 @WebServlet(urlPatterns = {"/post-add", "/post-load"})
+@MultipartConfig
 public class PostServlet extends HttpServlet {
 
-    private UserDAO userDAO;
     private PostDAO postDAO;
+    private UploadImageService uploadImageService = new UploadImageService();
 
     @Override
     public void init() {
-        userDAO = new UserDAO();
         postDAO = new PostDAO();
     }
 
@@ -54,21 +55,37 @@ public class PostServlet extends HttpServlet {
             return;
         }
         if (requestURI.endsWith("/post-add")) {
-            int userId = user.getUserId();
             String content = request.getParameter("content");
-            String imageUrl = request.getParameter("imageUrl");
             String activity = request.getParameter("activity");
             Post p = new Post();
-            p.setUserId(userId);
+            p.setUserId(user.getUserId());
             p.setContent(content);
-            p.setImageUrl(imageUrl);
             p.setActivity(activity);
+
+            Part filePart = request.getPart("image");
+            if (filePart == null || filePart.getSize() == 0) {
+//                resp.getWriter().write("File is empty");
+                return;
+            }
+            File tempFile = File.createTempFile("temp", null);
             try {
+                filePart.write(tempFile.getAbsolutePath());
+                String url = uploadImageService.uploadImageToDrive(tempFile);
+                p.setImageUrl(url);
                 postDAO.addPost(p);
+
+                String loadMe = (String) request.getAttribute("me");
+
+                if (loadMe != null && loadMe.equalsIgnoreCase("true")) {
+                    response.sendRedirect(request.getContextPath() + "/post-load-me");
+                    return;
+                }
                 response.sendRedirect(request.getContextPath() + "/post-load");
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            } catch (Exception e) {
+                session.setAttribute("error", e.getMessage());
                 response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
+            } finally {
+                tempFile.delete();
             }
         }
     }

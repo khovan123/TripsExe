@@ -124,6 +124,7 @@ public class PostDAO extends DBContext {
             ORDER BY p.timestamp DESC
                      """;
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
+            st.setInt(1, userId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Post post = new Post();
