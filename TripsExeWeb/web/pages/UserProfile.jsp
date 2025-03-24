@@ -309,7 +309,23 @@
                     });
                 });
 
-                showFeedContent();
+                const urlParams = new URLSearchParams(window.location.search);
+                const tab = urlParams.get("tab");
+
+                // Kiểm tra và hiển thị tab tương ứng
+                if (tab === "friends") {
+                    clearSelected();
+                    const friendsTab = document.getElementById("connections-tab");
+                    friendsTab.classList.add("selected", "border-b-[3px]", "border-[#0f6fec]");
+                    const link = friendsTab.querySelector("a");
+                    if (link) {
+                        link.classList.remove("text-gray-300", "hover:text-[#0f6fec]");
+                        link.classList.add("text-[#0f6fec]");
+                    }
+                    showFriendsContent();
+                } else {
+                    showFeedContent(); // Mặc định hiển thị Feed nếu không có tham số hoặc tham số khác
+                }
             });
         </script>
     </body>

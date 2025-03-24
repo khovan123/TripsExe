@@ -171,23 +171,11 @@
                         <img src="./../public/images/navigation/feed-icons.svg" class="w-[20px]"/>
                         <span class="font-bold text-white group-hover:text-[#0f6fec] duration-300">Feed</span>
                     </a>
-                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-[#0f6fec] group">
+                    <a href="<c:url value='/pages/UserProfile.jsp?tab=friends'/>" class="flex items-center space-x-3 text-gray-300 hover:text-[#0f6fec] group">
                         <img src="./../public/images/navigation/connections-icon.svg" class="w-[20px]"/>
-                        <span class="font-bold text-white group-hover:text-[#0f6fec] duration-300">Connections</span>
+                        <span class="font-bold text-white group-hover:text-[#0f6fec] duration-300">Friends</span>
                     </a>
-                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-[#0f6fec] group">
-                        <img src="./../public/images/navigation/news-icon.svg" class="w-[20px]"/>
-                        <span class="font-bold text-white group-hover:text-[#0f6fec] duration-300">Latest News</span>
-                    </a>
-                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-[#0f6fec] group">
-                        <img src="./../public/images/navigation/event-icon.svg" class="w-[20px]"/>
-                        <span class="font-bold text-white group-hover:text-[#0f6fec] duration-300">Events</span>
-                    </a>
-                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-[#0f6fec] group">
-                        <img src="./../public/images/navigation/group-icon.svg" class="w-[20px]"/>
-                        <span class="font-bold text-white group-hover:text-[#0f6fec] duration-300">Groups</span>
-                    </a>
-                    <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-[#0f6fec] group">
+                    <a href="<c:url value='/pages/NotificationsPage.jsp'/>" class="flex items-center space-x-3 text-gray-300 hover:text-[#0f6fec] group">
                         <img src="./../public/images/navigation/notification-icon.svg" class="w-[20px]"/>
                         <span class="font-bold text-white group-hover:text-[#0f6fec] duration-300">Notifications</span>
                     </a>
@@ -325,7 +313,7 @@
                                 </div>
                             </div>
                             <button class="w-10 h-10 rounded-full bg-[#0f6fec1a] text-[#0f6fec] flex items-center justify-center hover:text-white hover:bg-[#0f6fec] hover:cursor-pointer duration-400">
-                                <span><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c-17.67 0-32-14.33-32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg></span>
+                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"></path></svg>
                             </button>
                         </div>                                               
                     </div>
