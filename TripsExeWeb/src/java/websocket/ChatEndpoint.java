@@ -1,6 +1,7 @@
 package websocket;
 
 import CRUD.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.*;
 import jakarta.websocket.server.*;
 import java.io.*;
@@ -13,6 +14,7 @@ public class ChatEndpoint {
 
     private static final Map<String, Map<Session, String>> rooms = Collections.synchronizedMap(new HashMap<>());
     private ChatDAO chatDAO = new ChatDAO();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @OnOpen
     public void onOpen(Session session, @PathParam("roomId") String roomId) {
@@ -23,18 +25,12 @@ public class ChatEndpoint {
 
     @OnMessage
     public void onMessage(String message, Session session, @PathParam("roomId") String roomId) throws IOException {
-        if (message.matches("^userId=([^&]+)&fullName=([^&]+)$")) {
-            String[] data = message.split("&");
-            String userId = data[0].split("=")[1].trim();
-            String fullName = data[1].split("=")[1].trim();
-            session.getUserProperties().put("userId", userId);
-            session.getUserProperties().put("fullName", fullName);
+        if (message.startsWith("{\"load\":")) {
             try {
                 List<Message> history = chatDAO.getMessageHistory(roomId);
                 history.forEach(msg -> {
                     try {
-                        String formattedMessage = msg.getUserId() + ":" + msg.getContent();
-                        session.getBasicRemote().sendText(formattedMessage);
+                        session.getBasicRemote().sendText(objectMapper.writeValueAsString(msg));
                     } catch (IOException ex) {
                         System.err.println("Error sending message: " + ex.getMessage());
                     }
@@ -42,37 +38,35 @@ public class ChatEndpoint {
             } catch (SQLException e) {
                 System.err.println("Error fetching message history: " + e.getMessage());
             }
-            return;
         }
 
-        String userId = (String) session.getUserProperties().get("userId");
-        String fullName = (String) session.getUserProperties().get("fullName");
-        if (userId == null || fullName == null) {
-            session.getBasicRemote().sendText("Something went wrong");
-            return;
-        }
+        if (message.startsWith("{\"message\":")) {
+            Map<String, Map<String, Object>> messageWrapper = objectMapper.readValue(message, Map.class);
+            Map<String, Object> messageData = messageWrapper.get("message");
+            try {
+                Message msg = new Message();
+                msg.setContent((String) messageData.get("content"));
+//                msg.setRoomId((String) messageData.get("roomId"));
+                msg.setRoomId(roomId);
+                msg.setUserId(Integer.parseInt((String) messageData.get("userId")));
+                msg.setFullName((String) messageData.get("fullName"));
+                msg.setImageUrl((String) messageData.get("imageUrl"));
+                chatDAO.addMessage(msg);
 
-        try {
-            Message msg = new Message();
-            msg.setContent(message);
-            msg.setRoomId(roomId);
-            msg.setUserId(Integer.parseInt(userId));
-            msg.setFullName(fullName);
-            chatDAO.addMessage(msg);
-
-            String formattedMessage = userId + ":" + message;
-            Map<Session, String> roomClients = rooms.get(roomId);
-            if (roomClients != null) {
-                for (Session client : roomClients.keySet()) {
-                    if (client.isOpen()) {
-                        client.getBasicRemote().sendText(formattedMessage);
+                Map<Session, String> roomClients = rooms.get(roomId);
+                if (roomClients != null) {
+                    for (Session client : roomClients.keySet()) {
+                        if (client.isOpen()) {
+                            client.getBasicRemote().sendText(objectMapper.writeValueAsString(msg));
+                        }
                     }
                 }
+            } catch (SQLException e) {
+                System.err.println("Error saving message to database: " + e.getMessage());
+                session.getBasicRemote().sendText("Error: Could not save message");
             }
-        } catch (SQLException e) {
-            System.err.println("Error saving message to database: " + e.getMessage());
-            session.getBasicRemote().sendText("Error: Could not save message");
         }
+
     }
 
     @OnClose

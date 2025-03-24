@@ -152,6 +152,6 @@ public class PostDAO extends DBContext {
             }
         });
         return posts;
-    }
+    }        
 
 }

@@ -33,7 +33,9 @@ public class UserProfileServlet extends HttpServlet {
                 session.setAttribute("postsMe", postsMe);
                 response.sendRedirect(request.getContextPath() + "/pages/UserProfile.jsp");
             } catch (Exception e) {
-                response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
+                session.setAttribute("error", e.getMessage());
+                response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
+//                response.sendRedirect(request.getContextPath() + "/pages/SignInPage.jsp");
                 return;
             }
         } else if (url.endsWith("/delete-me")) {

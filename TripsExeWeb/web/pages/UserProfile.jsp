@@ -4,8 +4,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>User Profile</title>
-        <script src="https://cdn.tailwindcss.com"></script>
+        <title>TripsExe | Profile</title>
+        <script src="https://unpkg.com/@tailwindcss/browser@4.0.0"></script>
+        <!--<script src="https://cdn.tailwindcss.com"></script>-->
         <style>
             * {
                 box-sizing: border-box;
@@ -13,12 +14,134 @@
             body {
                 margin: 0;
             }
+            .dialog-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+            .dialog {
+                background: #2A2C31;
+                border-radius: 8px;
+                width: 500px;
+                max-width: 90%;
+                padding: 16px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                color: #D1D2D3;
+                font-family: Arial, sans-serif;
+            }
+
+            .dialog-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 16px;
+            }
+            .dialog-header h2 {
+                font-size: 18px;
+                font-weight: 600;
+                margin: 0;
+            }
+            .dialog-header button {
+                background: none;
+                border: none;
+                color: #D1D2D3;
+                font-size: 20px;
+                cursor: pointer;
+            }
+
+            .user-info {
+                display: flex;
+                align-items: center;
+                margin-bottom: 12px;
+            }
+            .user-info img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                margin-right: 12px;
+            }
+            .user-info div {
+                flex: 1;
+            }
+            .user-info div p {
+                margin: 0;
+                font-size: 14px;
+                font-weight: 600;
+            }
+            .user-info select {
+                background: #191A1F;
+                color: #D1D2D3;
+                border: 1px solid #202227;
+                border-radius: 4px;
+                padding: 4px 8px;
+                font-size: 12px;
+                cursor: pointer;
+            }
+
+            .dialog textarea {
+                width: 100%;
+                min-height: 60px;
+                background: #191A1F;
+                color: #D1D2D3;
+                padding: 12px;
+                border-radius: 6px;
+                border: 1px solid #202227;
+                outline: none;
+                resize: none;
+                font-size: 16px;
+                font-family: Arial, sans-serif;
+            }
+            .dialog textarea:focus {
+                border-color: #3B82F6;
+            }
+            .dialog textarea::placeholder {
+                color: #A0A0A0;
+            }
+
+            .dialog-footer {
+                margin-top: 16px;
+            }
+            .dialog-footer .add-to-post {
+                background: #191A1F;
+                border: 1px solid #202227;
+                border-radius: 6px;
+                padding: 8px 12px;
+                margin-bottom: 12px;
+            }
+            .dialog-footer .add-to-post span {
+                font-size: 14px;
+                color: #D1D2D3;
+            }
+
+            .dialog-footer .post-button {
+                width: 100%;
+                background: #4A4E54;
+                color: #D1D2D3;
+                border: none;
+                border-radius: 6px;
+                padding: 10px;
+                font-size: 16px;
+                cursor: not-allowed;
+                opacity: 0.5;
+            }
+            .dialog-footer .post-button.enabled {
+                background: #1A73E8;
+                cursor: pointer;
+                opacity: 1;
+            }
         </style>
     </head>
     <body class="bg-[#191a1f]">
         <jsp:include page="/components/NavigationBar.jsp"/> 
 
-        <div class="px-[128px] pt-20 text-white min-h-fit flex">
+        <main class="px-[128px] pt-20 text-white min-h-fit flex">
             <main class="w-4/6 mr-6">
                 <div class="mb-5 border border-[#202227] bg-[#141519] rounded-md">
                     <img src='<c:url value="${user.getAvatarUrl()}"/>' alt="User Background" class="w-full h-[200px] object-cover rounded-t-lg">
@@ -237,12 +360,12 @@
                 <div class="p-5 mb-5 border border-[#202227] bg-[#141519] rounded-md">
                     <h3 class="text-lg font-bold mb-2">About</h3>
                     <div>
-                        <p class="text-gray-400 mb-4">He moonlights difficult engrossed it, sportsmen. Interested has all Devonshire difficulty gay assistance joy.</p>
+                        <p class="text-gray-400 mb-4">${user.getOverview()}</p>
                         <ul>
                             <li class="text-gray-400 flex flex-row items-center mb-2">
                                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="fa-fw pe-1" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M6.445 11.688V6.354h-.633A13 13 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23"></path><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"></path></svg>
                                 <span class="ml-1 mr-1">Born:</span>
-                                <strong> February 3, 2004 </strong>
+                                <strong> ${user.getDob()} </strong>
                             </li>
                             <li class="text-gray-400 flex flex-row items-center mb-2">
                                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="fa-fw pe-1" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"></path></svg>
@@ -252,14 +375,179 @@
                             <li class="text-gray-400 flex flex-row items-center mb-2">
                                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" class="fa-fw pe-1" height="18" width="18" xmlns="http://www.w3.org/2000/svg"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"></path></svg>
                                 <span class="ml-1 mr-1">Email:</span>
-                                <strong> khangdev.030204@gmail.com </strong>
+                                <strong> ${user.getEmail()} </strong>
                             </li>
                         </ul>
                     </div>
                 </div>
             </aside>
-        </div>
+            <div id="create-post-dialog" class="hidden">
+                <form class="dialog hidden" action="/TripsExeWeb/post-add?me=true" method="post">
+                    <div class="dialog-header">
+                        <h2>Create post</h2>
+                        <button type="button" id="close-create-post-dialog">✕</button>
+                    </div>
+
+                    <div class="user-info">
+                        <img src='<c:url value="${user.getAvatarUrl()}"/>' alt="User Avatar">
+                        <p>${user.getFullName()}</p>                   
+                    </div>
+
+                    <div>
+                        <textarea placeholder="Share your thoughts..." name="content"></textarea>
+                    </div>
+
+                    <div id="photo-dialog" class="bg-black/50 flex items-center justify-center hidden">
+                        <div class="bg-[#141519] rounded-lg p-6 w-full max-w-[500px] relative">
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-white text-lg font-bold">Add photo</h2>
+                                <button type="button" id="close-photo-dialog" class="text-gray-400 hover:text-white hover:cursor-pointer">                               
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-400 text-sm mb-2">Upload attachment</label>
+                                <div class="border-2 border-dashed border-gray-500 rounded-lg p-6 text-center">
+                                    <svg class="mx-auto w-8 h-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                                    </svg>
+                                    <p class="text-gray-400 text-sm">Drag here or click to upload photo.</p>
+                                    <input type="file" class="hidden" accept="image/*" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="activity-dialog" class="bg-black/50 flex items-center justify-center hidden">                   
+                        <div class="rounded-lg p-6 w-full max-w-[500px] relative">
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-white text-lg font-bold">Share your activity</h2>
+                                <button type="button" id="close-activity-dialog" class="text-gray-400 hover:text-white hover:cursor-pointer">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <div class="mb-4">
+                                <input placeholder="Add activity" type="text" name="activity" id="activity"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dialog-footer">
+                        <div class="add-to-post">
+                            <div class="flex gap-4">
+                                <button type="button" id="open-photo-dialog-from-create" class="cursor-pointer ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                         width="16" 
+                                         height="16" 
+                                         viewBox="0 0 24 24" 
+                                         fill="none" 
+                                         stroke="#45BD62" 
+                                         stroke-width="2.25" 
+                                         stroke-linecap="round" 
+                                         stroke-linejoin="round" 
+                                         class="lucide lucide-images">
+                                    <path d="M18 22H4a2 2 0 0 1-2-2V6"/>
+                                    <path d="m22 13-1.296-1.296a2.41 2.41 0 0 0-3.408 0L11 18"/>
+                                    <circle cx="12" cy="8" r="2"/><rect width="16" height="16" x="6" y="2" rx="2"/>
+                                    </svg>
+                                </button>
+                                <button type="button" id="open-activity-dialog-from-create" class="cursor-pointer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                         width="16" 
+                                         height="16" 
+                                         viewBox="0 0 24 24" 
+                                         fill="none" 
+                                         stroke="#EEB428" 
+                                         stroke-width="2.25" 
+                                         stroke-linecap="round" 
+                                         stroke-linejoin="round" 
+                                         class="lucide lucide-smile">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                                    <line x1="9" x2="9.01" y1="9" y2="9"/>
+                                    <line x1="15" x2="15.01" y1="9" y2="9"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit" class="post-button">Post</button>
+                    </div>              
+                </form>
+            </div>
+        </main>
         <script>
+            const photoDialog = document.getElementById("photo-dialog");
+            const closePhotoDialogBtn = document.getElementById("close-photo-dialog");
+            const openCreatePostDialogBtn = document.getElementById("open-post-dialog");
+            const createPostDialog = document.getElementById("create-post-dialog");
+            const createPostDialogChild = createPostDialog.querySelector(".dialog");
+            const closeCreatePostDialogBtn = document.getElementById("close-create-post-dialog");
+            const openPhotoDialogFromCreateBtn = document.getElementById("open-photo-dialog-from-create");
+            const textareaEl = createPostDialog.querySelector('textarea');
+            const openActivityDialogFromCreateBtn = document.getElementById("open-activity-dialog-from-create");
+            const activityDialog = document.getElementById("activity-dialog");
+            const closeActivityDialogBtn = document.getElementById("close-activity-dialog");
+
+            closePhotoDialogBtn.addEventListener("click", () => {
+                photoDialog.classList.add("hidden");
+            });
+
+            closeActivityDialogBtn.addEventListener("click", () => {
+                activityDialog.classList.add("hidden");
+            });
+
+            openCreatePostDialogBtn.addEventListener("click", () => {
+                openCreatePostDialogBtn.disabled = true;
+                createPostDialog.classList.remove("hidden");
+                createPostDialog.classList.add("dialog-overlay");
+                createPostDialogChild.classList.remove("hidden");
+            });
+
+            closeCreatePostDialogBtn.addEventListener("click", () => {
+                openCreatePostDialogBtn.disabled = false;
+                createPostDialog.classList.add("hidden");
+                createPostDialog.classList.remove("dialog-overlay");
+                createPostDialogChild.classList.add("hidden");
+            });
+
+            createPostDialog.addEventListener("click", (e) => {
+                if (e.target === createPostDialog) {
+                    openCreatePostDialogBtn.disabled = false;
+                    createPostDialog.classList.add("hidden");
+                    createPostDialog.classList.remove("dialog-overlay");
+                    createPostDialogChild.classList.add("hidden");
+                    textarea.value = '';
+                    photoDialog.classList.add("hidden");
+                }
+            });
+
+            openPhotoDialogFromCreateBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                photoDialog.classList.remove("hidden");
+                activityDialog.classList.add("hidden");
+            });
+
+            openActivityDialogFromCreateBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                activityDialog.classList.remove("hidden");
+                photoDialog.classList.add("hidden");
+            });
+
+            textareaEl.addEventListener('input', function () {
+                let postBtn = this.closest('.dialog').querySelector('.post-button');
+                postBtn.classList.toggle('enabled', this.value.length > 0);
+            });
+
+            window.onload = function () {
+                if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+                    console.log("Page reloaded, fetching data from /post-load");
+                    window.location.href = "/TripsExeWeb/post-load-me";
+                }
+            };
             document.addEventListener("DOMContentLoaded", () => {
                 const tabs = document.querySelectorAll("ul.tab-list li");
                 const feedContent = document.getElementById("feed-content");

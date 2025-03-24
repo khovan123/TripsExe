@@ -4,7 +4,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Home Page</title>
+        <title>TripsExe</title>
         <script src="https://unpkg.com/@tailwindcss/browser@4.0.0"></script>
         <style>
             * {
@@ -29,7 +29,7 @@
             .dialog {
                 background: #2A2C31;
                 border-radius: 8px;
-                width: 500px;
+                width: 700px;
                 max-width: 90%;
                 padding: 16px;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -286,7 +286,7 @@
                                     </div>
                                 </c:forEach>                                
                             </div>
-                            <div class="space-y-4" id="comment-box-${post.getPostId()}">
+                            <div class="space-y-4 pt-4" id="comment-box-${post.getPostId()}">
                             </div>
                             <div class="space-y-4" id="load-more-${post.getPostId()}">
                                 <c:if test="${post.getCommentList().size() > 0}">
@@ -323,7 +323,7 @@
         </div>
 
         <div id="create-post-dialog" class="hidden">
-            <form class="dialog hidden" action="/TripsExeWeb/post-add" method="post">
+            <form class="dialog hidden" action="/TripsExeWeb/post-add" method="post" enctype="multipart/form-data">
                 <div class="dialog-header">
                     <h2>Create post</h2>
                     <button type="button" id="close-create-post-dialog">✕</button>
@@ -339,7 +339,7 @@
                 </div>
 
                 <div id="photo-dialog" class="bg-black/50 flex items-center justify-center hidden">
-                    <div class="bg-[#141519] rounded-lg p-6 w-full max-w-[500px] relative">
+                    <div class="bg-[#141519] rounded-lg p-6 w-full max-w-[700px] relative">
                         <div class="flex items-center justify-between mb-6">
                             <h2 class="text-white text-lg font-bold">Add photo</h2>
                             <button type="button" id="close-photo-dialog" class="text-gray-400 hover:text-white hover:cursor-pointer">                               
@@ -350,19 +350,16 @@
                         </div>
                         <div class="mb-4">
                             <label class="block text-gray-400 text-sm mb-2">Upload attachment</label>
-                            <div class="border-2 border-dashed border-gray-500 rounded-lg p-6 text-center">
-                                <svg class="mx-auto w-8 h-8 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
-                                </svg>
-                                <p class="text-gray-400 text-sm">Drag here or click to upload photo.</p>
-                                <input type="file" class="hidden" accept="image/*" />
+                            <div class="border-2 border-dashed border-gray-500 rounded-lg p-6 text-center flex gap-4">
+                                <input class="grow" type="file" name="image" accept="image/*" />
+                                <input type="submit" value="Upload Image" />
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div id="activity-dialog" class="bg-black/50 flex items-center justify-center hidden">                   
-                    <div class="rounded-lg p-6 w-full max-w-[500px] relative">
+                    <div class="rounded-lg p-6 w-full max-w-[700px] relative">
                         <div class="flex items-center justify-between mb-6">
                             <h2 class="text-white text-lg font-bold">Share your activity</h2>
                             <button type="button" id="close-activity-dialog" class="text-gray-400 hover:text-white hover:cursor-pointer">
@@ -442,12 +439,14 @@
         });
 
         openCreatePostDialogBtn.addEventListener("click", () => {
+            openCreatePostDialogBtn.disabled = true;
             createPostDialog.classList.remove("hidden");
             createPostDialog.classList.add("dialog-overlay");
             createPostDialogChild.classList.remove("hidden");
         });
 
         closeCreatePostDialogBtn.addEventListener("click", () => {
+            openCreatePostDialogBtn.disabled = false;
             createPostDialog.classList.add("hidden");
             createPostDialog.classList.remove("dialog-overlay");
             createPostDialogChild.classList.add("hidden");
@@ -455,6 +454,7 @@
 
         createPostDialog.addEventListener("click", (e) => {
             if (e.target === createPostDialog) {
+                openCreatePostDialogBtn.disabled = false;
                 createPostDialog.classList.add("hidden");
                 createPostDialog.classList.remove("dialog-overlay");
                 createPostDialogChild.classList.add("hidden");
@@ -502,16 +502,15 @@
 
             wsComment.onopen = function () {
                 console.log("Connected to room: " + postId);
-                wsComment.send("userId=" + currentUserId + "&fullName=" + fullName);
             };
 
             wsComment.onmessage = function (event) {
                 let commentBox = document.getElementById("comment-box-" + currentPostId);
                 let data = event.data;
-                console.log(data);
+                let dataJson = JSON.parse(data);
 
-                if (data.startsWith("remainingCmt:")) {
-                    let remaining = parseInt(data.split(":")[1]);
+                if (dataJson.remain || dataJson.remain != null) {
+                    let remaining = parseInt(dataJson.remain);
                     let loadMoreBtn = document.querySelector('#load-more-' + currentPostId + ' .flex.justify-center');
                     if (loadMoreBtn) {
                         loadMoreBtn.style.display = remaining > 0 ? "flex" : "none";
@@ -519,29 +518,24 @@
                     return;
                 }
 
-                let comment = JSON.parse(data);
                 let content = '';
-                if (comment.imageUrl) {
-                    content = '<p class="text-sm font-normal text-gray-300">' + comment.text + '</p>' +
-                            '<img src="/TripsExeWeb' + comment.imageUrl + '" alt="Comment Image" class="max-w-[200px] mt-2 rounded-md">';
+                if (dataJson.imageUrl) {
+                    content = '<p class="text-sm font-normal text-gray-300">' + dataJson.text + '</p>' +
+                            '<img src="/TripsExeWeb' + dataJson.imageUrl + '" alt="Comment Image" class="max-w-[200px] mt-2 rounded-md">';
                 } else {
-                    content = '<p class="text-sm font-normal text-gray-300">' + comment.text + '</p>';
+                    content = '<p class="text-sm font-normal text-gray-300">' + dataJson.text + '</p>';
                 }
 
                 commentBox.innerHTML +=
                         '<div class="flex space-x-3">' +
-                        '<img src="/TripsExeWeb' + comment.avatarUrl + '" alt="User Profile" class="w-8 h-8 rounded-full">' +
+                        '<img src="/TripsExeWeb/' + dataJson.avatarUrl + '" alt="User Profile" class="w-8 h-8 rounded-full">' +
                         '<div class="flex-1">' +
                         '<div class="bg-[#202227] p-3 rounded-lg">' +
-                        '<p class="font-bold text-base text-white mb-1">' + comment.fullName + '</p>' +
+                        '<p class="font-bold text-base text-white mb-1">' + dataJson.fullName + '</p>' +
                         content +
                         '</div>' +
                         '<div class="flex space-x-3 text-gray-400 text-sm mt-1">' +
-                        '<button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Like (0)</button>' +
-                        '<span class="mr-3 text-gray-400">•</span>' +
-                        '<button class="hover:cursor-pointer hover:text-[#0f6fec] duration-300">Reply</button>' +
-                        '<span class="mr-3 text-gray-400">•</span>' +
-                        '<span class="cursor-default select-none">' + new Date(comment.timestamp).toLocaleString() + '</span>' +
+                        '<span class="cursor-default select-none">' + new Date(dataJson.timestamp).toLocaleString() + '</span>' +
                         '</div>' +
                         '</div>' +
                         '</div>';
@@ -562,8 +556,18 @@
         function sendComment(postId) {
             let id = "comment-" + postId + "-${user.getUserId()}";
             let comment = document.getElementById(id).value;
+
+            let commentobj = {"comment": {
+                    "postId": postId,
+                    "text": comment,
+                    "userId": currentUserId,
+                    "imageUrl": null,
+                    "fullName": '${user.getFullName()}',
+                    "avatarUrl": '${user.getAvatarUrl()}'
+                }}
+
             if (wsComment && comment && currentPostId === postId) {
-                wsComment.send(comment);
+                wsComment.send(JSON.stringify(commentobj));
                 document.getElementById(id).value = "";
                 commentOffset[postId]++;
             } else {
@@ -572,15 +576,28 @@
         }
 
         function loadMoreComments(postId) {
+            let offset = commentOffset[postId] || 3;
+            let requiredobj = {
+                "load": {
+                    "offset": offset,
+                }
+            }
             if (!wsComment || currentPostId !== postId) {
                 openComment(postId);
-                setTimeout(function () {
-                    wsComment.send("load:" + commentOffset[postId]);
-                }, 100);
+                wsComment.addEventListener('open', function () {
+                    wsComment.send(JSON.stringify(requiredobj));
+                    commentOffset[postId] = offset + 5;
+                }, {once: true});
+            } else if (wsComment.readyState === WebSocket.OPEN) {
+                wsComment.send(JSON.stringify(requiredobj));
+                commentOffset[postId] = offset + 5;
             } else {
-                wsComment.send("load:" + commentOffset[postId]);
+                console.log("WebSocket chưa sẵn sàng cho postId: " + postId);
+                wsComment.addEventListener('open', function () {
+                    wsComment.send(JSON.stringify(requiredobj));
+                    commentOffset[postId] = offset + 5;
+                }, {once: true});
             }
-            commentOffset[postId] += 5;
         }
 
         let wsLike = null;
