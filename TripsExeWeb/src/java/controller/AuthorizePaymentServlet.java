@@ -66,6 +66,7 @@ public class AuthorizePaymentServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/pages/ErrorPage.jsp");
             } else {
                 response.sendRedirect(approvalLink);
+                System.err.println(approvalLink);
             }
         } catch (PayPalRESTException e) {
             request.setAttribute("error", "Failed to initiate payment: " + e.getMessage());

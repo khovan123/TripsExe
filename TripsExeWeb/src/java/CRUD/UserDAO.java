@@ -160,4 +160,21 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
+    
+    public void updateUserPremiumStatus(int userId, boolean premiumAccount, Date premiumExpirationDate) throws SQLException {
+        String sql = "UPDATE UserTBL SET premiumAccount = ?, premiumExpirationDate = ? WHERE userId = ?";
+        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
+            st.setBoolean(1, premiumAccount); 
+            if (premiumExpirationDate != null) {
+                st.setTimestamp(2, new java.sql.Timestamp(premiumExpirationDate.getTime()));
+            } else {
+                st.setNull(2, java.sql.Types.TIMESTAMP); 
+            }
+            st.setInt(3, userId); 
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("User with ID " + userId + " not found.");
+            }
+        }
+    }
 }

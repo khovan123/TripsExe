@@ -348,7 +348,7 @@
 
                 <div>
                     <textarea placeholder="Share your thoughts..." name="content"></textarea>
-                </div>
+                </xdiv>
 
                 <div id="photo-dialog" class="bg-black/50 flex items-center justify-center hidden">
                     <div class="bg-[#141519] rounded-lg p-6 w-full max-w-[700px] relative">
