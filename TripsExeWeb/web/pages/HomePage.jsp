@@ -87,7 +87,8 @@
 
             .dialog textarea {
                 width: 100%;
-                min-height: 60px;
+                min-height: 100px;
+                max-height: 300px;
                 background: #191A1F;
                 color: #D1D2D3;
                 padding: 12px;
@@ -97,6 +98,8 @@
                 resize: none;
                 font-size: 16px;
                 font-family: Arial, sans-serif;
+                overflow: hidden;
+                box-sizing: border-box;
             }
             .dialog textarea:focus {
                 border-color: #3B82F6;
@@ -135,6 +138,23 @@
                 background: #1A73E8;
                 cursor: pointer;
                 opacity: 1;
+            }
+
+            .tab-btn {
+                transition: background 0.3s, color 0.3s;
+            }
+
+            .tab-btn.active {
+                background: #0f6fec1a;
+                color: #0f6fec;
+            }
+
+            .tab-content {
+                display: none;
+            }
+
+            .tab-content.active {
+                display: block;
             }
         </style>
     </head>
@@ -198,15 +218,7 @@
                             <svg class="text-[#0CBC87] w-[12px] mr-[8px] text-success" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"></path></svg>
                             <span class="text-sm font-medium">Photo</span>
                         </button>
-                        <button class="flex items-center space-x-1 text-gray-400 hover:cursor-pointer hover:text-[#0f6fec] duration-300 bg-[#202227] py-[4px] px-[8px] rounded-lg">
-                            <svg class="text-[#4F9EF8] w-[12px] mr-[8px] text-info" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0"></path><path d="M9 6a3 3 0 1 1 0-6 3 3 0 0 1 0 6"></path><path d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"></path></svg>
-                            <span class="text-sm font-medium">Video</span>
-                        </button>
-                        <button class="flex items-center space-x-1 text-gray-400 hover:cursor-pointer hover:text-[#0f6fec] duration-300 bg-[#202227] py-[4px] px-[8px] rounded-lg">
-                            <svg class="text-[#D6293E] w-[12px] mr-[8px] text-danger" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5m9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5M11.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"></path></svg>
-                            <span class="text-sm font-medium">Event</span>
-                        </button>
-                        <button class="flex items-center space-x-1 text-gray-400 hover:cursor-pointer hover:text-[#0f6fec] duration-300 bg-[#202227] py-[4px] px-[8px] rounded-lg">
+                        <button id="open-activity-dialog" class="flex items-center space-x-1 text-gray-400 hover:cursor-pointer hover:text-[#0f6fec] duration-300 bg-[#202227] py-[4px] px-[8px] rounded-lg">
                             <svg class="text-[#F7C32E] w-[12px] mr-[8px] text-warning" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5M4.285 9.567a.5.5 0 0 1 .683.183A3.5 3.5 0 0 0 8 11.5a3.5 3.5 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683M10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8"></path></svg>
                             <span class="text-sm font-medium">Feeling/Activity</span>
                         </button>
@@ -338,111 +350,100 @@
                     <textarea placeholder="Share your thoughts..." name="content"></textarea>
                 </div>
 
-                <div id="photo-dialog" class="bg-black/50 flex items-center justify-center hidden">
-                    <div class="bg-[#141519] rounded-lg p-6 w-full max-w-[700px] relative">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-white text-lg font-bold">Add photo</h2>
-                            <button type="button" id="close-photo-dialog" class="text-gray-400 hover:text-white hover:cursor-pointer">                               
-                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-400 text-sm mb-2">Upload attachment</label>
-                            <div class="border-2 border-dashed border-gray-500 rounded-lg p-6 text-center flex gap-4">
-                                <input class="grow" type="file" name="image" accept="image/*" />
-                                <input type="submit" value="Upload Image" />
-                            </div>
-                        </div>
+                <div id="status-message" class="text-gray-400 text-sm mb-2 hidden"></div>
+
+                <div class="flex space-x-3 mb-4">
+                    <button type="button" id="tab-photo" class="tab-btn flex items-center text-gray-400 hover:cursor-pointer hover:text-[#0f6fec] duration-300 bg-[#202227] py-[4px] px-[8px] rounded-lg">
+                        <svg class="text-[#0CBC87] w-[12px] mr-[8px] text-success" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"></path></svg>
+                        <span class="text-sm font-medium">Photo</span>
+                    </button>
+                    <button type="button" id="tab-activity" class="tab-btn flex items-center space-x-1 text-gray-400 hover:cursor-pointer hover:text-[#0f6fec] duration-300 bg-[#202227] py-[4px] px-[8px] rounded-lg">
+                        <svg class="text-[#F7C32E] w-[12px] mr-[8px] text-warning" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5M4.285 9.567a.5.5 0 0 1 .683.183A3.5 3.5 0 0 0 8 11.5a3.5 3.5 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683M10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8"></path></svg>
+                        <span class="text-sm font-medium">Feeling/Activity</span>
+                    </button>
+                </div>
+
+                <div id="photo-tab-content" class="tab-content hidden mb-4 cursor-pointer">
+                    <div class="border-2 border-dashed border-gray-500 rounded-lg p-6 text-center flex gap-4 cursor-pointer">
+                        <input class="cursor-pointer" type="file" name="image" accept="image/*" id="photo-input" />
                     </div>
                 </div>
 
-                <div id="activity-dialog" class="bg-black/50 flex items-center justify-center hidden">                   
-                    <div class="rounded-lg p-6 w-full max-w-[700px] relative">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-white text-lg font-bold">Share your activity</h2>
-                            <button type="button" id="close-activity-dialog" class="text-gray-400 hover:text-white hover:cursor-pointer">
-                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="mb-4">
-                            <input placeholder="Add activity" type="text" name="activity" id="activity"/>
-                        </div>
-                    </div>
+                <div id="activity-tab-content" class="tab-content hidden mb-4">
+                    <input placeholder="Add activity" type="text" name="activity" id="activity-input"/>
                 </div>
 
                 <div class="dialog-footer">
-                    <div class="add-to-post">
-                        <div class="flex gap-4">
-                            <button type="button" id="open-photo-dialog-from-create" class="cursor-pointer ">
-                                <svg xmlns="http://www.w3.org/2000/svg" 
-                                     width="16" 
-                                     height="16" 
-                                     viewBox="0 0 24 24" 
-                                     fill="none" 
-                                     stroke="#45BD62" 
-                                     stroke-width="2.25" 
-                                     stroke-linecap="round" 
-                                     stroke-linejoin="round" 
-                                     class="lucide lucide-images">
-                                <path d="M18 22H4a2 2 0 0 1-2-2V6"/>
-                                <path d="m22 13-1.296-1.296a2.41 2.41 0 0 0-3.408 0L11 18"/>
-                                <circle cx="12" cy="8" r="2"/><rect width="16" height="16" x="6" y="2" rx="2"/>
-                                </svg>
-                            </button>
-                            <button type="button" id="open-activity-dialog-from-create" class="cursor-pointer">
-                                <svg xmlns="http://www.w3.org/2000/svg" 
-                                     width="16" 
-                                     height="16" 
-                                     viewBox="0 0 24 24" 
-                                     fill="none" 
-                                     stroke="#EEB428" 
-                                     stroke-width="2.25" 
-                                     stroke-linecap="round" 
-                                     stroke-linejoin="round" 
-                                     class="lucide lucide-smile">
-                                <circle cx="12" cy="12" r="10"/>
-                                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-                                <line x1="9" x2="9.01" y1="9" y2="9"/>
-                                <line x1="15" x2="15.01" y1="9" y2="9"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
                     <button type="submit" class="post-button">Post</button>
                 </div>              
             </form>
         </div>
     </body>
     <script>
-        const photoDialog = document.getElementById("photo-dialog");
-        const closePhotoDialogBtn = document.getElementById("close-photo-dialog");
         const openCreatePostDialogBtn = document.getElementById("open-post-dialog");
+        const openPhotoDialogBtn = document.getElementById("open-photo-dialog");
+        const openActivityDialogBtn = document.getElementById("open-activity-dialog");
         const createPostDialog = document.getElementById("create-post-dialog");
         const createPostDialogChild = createPostDialog.querySelector(".dialog");
         const closeCreatePostDialogBtn = document.getElementById("close-create-post-dialog");
-        const openPhotoDialogFromCreateBtn = document.getElementById("open-photo-dialog-from-create");
         const textareaEl = createPostDialog.querySelector('textarea');
-        const openActivityDialogFromCreateBtn = document.getElementById("open-activity-dialog-from-create");
-        const activityDialog = document.getElementById("activity-dialog");
-        const closeActivityDialogBtn = document.getElementById("close-activity-dialog");
+        const tabPhotoBtn = document.getElementById("tab-photo");
+        const tabActivityBtn = document.getElementById("tab-activity");
+        const photoTabContent = document.getElementById("photo-tab-content");
+        const activityTabContent = document.getElementById("activity-tab-content");
+        const photoInput = document.getElementById("photo-input");
+        const activityInput = document.getElementById("activity-input");
+        const statusMessage = document.getElementById("status-message");
 
-        closePhotoDialogBtn.addEventListener("click", () => {
-            photoDialog.classList.add("hidden");
+
+        function autoResizeTextarea() {
+            textareaEl.style.height = 'auto';
+            textareaEl.style.height = `${textareaEl.scrollHeight}px`;
+        }
+
+        textareaEl.addEventListener('input', autoResizeTextarea);
+
+        photoTabContent.addEventListener("click", (e) => {
+            if (e.target !== photoInput) {
+                photoInput.click();
+            }
         });
 
-        closeActivityDialogBtn.addEventListener("click", () => {
-            activityDialog.classList.add("hidden");
-        });
-
-        openCreatePostDialogBtn.addEventListener("click", () => {
+        function openDialogWithTab(tab) {
             openCreatePostDialogBtn.disabled = true;
             createPostDialog.classList.remove("hidden");
             createPostDialog.classList.add("dialog-overlay");
             createPostDialogChild.classList.remove("hidden");
+            statusMessage.classList.add("hidden");
+
+            if (tab === "photo") {
+                tabPhotoBtn.classList.add("active");
+                photoTabContent.classList.add("active");
+                tabActivityBtn.classList.remove("active");
+                activityTabContent.classList.remove("active");
+            } else if (tab === "activity") {
+                tabActivityBtn.classList.add("active");
+                activityTabContent.classList.add("active");
+                tabPhotoBtn.classList.remove("active");
+                photoTabContent.classList.remove("active");
+            }
+        }
+
+        openCreatePostDialogBtn.addEventListener("click", () => {
+            openDialogWithTab(null);
+            autoResizeTextarea();
+        });
+
+        openPhotoDialogBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            openDialogWithTab("photo");
+            autoResizeTextarea();
+        });
+
+        openActivityDialogBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            openDialogWithTab("activity");
+            autoResizeTextarea();
         });
 
         closeCreatePostDialogBtn.addEventListener("click", () => {
@@ -450,6 +451,28 @@
             createPostDialog.classList.add("hidden");
             createPostDialog.classList.remove("dialog-overlay");
             createPostDialogChild.classList.add("hidden");
+            textareaEl.value = '';
+            photoInput.value = '';
+            activityInput.value = '';
+
+            let statusMessages = [];
+            if (photoInput.files.length > 0) {
+                statusMessages.push("Photo selected: " + photoInput.files[0].name);
+            }
+            if (activityInput.value.trim() !== "") {
+                statusMessages.push("Activity added: " + activityInput.value);
+            }
+            if (statusMessages.length > 0) {
+                statusMessage.classList.remove("hidden");
+                statusMessage.textContent = statusMessages.join(" | ");
+            } else {
+                statusMessage.classList.add("hidden");
+            }
+
+            tabPhotoBtn.classList.remove("active");
+            photoTabContent.classList.remove("active");
+            tabActivityBtn.classList.remove("active");
+            activityTabContent.classList.remove("active");
         });
 
         createPostDialog.addEventListener("click", (e) => {
@@ -458,21 +481,77 @@
                 createPostDialog.classList.add("hidden");
                 createPostDialog.classList.remove("dialog-overlay");
                 createPostDialogChild.classList.add("hidden");
-                textarea.value = '';
-                photoDialog.classList.add("hidden");
+                textareaEl.value = '';
+                photoInput.value = '';
+                activityInput.value = '';
+
+                let statusMessages = [];
+                if (photoInput.files.length > 0) {
+                    statusMessages.push("Photo selected: " + photoInput.files[0].name);
+                }
+                if (activityInput.value.trim() !== "") {
+                    statusMessages.push("Activity added: " + activityInput.value);
+                }
+                if (statusMessages.length > 0) {
+                    statusMessage.classList.remove("hidden");
+                    statusMessage.textContent = statusMessages.join(" | ");
+                } else {
+                    statusMessage.classList.add("hidden");
+                }
+
+                tabPhotoBtn.classList.remove("active");
+                photoTabContent.classList.remove("active");
+                tabActivityBtn.classList.remove("active");
+                activityTabContent.classList.remove("active");
             }
         });
 
-        openPhotoDialogFromCreateBtn.addEventListener("click", (e) => {
+        tabPhotoBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            photoDialog.classList.remove("hidden");
-            activityDialog.classList.add("hidden");
+            tabPhotoBtn.classList.add("active");
+            photoTabContent.classList.add("active");
+            tabActivityBtn.classList.remove("active");
+            activityTabContent.classList.remove("active");
         });
 
-        openActivityDialogFromCreateBtn.addEventListener("click", (e) => {
+        tabActivityBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            activityDialog.classList.remove("hidden");
-            photoDialog.classList.add("hidden");
+            tabActivityBtn.classList.add("active");
+            activityTabContent.classList.add("active");
+            tabPhotoBtn.classList.remove("active");
+            photoTabContent.classList.remove("active");
+        });
+
+        photoInput.addEventListener("change", () => {
+            let statusMessages = [];
+            if (photoInput.files.length > 0) {
+                statusMessages.push("Photo selected: " + photoInput.files[0].name);
+            }
+            if (activityInput.value.trim() !== "") {
+                statusMessages.push("Activity added: " + activityInput.value);
+            }
+            if (statusMessages.length > 0) {
+                statusMessage.classList.remove("hidden");
+                statusMessage.textContent = statusMessages.join(" | ");
+            } else {
+                statusMessage.classList.add("hidden");
+            }
+        });
+
+        activityInput.addEventListener("input", () => {
+            let statusMessages = [];
+            if (photoInput.files.length > 0) {
+                statusMessages.push("Photo selected: " + photoInput.files[0].name);
+            }
+            if (activityInput.value.trim() !== "") {
+                statusMessages.push("Activity added: " + activityInput.value);
+            }
+            if (statusMessages.length > 0) {
+                statusMessage.classList.remove("hidden");
+                statusMessage.textContent = statusMessages.join(" | ");
+            } else {
+                statusMessage.classList.add("hidden");
+            }
         });
 
         textareaEl.addEventListener('input', function () {
