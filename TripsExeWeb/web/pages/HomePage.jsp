@@ -348,7 +348,7 @@
 
                 <div>
                     <textarea placeholder="Share your thoughts..." name="content"></textarea>
-                </div>
+                </xdiv>
 
                 <div id="status-message" class="text-gray-400 text-sm mb-2 hidden"></div>
 
