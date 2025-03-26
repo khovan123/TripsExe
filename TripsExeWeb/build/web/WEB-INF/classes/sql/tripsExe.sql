@@ -1,3 +1,9 @@
+CREATE DATABSE TripsExeDB;
+
+GO
+USE TripsExeDB;
+
+GO
 CREATE TABLE UserTBL (
     userId INT IDENTITY(1,1),
     username VARCHAR(50) NULL,
@@ -71,18 +77,6 @@ VALUES
     (4, 'room_4_5', 'Pham Thi D', 'OK, gửi mình bài hay nhé!', NULL, '2023-10-04 20:05:00');
 
 GO
-SELECT * FROM UserTBL;
-SELECT * FROM FriendTBL;
-SELECT * FROM Messages;
-
-SELECT CASE WHEN userId1 = 2 THEN userId2 ELSE userId1 END AS friendId FROM FriendTBL WHERE userId1 = 2 OR userId2 = 2;
-SELECT userId, fullName FROM UserTBL WHERE userId = 2
-
-SELECT * FROM Messages WHERE roomId = 'room_1_2' ORDER BY timestamp
-
-INSERT INTO Messages(userId, roomId, fullName, content)  VALUES (1, 'room_1_2', 'Nguyen Van A', 'Thang ngu')
-
-GO
 create table PostTBL(
     postId INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     userId INT NOT NULL,
@@ -92,6 +86,7 @@ create table PostTBL(
     timestamp DATETIME DEFAULT GETDATE()
 );
 
+GO
 INSERT INTO PostTBL (userId, activity, content, imageUrl, timestamp)
 VALUES 
     (1, 'Feeling happy 😊', 'Just got a new job! Excited for this journey.', NULL, '2025-03-01 08:30:00'),
@@ -106,12 +101,14 @@ VALUES
     (1, 'Pet lover 🐶', 'Meet my new puppy, Charlie!', 'cute_puppy.jpg', '2025-03-09 16:45:00');
 SELECT p.*, u.fullName ,u.avatarUrl FROM PostTBL p JOIN UserTBL u ON p.userId = u.userId WHERE p.userId = 1 ORDER BY timestamp DESC;
 
+GO
 CREATE TABLE LikeTBL (
     postId INT NOT NULL,
     userId INT NOT NULL,
     PRIMARY KEY (postId, userId)
 );
 
+GO
 CREATE TABLE CommentTBL (
     postId INT NOT NULL,
     userId INT NOT NULL,
@@ -121,62 +118,9 @@ CREATE TABLE CommentTBL (
     PRIMARY KEY (postId, userId, timestamp)
 );
 
-SELECT p.*, u.fullName, u.avatarUrl, COUNT(DISTINCT l.userId) AS likes, COUNT(DISTINCT c.userId) AS comments FROM PostTBL p JOIN UserTBL u ON p.userId = u.userId LEFT JOIN LikeTBL l ON p.postId = l.postId LEFT JOIN CommentTBL c ON p.postId = c.postId WHERE p.postId = 1 GROUP BY p.postId, p.userId, p.activity, p.content, p.imageUrl, p.timestamp, u.fullName, u.avatarUrl ORDER BY p.timestamp DESC;
-
-SELECT 
-    p.*, 
-    u.fullName, 
-    u.avatarUrl, 
-    (SELECT COUNT(DISTINCT l.userId) FROM LikeTBL l WHERE l.postId = p.postId) AS likes,
-    (SELECT COUNT(*) FROM CommentTBL c WHERE c.postId = p.postId) AS comments
-FROM PostTBL p 
-JOIN UserTBL u ON p.userId = u.userId 
-ORDER BY p.timestamp DESC;
-
-
-SELECT *, (SELECT COUNT(DISTINCT p.postId) FROM PostTBL p WHERE p.userId = u.userId) AS posts FROM UserTBL u WHERE email = 'user1@example.com';
-
-SELECT 
-    u.userId, 
-	u.username,
-    u.email,
-	u.password,	
-    u.fullName,
-	u.additionalName,
-	u.dob,
-	u.gender,
-	u.phoneNumber,
-    u.avatarUrl,
-	u.overview,
-	u.premiumExpirationDate,
-	u.premiumAccount,
-    COUNT(DISTINCT p.postId) AS posts, 
-    COUNT(DISTINCT CASE WHEN f.userId1 = u.userId THEN f.userId2 
-                        WHEN f.userId2 = u.userId THEN f.userId1 
-                        END) AS friends
-FROM UserTBL u 
-LEFT JOIN PostTBL p ON p.userId = u.userId 
-LEFT JOIN FriendTBL f ON f.userId1 = u.userId OR f.userId2 = u.userId 
-WHERE u.email = 'user1@example.com'
-GROUP BY u.userId, 
-	u.username,
-    u.email,
-	u.password,	
-    u.fullName,
-	u.additionalName,
-	u.dob,
-	u.gender,
-	u.phoneNumber,
-    u.avatarUrl,
-	u.overview,
-	u.premiumExpirationDate,
-	u.premiumAccount
-ORDER BY u.userId;
-
-SELECT * FROM UserTBL
-
+GO
 CREATE TABLE DeleteAccountTBL(
     userId INT,
     timestamp DATETIME DEFAULT GETDATE(),
-	PRIMARY KEY (userId, timestamp),
-)
+    PRIMARY KEY (userId, timestamp),
+);

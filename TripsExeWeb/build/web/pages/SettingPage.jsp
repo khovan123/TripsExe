@@ -8,7 +8,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Account Settings</title>
+        <title>TripsExe | Settings</title>
         <!--<script src="https://unpkg.com/@tailwindcss/browser@4"></script>-->
         <script src="https://cdn.tailwindcss.com"></script>
         <style>
@@ -230,6 +230,13 @@
                     messageContainer.style.display = "none";
                 }, 2000);
             }
+
+            window.onload = function () {
+                if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+                    console.log("Page reloaded, fetching data from /post-load");
+                    window.location.href = "/TripsExeWeb/post-load-me";
+                }
+            };
         </script>
     </body>
 </html>
