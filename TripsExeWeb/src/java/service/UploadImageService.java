@@ -39,8 +39,8 @@ public class UploadImageService {
             permission.setType("anyone");
             permission.setRole("reader");
             drive.permissions().create(uploadedFile.getId(), permission).execute();
-            String imageUrl = "https://drive.google.com/thumbnail?id=" + uploadedFile.getId();
-            System.out.println("IMAGE URL: " + imageUrl);
+//            String imageUrl = "http://drive.google.com/thumbnail?id=" + uploadedFile.getId();
+            String imageUrl = "https://lh3.google.com/u/0/d/" + uploadedFile.getId();
             file.delete();
             return imageUrl;
         } catch (Exception e) {
